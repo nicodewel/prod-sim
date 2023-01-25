@@ -157,15 +157,58 @@ export class HttpClient {
  * @baseUrl http://localhost:8080
  */
 export class Api extends HttpClient {
+  stations = {
+    /**
+     * No description
+     *
+     * @tags station-controller
+     * @name GetAll
+     * @request GET:/stations
+     */
+    getAll: (params = {}) =>
+      this.request({
+        path: `/stations`,
+        method: "GET",
+        ...params,
+      }),
+    /**
+     * No description
+     *
+     * @tags station-controller
+     * @name Save
+     * @request POST:/stations
+     */
+    save: (data, params = {}) =>
+      this.request({
+        path: `/stations`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+    /**
+     * No description
+     *
+     * @tags station-controller
+     * @name GetById
+     * @request GET:/stations/{id}
+     */
+    getById: (id, params = {}) =>
+      this.request({
+        path: `/stations/${id}`,
+        method: "GET",
+        ...params,
+      }),
+  };
   robots = {
     /**
      * No description
      *
      * @tags robot-controller
-     * @name GetAll
+     * @name GetAll1
      * @request GET:/robots
      */
-    getAll: (params = {}) =>
+    getAll1: (params = {}) =>
       this.request({
         path: `/robots`,
         method: "GET",
@@ -175,10 +218,10 @@ export class Api extends HttpClient {
      * No description
      *
      * @tags robot-controller
-     * @name Save
+     * @name Save1
      * @request POST:/robots
      */
-    save: (data, params = {}) =>
+    save1: (data, params = {}) =>
       this.request({
         path: `/robots`,
         method: "POST",
@@ -190,12 +233,141 @@ export class Api extends HttpClient {
      * No description
      *
      * @tags robot-controller
-     * @name GetById
+     * @name GetById1
      * @request GET:/robots/{id}
      */
-    getById: (id, params = {}) =>
+    getById1: (id, params = {}) =>
       this.request({
         path: `/robots/${id}`,
+        method: "GET",
+        ...params,
+      }),
+  };
+  productionLines = {
+    /**
+     * No description
+     *
+     * @tags production-line-controller
+     * @name GetAll2
+     * @request GET:/productionLines
+     */
+    getAll2: (params = {}) =>
+      this.request({
+        path: `/productionLines`,
+        method: "GET",
+        ...params,
+      }),
+    /**
+     * No description
+     *
+     * @tags production-line-controller
+     * @name Save2
+     * @request POST:/productionLines
+     */
+    save2: (data, params = {}) =>
+      this.request({
+        path: `/productionLines`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+    /**
+     * No description
+     *
+     * @tags production-line-controller
+     * @name GetById2
+     * @request GET:/productionLines/{id}
+     */
+    getById2: (id, params = {}) =>
+      this.request({
+        path: `/productionLines/${id}`,
+        method: "GET",
+        ...params,
+      }),
+  };
+  employees = {
+    /**
+     * No description
+     *
+     * @tags employee-controller
+     * @name GetAll3
+     * @request GET:/employees
+     */
+    getAll3: (params = {}) =>
+      this.request({
+        path: `/employees`,
+        method: "GET",
+        ...params,
+      }),
+    /**
+     * No description
+     *
+     * @tags employee-controller
+     * @name Save3
+     * @request POST:/employees
+     */
+    save3: (data, params = {}) =>
+      this.request({
+        path: `/employees`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+    /**
+     * No description
+     *
+     * @tags employee-controller
+     * @name GetById3
+     * @request GET:/employees/{id}
+     */
+    getById3: (id, params = {}) =>
+      this.request({
+        path: `/employees/${id}`,
+        method: "GET",
+        ...params,
+      }),
+  };
+  carModels = {
+    /**
+     * No description
+     *
+     * @tags car-model-controller
+     * @name GetAll4
+     * @request GET:/carModels
+     */
+    getAll4: (params = {}) =>
+      this.request({
+        path: `/carModels`,
+        method: "GET",
+        ...params,
+      }),
+    /**
+     * No description
+     *
+     * @tags car-model-controller
+     * @name Save4
+     * @request POST:/carModels
+     */
+    save4: (data, params = {}) =>
+      this.request({
+        path: `/carModels`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+    /**
+     * No description
+     *
+     * @tags car-model-controller
+     * @name GetById4
+     * @request GET:/carModels/{id}
+     */
+    getById4: (id, params = {}) =>
+      this.request({
+        path: `/carModels/${id}`,
         method: "GET",
         ...params,
       }),

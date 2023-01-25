@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { createNewRobot } from "./ressourceSlice";
+import { createNewRobot, createNewEmployee, createNewStation } from "./ressourceSlice";
 
 const NewRessource = () => {
 
@@ -13,9 +13,13 @@ const NewRessource = () => {
     const [time, setTime] = useState();
 
     const checkTypeAndSave = (t) => {
-        switch(t){
+        switch (t) {
             case "Roboter":
-                dispatch(createNewRobot({productionTime: time, step : 0, liftime: 1000, name: name}));
+                dispatch(createNewRobot({ productionTime: time, step: 0, liftime: 1000, name: name }));
+            case "Station":
+                dispatch(createNewStation({ productionTime: time, step: 0, name: name , employees: []}));
+            case "Mitarbeiter":
+                dispatch(createNewEmployee({ name: name }));
         }
     }
 
@@ -41,14 +45,14 @@ const NewRessource = () => {
                 <div className="row mb-3">
                     <label htmlFor="colFormLabel" className="col-sm-2 col-form-label">Name:</label>
                     <div className="col-sm-10">
-                        <input type="email" className="form-control" id="colFormLabel" placeholder="Stationsname" onChange={(e) => {setName(e.target.value)}}/>
+                        <input type="email" className="form-control" id="colFormLabel" placeholder="Stationsname" onChange={(e) => { setName(e.target.value) }} />
                     </div>
                 </div>
 
                 {type != "Mitarbeiter" ? <div className="row mb-3">
                     <label htmlFor="colFormLabel" className="col-sm-2 col-form-label">Benötigte Zeit:</label>
                     <div className="col-sm-10">
-                        <input type="email" className="form-control" id="colFormLabel" placeholder="in Sekunden" onChange={(e) => {setTime(e.target.value)}}/>
+                        <input type="email" className="form-control" id="colFormLabel" placeholder="in Sekunden" onChange={(e) => { setTime(e.target.value) }} />
                     </div>
                 </div> : <div></div>}
 

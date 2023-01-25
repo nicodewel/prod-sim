@@ -6,7 +6,8 @@ const ProductionStep = ({ order }) => {
     const [step, setStep] = useState();
 
 
-    const robotList = useSelector(state => state.robots.robots)
+    const robotList = useSelector(state => state.ressources.robots)
+    const employeeList = useSelector(state => state.ressources.employees)
 
     const checkTypeSelection = (t) => {
         switch (t) {
