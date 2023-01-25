@@ -1,8 +1,20 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { getAllRobots } from "./production/robotSlice";
 
 
 
 const Landing = () => {
+
+
+    const dispatch = useDispatch();
+    
+    useEffect(() => {
+        dispatch(getAllRobots());
+    }, [])
+
+    
 
     return (
         <div>

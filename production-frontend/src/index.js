@@ -6,6 +6,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Landing from './components/Landing';
 import NewProduction from "./components/production/NewProduction";
 import NewRessource from './components/production/NewRessource';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -20,7 +22,7 @@ const router = createBrowserRouter([
     element: <NewProduction />
   },
   {
-    path:"/createstation",
+    path: "/createstation",
     element: <NewRessource />
   }
 ]);
@@ -28,9 +30,9 @@ const router = createBrowserRouter([
 
 root.render(
   <React.StrictMode>
-
-    <RouterProvider router={router} />
-
+    <Provider store={store} >
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
 
