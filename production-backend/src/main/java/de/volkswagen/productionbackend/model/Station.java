@@ -10,7 +10,7 @@ import java.util.List;
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
 public class Station extends ProductionLineComponent{
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Employee> employees;
 
 }

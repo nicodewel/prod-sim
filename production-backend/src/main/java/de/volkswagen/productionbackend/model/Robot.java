@@ -11,5 +11,4 @@ import javax.persistence.*;
 public class Robot extends ProductionLineComponent {
 
     private long lifetime;
-
 }

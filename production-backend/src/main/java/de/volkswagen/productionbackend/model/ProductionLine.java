@@ -17,9 +17,9 @@ public class ProductionLine {
     private long Id;
     private boolean isRunnable;
     private boolean isActive;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private CarModel carModel;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<ProductionLineComponent> components;
 
 
