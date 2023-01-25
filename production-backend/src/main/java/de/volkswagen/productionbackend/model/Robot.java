@@ -1,12 +1,15 @@
 package de.volkswagen.productionbackend.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Data;
 
-public class Robot {
+import javax.persistence.*;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Id;
+
+@Entity
+@Data
+@PrimaryKeyJoinColumn(referencedColumnName = "id")
+public class Robot extends ProductionLineComponent {
+
+    private long lifetime;
+
 }
