@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Landing from './components/Landing';
+import NewProduction from "./components/production/NewProduction";
+import NewRessource from './components/production/NewRessource';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -13,8 +14,16 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Landing />,
-  }]
-);
+  },
+  {
+    path: "/createproductionline",
+    element: <NewProduction />
+  },
+  {
+    path:"/createstation",
+    element: <NewRessource />
+  }
+]);
 
 
 root.render(
