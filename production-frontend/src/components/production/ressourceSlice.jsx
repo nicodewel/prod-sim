@@ -75,7 +75,11 @@ const ressourceSlice = createSlice({
             .addCase(getAllRobots.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.robots = action.payload;
-            })            
+            })   
+            .addCase(getAllStations.fulfilled, (state, action) => {
+                state.status = 'idle';
+                state.stations = action.payload;
+            })          
             .addCase(getAllEmployees.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.employees = action.payload;
