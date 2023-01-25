@@ -1,5 +1,6 @@
 package de.volkswagen.productionbackend.controller;
 
+import de.volkswagen.productionbackend.dto.ProductionLineDto;
 import de.volkswagen.productionbackend.model.ProductionLine;
 import de.volkswagen.productionbackend.service.ProductionLineService;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class ProductionLineController {
     }
 
     @GetMapping("/productionLines")
-    public ResponseEntity<List<ProductionLine>> getAll(){
+    public ResponseEntity<List<ProductionLineDto>> getAll(){
         return ResponseEntity.ok(productionLineService.getAllProductionLines());
     }
 
@@ -30,8 +31,8 @@ public class ProductionLineController {
     }
 
     @PostMapping("/productionLines")
-    public ResponseEntity<ProductionLine> save(@RequestBody ProductionLine productionLine){
-        return ResponseEntity.ok(productionLineService.saveProductionLine(productionLine));
+    public ResponseEntity<ProductionLineDto> save(@RequestBody ProductionLineDto productionLineDto){
+        return ResponseEntity.ok(productionLineService.saveProductionLine(productionLineDto));
     }
 
 

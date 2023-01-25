@@ -15,8 +15,8 @@ public class CarModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long Id;
-    private String Name;
+    private long id;
+    private String name;
     private float complexity;
 
 }

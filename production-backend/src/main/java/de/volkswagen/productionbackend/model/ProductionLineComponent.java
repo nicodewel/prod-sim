@@ -15,5 +15,4 @@ public class ProductionLineComponent {
     private long Id;
     private String Name;
     private long productionTime;
-    private int step;
 }
