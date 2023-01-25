@@ -1,5 +1,5 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import robotSlice from "../components/production/robotSlice";
+import robotSlice from "../components/production/ressourceSlice";
 
 
 const rootReducer = combineReducers({

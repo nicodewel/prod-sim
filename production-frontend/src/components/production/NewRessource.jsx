@@ -1,12 +1,23 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { createNewRobot } from "./ressourceSlice";
 
 const NewRessource = () => {
+
+    const dispatch = useDispatch();
 
 
     const [type, setType] = useState();
     const [name, setName] = useState();
     const [time, setTime] = useState();
+
+    const checkTypeAndSave = (t) => {
+        switch(t){
+            case "Roboter":
+                dispatch(createNewRobot({productionTime: time, step : 0, liftime: 1000, name: name}));
+        }
+    }
 
     return (
 
@@ -20,7 +31,7 @@ const NewRessource = () => {
                     <div className="col-sm-10">
                         <select className="form-select" aria-label="Default select example" onChange={(e) => { setType(e.target.value) }}>
                             <option defaultValue>Bitte wählen</option>
-                            <option value="Roboter">Robotor</option>
+                            <option value="Roboter">Roboter</option>
                             <option value="Station">Station</option>
                             <option value="Mitarbeiter">Mitarbeiter</option>
                         </select>
@@ -45,6 +56,7 @@ const NewRessource = () => {
 
 
             </form >
+            <button onClick={() => checkTypeAndSave(type)}>erstellen</button>
             <NavLink to="/"><button>zurück</button></NavLink>
 
         </div >
