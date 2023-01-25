@@ -1,0 +1,38 @@
+package de.volkswagen.productionbackend.controller;
+
+import de.volkswagen.productionbackend.model.Employee;
+import de.volkswagen.productionbackend.service.EmployeeService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController()
+public class EmployeeController {
+
+    private final EmployeeService employeeService;
+
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+
+    @GetMapping("/employees")
+    public ResponseEntity<List<Employee>> getAll(){
+        return ResponseEntity.ok(employeeService.getAllEmployees());
+    }
+
+    @GetMapping("/employees/{id}")
+    public ResponseEntity<Employee> getById(@PathVariable long id){
+        if (employeeService.getEmployeeById(id).isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(employeeService.getEmployeeById(id).get());
+    }
+
+    @PostMapping("/employees")
+    public ResponseEntity<Employee> save(@RequestBody Employee employee){
+        return ResponseEntity.ok(employeeService.saveEmployee(employee));
+    }
+
+
+}
