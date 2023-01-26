@@ -1,9 +1,11 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import ressourceSlice from "../components/production/ressourceSlice"; 
+import productionlineSlice from "../components/production/productionlineSlice";
 
 
 const rootReducer = combineReducers({
-    ressources: ressourceSlice
+    ressources: ressourceSlice,
+    productionlines: productionlineSlice
     
 });
 

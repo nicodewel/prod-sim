@@ -17,8 +17,6 @@ export interface Employee {
 export interface Station {
   /** @format int64 */
   productionTime?: number;
-  /** @format int32 */
-  step?: number;
   employees?: Employee[];
   name?: string;
   /** @format int64 */
@@ -27,8 +25,6 @@ export interface Station {
 export interface Robot {
   /** @format int64 */
   productionTime?: number;
-  /** @format int32 */
-  step?: number;
   /** @format int64 */
   lifetime?: number;
   name?: string;
@@ -36,25 +32,24 @@ export interface Robot {
   id?: number;
 }
 export interface CarModel {
+  /** @format int64 */
+  id?: number;
+  name?: string;
   /** @format float */
   complexity?: number;
-  name?: string;
-  /** @format int64 */
-  id?: number;
 }
 export interface ProductionLine {
-  carModel?: CarModel;
-  components?: ProductionLineComponent[];
   /** @format int64 */
   id?: number;
+  name?: string;
+  carModel?: CarModel;
+  componentMap?: Record<string, ProductionLineComponent>;
   active?: boolean;
   runnable?: boolean;
 }
 export interface ProductionLineComponent {
   /** @format int64 */
   productionTime?: number;
-  /** @format int32 */
-  step?: number;
   name?: string;
   /** @format int64 */
   id?: number;
