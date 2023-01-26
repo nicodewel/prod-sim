@@ -7,9 +7,11 @@ const ProductionStep = ({ order, addToMap, mapEntry, setMapEntry }) => {
     const [step, setStep] = useState();
     const [selectedComponent, setSelectedComponent] = useState();
     const [stationEmp, setStationEmp] = useState()
-    const robotList = useSelector(state => state.ressources.robots)
-    const employeeList = useSelector(state => state.ressources.employees)
-    const stationList = useSelector(state => state.ressources.stations)
+    const robotList = useSelector(state => state.ressources.robots).filter(comp => !comp.onDuty)
+    const employeeList = useSelector(state => state.ressources.employees).filter(comp => !comp.onDuty)
+    const stationList = useSelector(state => state.ressources.stations).filter(comp => !comp.onDuty)
+    
+
    
 
     //useEffect(() => {console.log(mapEntry)}, [selectedComponent])
@@ -33,6 +35,7 @@ const ProductionStep = ({ order, addToMap, mapEntry, setMapEntry }) => {
             mapEntry.comp=comp
             return mapEntry
         })
+        
         addToMap(mapEntry)
     }
 
