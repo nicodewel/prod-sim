@@ -20,6 +20,7 @@ public class ProductionLine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private String name;
     private boolean isRunnable;
     private boolean isActive;
     @ManyToOne(cascade = CascadeType.PERSIST)
