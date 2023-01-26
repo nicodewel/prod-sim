@@ -16,4 +16,5 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
     private String name;
+    private boolean isAvailable;
 }
