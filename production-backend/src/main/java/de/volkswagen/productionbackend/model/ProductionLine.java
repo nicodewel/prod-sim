@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import java.util.Map;
 @Data
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 public class ProductionLine {
 
     @Id
@@ -34,4 +36,6 @@ public class ProductionLine {
         this.isActive = isActive;
         this.carModel = carModel;
     }
+
+
 }

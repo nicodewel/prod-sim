@@ -1,15 +1,10 @@
 package de.volkswagen.productionbackend.service;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import de.volkswagen.productionbackend.dto.ProductionLineDto;
-import de.volkswagen.productionbackend.mapper.Mapper;
 import de.volkswagen.productionbackend.model.*;
 import de.volkswagen.productionbackend.repository.ProductionLineRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,14 +19,12 @@ public class ProductionLineService {
 //        robot.setName("Robert");
 //        robot.setLifetime(10000);
 //        robot.setProductionTime(2);
-//        robot.setStep(1);
 //
 //        Employee employee = new Employee();
 //        employee.setName("Erwin");
 //
 //        Station station = new Station();
 //        station.setProductionTime(3);
-//        station.setStep(2);
 //        station.setName("Band1");
 //        station.setEmployees(Arrays.asList(employee));
 //
@@ -41,15 +34,18 @@ public class ProductionLineService {
 //
 //        ProductionLine line = new ProductionLine();
 //        line.setActive(true);
-//        line.setComponents(Arrays.asList(robot,station));
+//        Map<Long,ProductionLineComponent> productOrderMap = new HashMap<>();
+//        productOrderMap.put(1l,station);
+//        productOrderMap.put(2l,robot);
+//        line.setComponentMap(productOrderMap);
 //        line.setRunnable(true);
 //
 //        productionLineRepository.save(line);
     }
 
-    public List<ProductionLineDto> getAllProductionLines(){
+    public List<ProductionLine> getAllProductionLines(){
         List<ProductionLine> productionLines = productionLineRepository.findAll();
-        return productionLines.stream().map(productionLine -> Mapper.mapProductionLine(productionLine)).collect(Collectors.toList());
+        return productionLines;
     }
 
     public Optional<ProductionLine> getProductionLineById(long id){
@@ -60,8 +56,7 @@ public class ProductionLineService {
         productionLineRepository.deleteById(id);
     }
 
-    public ProductionLineDto saveProductionLine(ProductionLineDto dto){
-        ProductionLine productionLine = Mapper.mapProductionLine(dto);
+    public ProductionLine saveProductionLine(ProductionLine productionLine){
         return productionLineRepository.save(productionLine);
     }
 }
