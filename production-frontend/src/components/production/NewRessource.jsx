@@ -16,10 +16,13 @@ const NewRessource = () => {
         switch (t) {
             case "Roboter":
                 dispatch(createNewRobot({ productionTime: time, step: 0, liftime: 1000, name: name }));
+                break;
             case "Station":
                 dispatch(createNewStation({ productionTime: time, step: 0, name: name , employees: []}));
+                break;
             case "Mitarbeiter":
                 dispatch(createNewEmployee({ name: name }));
+                break;
         }
     }
 

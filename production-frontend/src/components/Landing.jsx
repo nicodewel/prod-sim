@@ -24,7 +24,6 @@ const Landing = () => {
     return (
         <div>
             <h1>ProduktionsstraßenplanungsApp</h1>
-
             <h2>Übersicht</h2>
             <table className="table caption-top">
                 <caption>Aktuelle Produktionsstraßen</caption>
