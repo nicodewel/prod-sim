@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { getAllProductionlines } from "./production/productionlineSlice";
 import { getAllEmployees, getAllStations } from "./production/ressourceSlice";
 import { getAllRobots } from "./production/ressourceSlice";
 
@@ -15,14 +16,14 @@ const Landing = () => {
         dispatch(getAllRobots());
         dispatch(getAllStations());
         dispatch(getAllEmployees())
+        dispatch(getAllProductionlines())
     }, [])
 
-    
+    const lines = useSelector(state => state.productionlines.productionlines)
 
     return (
         <div>
             <h1>ProduktionsstraßenplanungsApp</h1>
-
             <h2>Übersicht</h2>
             <table className="table caption-top">
                 <caption>Aktuelle Produktionsstraßen</caption>
@@ -57,6 +58,16 @@ const Landing = () => {
                         <td>läuft/läuft nicht </td>
                         <td><i class="bi bi-play"></i><i class="bi bi-stop"></i></td>
                     </tr>
+                {lines?.map((pl, i) => <tr key={i}>
+                        <th scope="row">{i}</th>
+                        <td>{pl.name == null ? "Linienname" : pl.name}</td>
+                        <td>{pl.runnable ? "lauffähig" : "unvollständig"}</td>
+                        <td>{pl.active ? "läuft" : "läuft nicht"} </td>
+                        <td><i class="bi bi-play"></i><i class="bi bi-stop"></i></td>
+                    </tr>)}
+
+
+
                 </tbody>
             </table>
 
