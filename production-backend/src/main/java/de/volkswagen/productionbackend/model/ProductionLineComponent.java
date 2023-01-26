@@ -1,5 +1,6 @@
 package de.volkswagen.productionbackend.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
