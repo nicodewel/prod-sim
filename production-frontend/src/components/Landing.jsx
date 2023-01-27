@@ -34,7 +34,7 @@ const Landing = () => {
                         <th scope="col">Produziert</th>
                         <th scope="col">Status</th>
                         <th scope="col">Simulationsstatus</th>
-                        <th scope="col">Start/Stop</th>
+                        <th scope="col">Start/Stop/Bearbeiten</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,7 +44,7 @@ const Landing = () => {
                         <td>{pl.name == null ? "Fahrzeu" : pl.carModel.name}</td>
                         <td>{pl.runnable ? "lauffähig" : "unvollständig"}</td>
                         <td>{pl.active ? "läuft" : "läuft nicht"} </td>
-                        <td><i class="bi bi-play"></i><i class="bi bi-stop"></i></td>
+                        <td><i className="bi bi-play iconhover"></i><i className="bi bi-stop iconhover"><i className="bi bi-pencil-square iconhover" onClick={() => console.log("ICH BIN BEARBIOETN")}></i></i></td>
                     </tr>)}
                 </tbody>
             </table>
