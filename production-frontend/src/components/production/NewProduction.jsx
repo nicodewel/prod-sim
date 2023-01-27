@@ -53,9 +53,19 @@ const NewProduction = () => {
     }
 
     const nextStep = () => {
-        setOrder([...order, order.length + 1])
-        dispatch(setCompBusy(mapEntry.comp));
-        document.querySelectorAll(`.prodStep${order.length}`).forEach(element =>  element.setAttribute("disabled", true))
+        
+        if(mapEntry.comp.id == undefined){
+            console.log("BITTE EINE KOMPONENTE AUSWÄHLEN")
+            document.getElementById("modalBtn").setAttribute("data-bs-toggle", "modal")
+            document.getElementById("modalBtn").click();
+            document.getElementById("modalBtn").removeAttribute("data-bs-toggle", "modal")
+        }else{
+            setOrder([...order, order.length + 1])
+            dispatch(setCompBusy(mapEntry.comp));
+            document.querySelectorAll(`.prodStep${order.length}`).forEach(element =>  element.setAttribute("disabled", true))
+        }
+       
+      
     }
 
     return (
@@ -86,7 +96,24 @@ const NewProduction = () => {
                 {order.map((o, i) => <ProductionStep key={i} order={o}  addToMap={addToMap} mapEntry={mapEntry} setMapEntry={setMapEntry} robots={[...robotList]} stations={stationList} employees={employeeList}/>)}
             </form>
 
-            <button onClick={() => nextStep()}>Schritt hinzufügen</button>
+            <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-5" id="staticBackdropLabel">Schritt unvollständig</h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            Bitte eine Komponente auswählen.
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Schließen</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="modalBtn" data-bs-target="#staticBackdrop" onClick={() => nextStep()}>Schritt hinzufügen</button>
             <button onClick={() => buildProduction()}>speichern</button>
             <NavLink to="/"><button>zurück</button></NavLink>
 
