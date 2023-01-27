@@ -13,6 +13,7 @@ export interface Employee {
   name?: string;
   /** @format int64 */
   id?: number;
+  onDuty?: boolean;
 }
 export interface Station {
   /** @format int64 */
@@ -21,6 +22,7 @@ export interface Station {
   name?: string;
   /** @format int64 */
   id?: number;
+  onDuty?: boolean;
 }
 export interface Robot {
   /** @format int64 */
@@ -30,6 +32,7 @@ export interface Robot {
   name?: string;
   /** @format int64 */
   id?: number;
+  onDuty?: boolean;
 }
 export interface CarModel {
   /** @format int64 */
@@ -53,6 +56,7 @@ export interface ProductionLineComponent {
   name?: string;
   /** @format int64 */
   id?: number;
+  onDuty?: boolean;
 }
 export declare type QueryParamsType = Record<string | number, any>;
 export declare type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
