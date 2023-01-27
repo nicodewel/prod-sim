@@ -1,29 +1,33 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import ProductionStep from "./ProductionStep";
+import { useSelector, useDispatch } from "react-redux";
+import { setCompBusy } from "./ressourceSlice";
+import { buildNewProductionline } from "./productionlineSlice";
 
 const NewProduction = () => {
 
-
+    const dispatch = useDispatch();
     const [name, setName] = useState();
     const [carmodel, setCarmodel] = useState();
     const [order, setOrder] = useState([1]);
     const [componentMap, setComponentMap] = useState(new Map());
-
     const [mapEntry, setMapEntry] = useState({order:"", 
     comp: {
         employees:[]
     }});
 
+    const robotList = useSelector(state => state.ressources.robots).filter(comp => !comp.onDuty)
+    const employeeList = useSelector(state => state.ressources.employees).filter(comp => !comp.onDuty)
+    const stationList = useSelector(state => state.ressources.stations).filter(comp => !comp.onDuty)
+
     const checkRunnable = () => {
-        return true;
+        return false;
     }
 
     //active default false
 
     const addToMap = () => {
-        console.log("AddToMap: " + mapEntry);
-       
         componentMap.set(mapEntry.order,mapEntry.comp)
         console.log("MAP: ", componentMap);
     }
@@ -33,15 +37,27 @@ const NewProduction = () => {
 
         let newLine = {
             "name" : name,
-            "carModel": carmodel,
+            "carModel": {
+                "name" : carmodel,
+                "complexity": 0
+            },
             "componentMap" : componentMap,
             "active" : false,
             "runnable" : checkRunnable()
         } 
-        console.log("MAP: ", componentMap)
-        console.log(newLine)
+
+        console.log("TOPOST:" , newLine)
+       // dispatch(buildNewProductionline({newLine}));
+
 
     }
+
+    const nextStep = () => {
+        setOrder([...order, order.length + 1])
+        dispatch(setCompBusy(mapEntry.comp));
+        document.querySelectorAll(`.prodStep${order.length}`).forEach(element =>  element.setAttribute("disabled", true))
+    }
+
     return (
 
         <div>
@@ -67,24 +83,15 @@ const NewProduction = () => {
                     </div>
                 </div>
 
-                {order.map((o, i) => <ProductionStep key={i} order={o}  addToMap={addToMap} mapEntry={mapEntry} setMapEntry={setMapEntry} />)}
-
-
+                {order.map((o, i) => <ProductionStep key={i} order={o}  addToMap={addToMap} mapEntry={mapEntry} setMapEntry={setMapEntry} robots={[...robotList]} stations={stationList} employees={employeeList}/>)}
             </form>
 
-
-            <button onClick={() => setOrder([...order, order.length + 1])}>Schritt hinzufügen</button>
+            <button onClick={() => nextStep()}>Schritt hinzufügen</button>
             <button onClick={() => buildProduction()}>speichern</button>
             <NavLink to="/"><button>zurück</button></NavLink>
 
         </div>
-
-
-
-
-
     )
-
 }
 
 export default NewProduction;

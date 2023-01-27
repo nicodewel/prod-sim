@@ -67,6 +67,24 @@ export const createNewEmployee = createAsyncThunk(
 const ressourceSlice = createSlice({
     name: "robots",
     initialState,
+    reducers: {
+        setCompBusy: (state, action) => {
+            console.log("ACTION :", action.payload.hasOwnProperty("employees"))
+            //find out if action ist robot/station or employee
+            if (action.payload.hasOwnProperty("employees") && action.payload.hasOwnProperty("productionTime")) {
+                console.log("ICH BIN EINE STATION");
+                let indexStation = state.stations.findIndex(s => s.id == action.payload.id);
+                state.stations[indexStation].onDuty = true;                
+
+            } else if (action.payload.hasOwnProperty("productionTime")) {
+                console.log("ICH BIN EIN ROBOTER");
+                let index = state.robots.findIndex(r => r.id == action.payload.id);
+                state.robots[index].onDuty = true;
+            } 
+        }
+
+    },
+
     extraReducers: (builder) => {
         builder
             .addCase(getAllRobots.pending, (state, action) => {
@@ -75,11 +93,11 @@ const ressourceSlice = createSlice({
             .addCase(getAllRobots.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.robots = action.payload;
-            })   
+            })
             .addCase(getAllStations.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.stations = action.payload;
-            })          
+            })
             .addCase(getAllEmployees.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.employees = action.payload;
@@ -98,6 +116,8 @@ const ressourceSlice = createSlice({
             });
     },
 })
+
+export const { setCompBusy } = ressourceSlice.actions;
 
 
 

@@ -1,0 +1,8 @@
+2023-01-27 14:06:41 jdbc[93]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax Fehler in SQL Befehl "DELETE [*]* FROM PRODUCTION_LINE"; erwartet "identifier"
+Syntax error in SQL statement "DELETE [*]* FROM PRODUCTION_LINE"; expected "identifier"; SQL statement:
+DELETE * FROM PRODUCTION_LINE [42001-214]
+2023-01-27 14:07:13 jdbc[93]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax Fehler in SQL Befehl "DELETE [*]* FROM PRODUCTION_LINE WHERE ID > 0"; erwartet "identifier"
+Syntax error in SQL statement "DELETE [*]* FROM PRODUCTION_LINE WHERE ID > 0"; expected "identifier"; SQL statement:
+DELETE * FROM PRODUCTION_LINE WHERE ID > 0 [42001-214]

@@ -19,6 +19,15 @@ export const getAllProductionlines = createAsyncThunk(
     }
 )
 
+export const buildNewProductionline = createAsyncThunk(
+    "ProductionLines/create",
+    async (productionline) => {
+        const response = await api.productionLines.save2(productionline);
+        return response;
+
+    }
+)
+
 
 
 const productionlineSlice = createSlice({
@@ -32,6 +41,10 @@ const productionlineSlice = createSlice({
             .addCase(getAllProductionlines.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.productionlines = action.payload;
+            })
+            .addCase(buildNewProductionline.fulfilled, (state, action) => {
+                state.status = "idle";
+                state.productionlines = [...state.productionlines, action.payload]
             })
     }
 })
