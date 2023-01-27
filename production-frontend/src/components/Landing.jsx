@@ -31,43 +31,21 @@ const Landing = () => {
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
+                        <th scope="col">Produziert</th>
                         <th scope="col">Status</th>
                         <th scope="col">Simulationsstatus</th>
                         <th scope="col">Start/Stop</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Golflinie</td>
-                        <td>lauffähig/ unvollständig</td>
-                        <td>läuft/läuft nicht </td>
-                        <td><i class="bi bi-play"></i><i class="bi bi-stop"></i></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Tiguanlinie</td>
-                        <td>lauffähig/ unvollständig</td>
-                        <td>läuft/läuft nicht </td>
-                        <td><i class="bi bi-play"></i><i class="bi bi-stop"></i></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Touranlinie</td>
-                        <td>lauffähig/ unvollständig</td>
-                        <td>läuft/läuft nicht </td>
-                        <td><i class="bi bi-play"></i><i class="bi bi-stop"></i></td>
-                    </tr>
                 {lines?.map((pl, i) => <tr key={i}>
                         <th scope="row">{i}</th>
                         <td>{pl.name == null ? "Linienname" : pl.name}</td>
+                        <td>{pl.name == null ? "Fahrzeu" : pl.carModel.name}</td>
                         <td>{pl.runnable ? "lauffähig" : "unvollständig"}</td>
                         <td>{pl.active ? "läuft" : "läuft nicht"} </td>
                         <td><i class="bi bi-play"></i><i class="bi bi-stop"></i></td>
                     </tr>)}
-
-
-
                 </tbody>
             </table>
 
