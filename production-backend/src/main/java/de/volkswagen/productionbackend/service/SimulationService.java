@@ -17,7 +17,7 @@ public class SimulationService {
 
     // Ein Simulationsschritt wird pro Sekunde ausgeführt
     // Dabei wird bei einem minimalen Simulationsgeschwindigkeit (simSpeed) von 1 eine Produktionszeit von 1s hinzugefügt
-    @Scheduled(fixedRate = 1000)
+    //@Scheduled(fixedRate = 1000)
     public void executeProductionStep() {
         activeSimulations.forEach(((productionLine, simSpeed) -> {
             productionLine.addSimTime(1 * simSpeed );
@@ -26,8 +26,17 @@ public class SimulationService {
 
     public boolean addToSimulation(ProductionLine productionLine, long simSpeed) {
         if (!productionLine.validateConfiguration()) return false;
+        productionLine.setFinishedParts(0);
         activeSimulations.put(productionLine, simSpeed);
         return true;
+    }
+
+    public void removeFromSimulation(ProductionLine productionLine){
+      activeSimulations.remove(productionLine);
+    }
+
+    public void changeModelForCurrentSimulation(ProductionLine productionLine){
+
     }
 
 }

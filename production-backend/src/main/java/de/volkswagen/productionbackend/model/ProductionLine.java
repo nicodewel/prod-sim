@@ -50,12 +50,27 @@ public class ProductionLine {
         isRunnable = true;
         return true;
     }
-//TODO: Handling ergänzen wenn mehrere Teile in einem Simulationsschritt fertig gestellt werden.
+
     public void addSimTime(long time) {
         simTime += time;
-        if (simTime >= timeToCompletion) {
+        while (simTime >= timeToCompletion) {
             simTime -= timeToCompletion;
             finishedParts += 1;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ProductionLine that = (ProductionLine) o;
+
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
     }
 }
