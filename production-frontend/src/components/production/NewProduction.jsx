@@ -35,6 +35,9 @@ const NewProduction = () => {
     const buildProduction = () => {
       addToMap();
 
+      if(componentMap.size < 3){
+        console.log("LINIE MUSS MINDESTES 3 SCHRITTE BEINHALTEN")
+      } else{
         let newLine = {
             "name" : name,
             "carModel": {
@@ -47,7 +50,11 @@ const NewProduction = () => {
         } 
 
         console.log("TOPOST:" , newLine)
-       dispatch(buildNewProductionline(newLine));
+       //dispatch(buildNewProductionline(newLine));
+
+      }
+
+        
 
 
     }
@@ -63,10 +70,10 @@ const NewProduction = () => {
             setOrder([...order, order.length + 1])
             dispatch(setCompBusy(mapEntry.comp));
             document.querySelectorAll(`.prodStep${order.length}`).forEach(element =>  element.setAttribute("disabled", true))
-        }
-       
-      
+        }      
     }
+
+    
 
     return (
 
@@ -115,7 +122,8 @@ const NewProduction = () => {
 
             <button id="modalBtn" data-bs-target="#staticBackdrop" onClick={() => nextStep()}>Schritt hinzufügen</button>
             <button onClick={() => buildProduction()}>speichern</button>
-            <NavLink to="/"><button>zurück</button></NavLink>
+            {/* <button onClick={() => setOrder(order.slice(0, -1))}>Schritt entfernen</button> */}
+            <NavLink to="/"><button>home</button></NavLink>
 
         </div>
     )
