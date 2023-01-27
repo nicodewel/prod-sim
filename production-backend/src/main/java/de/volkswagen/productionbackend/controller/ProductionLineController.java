@@ -31,6 +31,7 @@ public class ProductionLineController {
 
     @PostMapping("/productionLines")
     public ResponseEntity<ProductionLine> save(@RequestBody ProductionLine productionLine){
+        System.out.println (productionLine);
         return ResponseEntity.ok(productionLineService.saveProductionLine(productionLine));
     }
 

@@ -31,9 +31,9 @@ public class ProductionLine {
     // Zeit bis Fertigstellung in ms
     private long timeToCompletion;
     private long finishedParts = 0;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     private CarModel carModel;
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "production_componentOrder_mapping", joinColumns = {@JoinColumn(name = "productionLine_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "component_id", referencedColumnName = "id")})
     @MapKeyColumn(name = "step")

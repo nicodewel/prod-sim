@@ -11,7 +11,7 @@ import java.util.List;
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
 public class Station extends ProductionLineComponent{
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Employee> employees;
 
 }

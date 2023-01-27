@@ -32,7 +32,7 @@ const ProductionStep = ({ order, addToMap, mapEntry, setMapEntry, robots, statio
         console.log({ order: order, comp: comp })
         setMapEntry(mapEntry => {
             mapEntry.order = order
-            mapEntry.comp = comp
+            mapEntry.comp = {...comp, onDuty : true}
             return mapEntry
         })
 

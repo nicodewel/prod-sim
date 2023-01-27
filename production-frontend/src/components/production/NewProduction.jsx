@@ -47,7 +47,7 @@ const NewProduction = () => {
         } 
 
         console.log("TOPOST:" , newLine)
-       // dispatch(buildNewProductionline({newLine}));
+       dispatch(buildNewProductionline(newLine));
 
 
     }
