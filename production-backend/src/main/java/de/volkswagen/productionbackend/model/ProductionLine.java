@@ -2,8 +2,10 @@ package de.volkswagen.productionbackend.model;
 
 import javax.persistence.*;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -13,6 +15,8 @@ import static de.volkswagen.productionbackend.service.SimulationService.MINIMAL_
 @Data
 @Entity
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductionLine {
 
 
