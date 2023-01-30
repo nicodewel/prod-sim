@@ -71,16 +71,20 @@ const ressourceSlice = createSlice({
         setCompBusy: (state, action) => {
             console.log("ACTION :", action.payload.hasOwnProperty("employees"))
             //find out if action ist robot/station or employee
-            if (action.payload.hasOwnProperty("employees") && action.payload.hasOwnProperty("productionTime")) {
+            if (action.payload.hasOwnProperty("employees")) {
                 console.log("ICH BIN EINE STATION");
                 let indexStation = state.stations.findIndex(s => s.id == action.payload.id);
                 state.stations[indexStation].onDuty = true;                
 
-            } else if (action.payload.hasOwnProperty("productionTime")) {
+            } else {
                 console.log("ICH BIN EIN ROBOTER");
                 let index = state.robots.findIndex(r => r.id == action.payload.id);
                 state.robots[index].onDuty = true;
             } 
+        },
+        setEmployeeBusy: (state,action) => {
+            let index = state.employees.findIndex(r => r.id == action.payload.id);
+                state.employees[index].onDuty = true;
         }
 
     },
@@ -117,7 +121,7 @@ const ressourceSlice = createSlice({
     },
 })
 
-export const { setCompBusy } = ressourceSlice.actions;
+export const { setCompBusy, setEmployeeBusy } = ressourceSlice.actions;
 
 
 
