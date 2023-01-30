@@ -16,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +43,8 @@ public class ProductionLineControllerTest {
     void setUp() {
         Map<Long, ProductionLineComponent> productOrderMap = new HashMap<>();
 
-        Robot robot = new Robot();
+        ProductionLineComponent robot = new ProductionLineComponent();
+        robot.setType(Type.robot);
         robot.setName("Robert");
         robot.setProductionTime(2);
         productOrderMap.put(2l, robot);
@@ -53,7 +53,8 @@ public class ProductionLineControllerTest {
         Employee employee = new Employee();
         employee.setName("Erwin");
 
-        Station station = new Station();
+        ProductionLineComponent station = new ProductionLineComponent();
+        station.setType(Type.station);
         station.setProductionTime(3);
         station.setName("Band1");
         station.setEmployees(Arrays.asList(employee));
