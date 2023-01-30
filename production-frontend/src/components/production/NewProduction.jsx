@@ -73,6 +73,7 @@ const NewProduction = () => {
         } else {
             setOrder([...order, order.length + 1])
             dispatch(setCompBusy(mapEntry.comp));
+            
             document.querySelectorAll(`.prodStep${order.length}`).forEach(element => element.setAttribute("disabled", true))
         }
     }

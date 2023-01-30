@@ -2,10 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { getAllProductionlines } from "./production/productionlineSlice";
-import { getAllComponents, getAllEmployees, getAllStations } from "./production/ressourceSlice";
-import { getAllRobots } from "./production/ressourceSlice";
-
-
+import { getAllComponents, getAllEmployees} from "./production/ressourceSlice";
 
 const Landing = () => {
 

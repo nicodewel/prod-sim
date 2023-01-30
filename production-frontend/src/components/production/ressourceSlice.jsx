@@ -12,7 +12,7 @@ const initialState = {
 export const getAllComponents = createAsyncThunk(
     "components/load",
     async () => {
-        const response = await api.productionLineComponents.getAll3();
+        const response = await api.productionLineComponents.getAll1();
         const json = await response.json()
         return json;
     }
@@ -21,7 +21,8 @@ export const getAllComponents = createAsyncThunk(
 export const createNewRobot = createAsyncThunk(
     "robots/build",
     async (robot) => {
-        const response = await api.robots.save1(robot);
+        console.log(robot);
+        const response = await api.productionLineComponents.save1(robot);
         return response;
     }
 )
@@ -30,7 +31,7 @@ export const createNewRobot = createAsyncThunk(
 export const createNewStation = createAsyncThunk(
     "stations/build",
     async (station) => {
-        const response = await api.stations.save(station);
+        const response = await api.productionLineComponents.save1(station);
         return response;
     }
 )
@@ -38,7 +39,7 @@ export const createNewStation = createAsyncThunk(
 export const getAllEmployees = createAsyncThunk(
     "employees/load",
     async () => {
-        const response = await api.employees.getAll3();
+        const response = await api.employees.getAll2();
         const json = await response.json()
         return json;
     }
@@ -61,9 +62,8 @@ const ressourceSlice = createSlice({
     initialState,
     reducers: {
         setCompBusy: (state, action) => {
-            console.log("ACTION :", action.payload.hasOwnProperty("employees"))
-            //find out if action ist robot/station or employee
-            if (action.payload.hasOwnProperty("employees")) {
+           
+            if (action.payload.type == "station") {
                 console.log("ICH BIN EINE STATION");
                 let indexStation = state.stations.findIndex(s => s.id == action.payload.id);
                 state.stations[indexStation].onDuty = true;                

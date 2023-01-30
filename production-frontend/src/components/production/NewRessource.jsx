@@ -15,10 +15,10 @@ const NewRessource = () => {
     const checkTypeAndSave = (t) => {
         switch (t) {
             case "Roboter":
-                dispatch(createNewRobot({ productionTime: time, step: 0, liftime: 1000, name: name }));
+                dispatch(createNewRobot({ productionTime: time, step: 0, liftime: 1000, name: name, type: "robot"}));
                 break;
             case "Station":
-                dispatch(createNewStation({ productionTime: time, step: 0, name: name , employees: []}));
+                dispatch(createNewStation({ productionTime: time, step: 0, name: name , employees: [], type:"station"}));
                 break;
             case "Mitarbeiter":
                 dispatch(createNewEmployee({ name: name }));
