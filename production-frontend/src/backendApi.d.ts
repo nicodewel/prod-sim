@@ -45,6 +45,12 @@ export interface ProductionLine {
   /** @format int64 */
   id?: number;
   name?: string;
+  /** @format int64 */
+  simTime?: number;
+  /** @format int64 */
+  timeToCompletion?: number;
+  /** @format int64 */
+  finishedParts?: number;
   carModel?: CarModel;
   componentMap?: Record<string, ProductionLineComponent>;
   active?: boolean;

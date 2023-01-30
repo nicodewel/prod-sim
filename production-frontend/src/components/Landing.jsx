@@ -41,7 +41,7 @@ const Landing = () => {
                 {lines?.map((pl, i) => <tr key={i}>
                         <th scope="row">{i}</th>
                         <td>{pl.name == null ? "Linienname" : pl.name}</td>
-                        <td>{pl.name == null ? "Fahrzeu" : pl.carModel.name}</td>
+                        <td>{pl.name == null ? "Fahrzeug" : pl.carModel.name}</td>
                         <td>{pl.runnable ? "lauffähig" : "unvollständig"}</td>
                         <td>{pl.active ? "läuft" : "läuft nicht"} </td>
                         <td><i className="bi bi-play iconhover"></i><i className="bi bi-stop iconhover"><i className="bi bi-pencil-square iconhover" onClick={() => console.log("ICH BIN BEARBIOETN")}></i></i></td>
