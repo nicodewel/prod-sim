@@ -3,13 +3,11 @@ package de.volkswagen.productionbackend.controller;
 import de.volkswagen.productionbackend.model.ProductionLineComponent;
 import de.volkswagen.productionbackend.service.ProductionLineComponentService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
 public class ProductionLineComponentController {
 
     private final ProductionLineComponentService productionLineComponentService;

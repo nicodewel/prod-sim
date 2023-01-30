@@ -39,8 +39,8 @@ public class ProductionLine {
     private Map<Long, ProductionLineComponent> componentMap;
 
     public boolean validateConfiguration() {
-        if (componentMap.size() <= MINIMAL_STATION_COUNT) return false;
-        if (componentMap.values().stream()
+        if (componentMap.size() < MINIMAL_STATION_COUNT) return false;
+        if (!componentMap.values().stream()
                 .filter(v -> v.getType() == Type.station)
                 .filter(v -> v.getEmployees().isEmpty())
                 .findAny()
