@@ -9,37 +9,18 @@
  * ---------------------------------------------------------------
  */
 
-export interface Employee {
-  name?: string;
-  /** @format int64 */
-  id?: number;
-  onDuty?: boolean;
-}
-export interface Station {
-  /** @format int64 */
-  productionTime?: number;
-  employees?: Employee[];
-  name?: string;
-  /** @format int64 */
-  id?: number;
-  onDuty?: boolean;
-}
-export interface Robot {
-  /** @format int64 */
-  productionTime?: number;
-  /** @format int64 */
-  lifetime?: number;
-  name?: string;
-  /** @format int64 */
-  id?: number;
-  onDuty?: boolean;
-}
 export interface CarModel {
   /** @format int64 */
   id?: number;
   name?: string;
   /** @format float */
   complexity?: number;
+}
+export interface Employee {
+  /** @format int64 */
+  id?: number;
+  name?: string;
+  onDuty?: boolean;
 }
 export interface ProductionLine {
   /** @format int64 */
@@ -58,10 +39,12 @@ export interface ProductionLine {
 }
 export interface ProductionLineComponent {
   /** @format int64 */
-  productionTime?: number;
+  id?: number;
   name?: string;
   /** @format int64 */
-  id?: number;
+  productionTime?: number;
+  employees?: Employee[];
+  type?: "robot" | "station";
   onDuty?: boolean;
 }
 export declare type QueryParamsType = Record<string | number, any>;
@@ -138,135 +121,160 @@ export declare class HttpClient<SecurityDataType = unknown> {
  * @baseUrl http://localhost:8080
  */
 export declare class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
-  stations: {
+  simulations: {
     /**
      * No description
      *
-     * @tags station-controller
-     * @name GetAll
-     * @request GET:/stations
+     * @tags simulation-controller
+     * @name GetActiveSimulations
+     * @request GET:/simulations
      */
-    getAll: (params?: RequestParams) => Promise<HttpResponse<Station[], any>>;
+    getActiveSimulations: (params?: RequestParams) => Promise<HttpResponse<Record<string, number>, any>>;
     /**
      * No description
      *
-     * @tags station-controller
-     * @name Save
-     * @request POST:/stations
+     * @tags simulation-controller
+     * @name AddToSimulation
+     * @request POST:/simulations
      */
-    save: (data: Station, params?: RequestParams) => Promise<HttpResponse<Station, any>>;
+    addToSimulation: (
+      query: {
+        /** @format int64 */
+        simSpeed: number;
+      },
+      data: ProductionLine,
+      params?: RequestParams,
+    ) => Promise<HttpResponse<boolean, any>>;
     /**
      * No description
      *
-     * @tags station-controller
-     * @name GetById
-     * @request GET:/stations/{id}
+     * @tags simulation-controller
+     * @name RemoveFromSimulation
+     * @request DELETE:/simulations
      */
-    getById: (id: number, params?: RequestParams) => Promise<HttpResponse<Station, any>>;
-  };
-  robots: {
+    removeFromSimulation: (data: ProductionLine, params?: RequestParams) => Promise<HttpResponse<void, any>>;
     /**
      * No description
      *
-     * @tags robot-controller
-     * @name GetAll1
-     * @request GET:/robots
+     * @tags simulation-controller
+     * @name ModifySimulationSpeed
+     * @request POST:/simulations/modifySpeed
      */
-    getAll1: (params?: RequestParams) => Promise<HttpResponse<Robot[], any>>;
-    /**
-     * No description
-     *
-     * @tags robot-controller
-     * @name Save1
-     * @request POST:/robots
-     */
-    save1: (data: Robot, params?: RequestParams) => Promise<HttpResponse<Robot, any>>;
-    /**
-     * No description
-     *
-     * @tags robot-controller
-     * @name GetById1
-     * @request GET:/robots/{id}
-     */
-    getById1: (id: number, params?: RequestParams) => Promise<HttpResponse<Robot, any>>;
+    modifySimulationSpeed: (
+      query: {
+        /** @format int64 */
+        simSpeed: number;
+      },
+      data: ProductionLine,
+      params?: RequestParams,
+    ) => Promise<HttpResponse<boolean, any>>;
   };
   productionLines: {
     /**
      * No description
      *
      * @tags production-line-controller
-     * @name GetAll2
+     * @name GetAll
      * @request GET:/productionLines
      */
-    getAll2: (params?: RequestParams) => Promise<HttpResponse<ProductionLine[], any>>;
+    getAll: (params?: RequestParams) => Promise<HttpResponse<ProductionLine[], any>>;
     /**
      * No description
      *
      * @tags production-line-controller
-     * @name Save2
+     * @name Save
      * @request POST:/productionLines
      */
-    save2: (data: ProductionLine, params?: RequestParams) => Promise<HttpResponse<ProductionLine, any>>;
+    save: (data: ProductionLine, params?: RequestParams) => Promise<HttpResponse<ProductionLine, any>>;
     /**
      * No description
      *
      * @tags production-line-controller
-     * @name GetById2
+     * @name GetById
      * @request GET:/productionLines/{id}
      */
-    getById2: (id: number, params?: RequestParams) => Promise<HttpResponse<ProductionLine, any>>;
+    getById: (id: number, params?: RequestParams) => Promise<HttpResponse<ProductionLine, any>>;
+  };
+  productionLineComponents: {
+    /**
+     * No description
+     *
+     * @tags production-line-component-controller
+     * @name GetAll1
+     * @request GET:/productionLineComponents
+     */
+    getAll1: (params?: RequestParams) => Promise<HttpResponse<ProductionLineComponent[], any>>;
+    /**
+     * No description
+     *
+     * @tags production-line-component-controller
+     * @name Save1
+     * @request POST:/productionLineComponents
+     */
+    save1: (
+      data: ProductionLineComponent,
+      params?: RequestParams,
+    ) => Promise<HttpResponse<ProductionLineComponent, any>>;
+    /**
+     * No description
+     *
+     * @tags production-line-component-controller
+     * @name GetById1
+     * @request GET:/productionLineComponents/{id}
+     */
+    getById1: (id: number, params?: RequestParams) => Promise<HttpResponse<ProductionLineComponent, any>>;
   };
   employees: {
     /**
      * No description
      *
      * @tags employee-controller
-     * @name GetAll3
+     * @name GetAll2
      * @request GET:/employees
      */
-    getAll3: (params?: RequestParams) => Promise<HttpResponse<Employee[], any>>;
+    getAll2: (params?: RequestParams) => Promise<HttpResponse<Employee[], any>>;
     /**
      * No description
      *
      * @tags employee-controller
-     * @name Save3
+     * @name Save2
      * @request POST:/employees
      */
-    save3: (data: Employee, params?: RequestParams) => Promise<HttpResponse<Employee, any>>;
+    save2: (data: Employee, params?: RequestParams) => Promise<HttpResponse<Employee, any>>;
     /**
      * No description
      *
      * @tags employee-controller
-     * @name GetById3
+     * @name GetById2
      * @request GET:/employees/{id}
      */
-    getById3: (id: number, params?: RequestParams) => Promise<HttpResponse<Employee, any>>;
+    getById2: (id: number, params?: RequestParams) => Promise<HttpResponse<Employee, any>>;
   };
   carModels: {
     /**
      * No description
      *
      * @tags car-model-controller
-     * @name GetAll4
+     * @name GetAll3
      * @request GET:/carModels
      */
-    getAll4: (params?: RequestParams) => Promise<HttpResponse<CarModel[], any>>;
+    getAll3: (params?: RequestParams) => Promise<HttpResponse<CarModel[], any>>;
     /**
      * No description
      *
      * @tags car-model-controller
-     * @name Save4
+     * @name Save3
      * @request POST:/carModels
      */
-    save4: (data: CarModel, params?: RequestParams) => Promise<HttpResponse<CarModel, any>>;
+    save3: (data: CarModel, params?: RequestParams) => Promise<HttpResponse<CarModel, any>>;
     /**
      * No description
      *
      * @tags car-model-controller
-     * @name GetById4
+     * @name GetById3
      * @request GET:/carModels/{id}
      */
-    getById4: (id: number, params?: RequestParams) => Promise<HttpResponse<CarModel, any>>;
+    getById3: (id: number, params?: RequestParams) => Promise<HttpResponse<CarModel, any>>;
   };
 }
 export {};

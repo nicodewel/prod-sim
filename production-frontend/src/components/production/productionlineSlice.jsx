@@ -13,7 +13,7 @@ const initialState = {
 export const getAllProductionlines = createAsyncThunk(
     "Productionlines/load",
     async () => {
-        const response = await api.productionLines.getAll2();
+        const response = await api.productionLines.getAll();
         const json = await response.json()
         return json;
     }

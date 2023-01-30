@@ -9,10 +9,10 @@ const initialState = {
     status: "idle",
 };
 
-export const getAllRobots = createAsyncThunk(
-    "robots/load",
+export const getAllComponents = createAsyncThunk(
+    "components/load",
     async () => {
-        const response = await api.robots.getAll1();
+        const response = await api.productionLineComponents.getAll3();
         const json = await response.json()
         return json;
     }
@@ -26,14 +26,6 @@ export const createNewRobot = createAsyncThunk(
     }
 )
 
-export const getAllStations = createAsyncThunk(
-    "stations/load",
-    async () => {
-        const response = await api.stations.getAll();
-        const json = await response.json()
-        return json;
-    }
-)
 
 export const createNewStation = createAsyncThunk(
     "stations/build",
@@ -91,16 +83,12 @@ const ressourceSlice = createSlice({
 
     extraReducers: (builder) => {
         builder
-            .addCase(getAllRobots.pending, (state, action) => {
-                state.status = 'loading';
+            .addCase(getAllComponents.pending, (state, action) => {
+                state.status = 'pending';
             })
-            .addCase(getAllRobots.fulfilled, (state, action) => {
-                state.status = 'idle';
-                state.robots = action.payload;
-            })
-            .addCase(getAllStations.fulfilled, (state, action) => {
-                state.status = 'idle';
-                state.stations = action.payload;
+            .addCase(getAllComponents.fulfilled, (state, action) => {
+                state.robots = action.payload.filter(comp => comp.type == "robot")
+                state.stations = action.payload.filter(comp => comp.type == "station")
             })
             .addCase(getAllEmployees.fulfilled, (state, action) => {
                 state.status = 'idle';

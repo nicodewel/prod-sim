@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { getAllProductionlines } from "./production/productionlineSlice";
-import { getAllEmployees, getAllStations } from "./production/ressourceSlice";
+import { getAllComponents, getAllEmployees, getAllStations } from "./production/ressourceSlice";
 import { getAllRobots } from "./production/ressourceSlice";
 
 
@@ -13,8 +13,7 @@ const Landing = () => {
     const dispatch = useDispatch();
     
     useEffect(() => {
-        dispatch(getAllRobots());
-        dispatch(getAllStations());
+        dispatch(getAllComponents());
         dispatch(getAllEmployees())
         dispatch(getAllProductionlines())
     }, [])
