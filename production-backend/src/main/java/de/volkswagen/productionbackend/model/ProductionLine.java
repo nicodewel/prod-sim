@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static de.volkswagen.productionbackend.service.SimulationService.MINIMAL_STATION_COUNT;
 
@@ -42,8 +41,8 @@ public class ProductionLine {
     public boolean validateConfiguration() {
         if (componentMap.size() <= MINIMAL_STATION_COUNT) return false;
         if (componentMap.values().stream()
-                .filter(v -> v.getClass() == Station.class)
-                .filter(v -> ((Station) v).getEmployees().isEmpty())
+                .filter(v -> v.getType() == Type.station)
+                .filter(v -> v.getEmployees().isEmpty())
                 .findAny()
                 .isEmpty()
         ) return false;

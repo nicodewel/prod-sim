@@ -1,20 +1,22 @@
 package de.volkswagen.productionbackend.model;
 
-import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
-
+import java.util.List;
 
 @Entity
 @Data
-@Inheritance( strategy = InheritanceType.JOINED)
 public class ProductionLineComponent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Id;
-    private String Name;
+    private long id;
+    private String name;
     private long productionTime;
     private boolean isOnDuty;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Employee> employees;
+    @Enumerated(EnumType.STRING)
+    private Type type;
 }
