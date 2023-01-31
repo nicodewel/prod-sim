@@ -25,10 +25,10 @@ public class SimulationController {
     }
 
     @PostMapping("/simulations")
-    public ResponseEntity<Void> addToSimulation(@RequestBody ProductionLine productionLine, @RequestParam Long simSpeed){
+    public ResponseEntity<ProductionLine> addToSimulation(@RequestBody ProductionLine productionLine, @RequestParam Long simSpeed){
         if (simulationService.addToSimulation(productionLine, simSpeed)) {
             productionLine.setActive(true);
-            return ResponseEntity.accepted().build();
+            return ResponseEntity.ok(productionLine);
         }
         return ResponseEntity.badRequest().build();
     }
