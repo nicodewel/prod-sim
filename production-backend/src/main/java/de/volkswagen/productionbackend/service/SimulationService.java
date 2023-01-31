@@ -1,6 +1,7 @@
 package de.volkswagen.productionbackend.service;
 
 import de.volkswagen.productionbackend.model.ProductionLine;
+import de.volkswagen.productionbackend.repository.ProductionLineRepository;
 import lombok.Data;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,11 @@ public class SimulationService {
     public static final int MINIMAL_STATION_COUNT = 3;
 
     private Map<ProductionLine, Long> activeSimulations = new HashMap<>();
+    private ProductionLineRepository productionLineRepository;
+
+    public SimulationService(ProductionLineRepository productionLineRepository) {
+        this.productionLineRepository = productionLineRepository;
+    }
 
     // Ein Simulationsschritt wird pro Sekunde ausgeführt
     // Dabei wird bei einem minimalen Simulationsgeschwindigkeit (simSpeed) von 1 eine Produktionszeit von 1s hinzugefügt
@@ -33,6 +39,18 @@ public class SimulationService {
         activeSimulations.put(productionLine, simSpeed);
         return true;
     }
+
+    public boolean pauseSimulation(ProductionLine productionLine){
+        if (!activeSimulations.containsKey(productionLine)) return false;
+        activeSimulations.remove(productionLine);
+        productionLine.setActive(false);
+        productionLineRepository.save(productionLine);
+        return true;
+    }
+
+
+
+
 
     public void removeFromSimulation(ProductionLine productionLine){
       activeSimulations.remove(productionLine);
