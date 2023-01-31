@@ -24,7 +24,6 @@ export const createNewRobot = createAsyncThunk(
     async (robot) => {
         const response = await api.productionLineComponents.save1(robot);
         const json = await response.json()
-        alert(`Der Roboter "${json.name}" wurde erfolgreich angelegt`)
         return response;
     }
 )
@@ -43,8 +42,6 @@ export const createNewStation = createAsyncThunk(
     "stations/build",
     async (station) => {
         const response = await api.productionLineComponents.save1(station);
-        const json = await response.json()
-        alert(`Die Station "${json.name}" wurde erfolgreich angelegt`)
         return response;
     }
 )
@@ -62,8 +59,6 @@ export const createNewEmployee = createAsyncThunk(
     "employees/build",
     async (employee) => {
         const response = await api.employees.save2(employee);
-        const json = await response.json()
-        alert(`Der Mitarbeiter "${json.name}" wurde erfolgreich angelegt`)
         return response;
     }
 )
@@ -115,14 +110,17 @@ const ressourceSlice = createSlice({
             .addCase(createNewEmployee.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.employees = [...state.employees, action.payload]
+                alert(`Der Mitarbeiter "${action.payload.name}" wurde erfolgreich angelegt`)
             })
             .addCase(createNewRobot.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.robots = [...state.robots, action.payload]
+                alert(`Der Roboter "${action.payload.name}" wurde erfolgreich angelegt`)
             })
             .addCase(createNewStation.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.stations = [...state.stations, action.payload]
+                alert(`Die Station "${action.payload.name}" wurde erfolgreich angelegt`)
             });
     },
 })

@@ -191,10 +191,10 @@ export class Api extends HttpClient {
      * No description
      *
      * @tags simulation-controller
-     * @name RemoveFromSimulation
+     * @name StopSimulation
      * @request DELETE:/simulations
      */
-    removeFromSimulation: (data, params = {}) =>
+    stopSimulation: (data, params = {}) =>
       this.request({
         path: `/simulations`,
         method: "DELETE",

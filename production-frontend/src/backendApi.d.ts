@@ -26,7 +26,7 @@ export interface ProductionLine {
   /** @format int64 */
   id?: number;
   name?: string;
-  /** @format int64 */
+  /** @format float */
   simTime?: number;
   /** @format int64 */
   timeToCompletion?: number;
@@ -144,15 +144,15 @@ export declare class Api<SecurityDataType extends unknown> extends HttpClient<Se
       },
       data: ProductionLine,
       params?: RequestParams,
-    ) => Promise<HttpResponse<boolean, any>>;
+    ) => Promise<HttpResponse<ProductionLine, any>>;
     /**
      * No description
      *
      * @tags simulation-controller
-     * @name RemoveFromSimulation
+     * @name StopSimulation
      * @request DELETE:/simulations
      */
-    removeFromSimulation: (data: ProductionLine, params?: RequestParams) => Promise<HttpResponse<void, any>>;
+    stopSimulation: (data: ProductionLine, params?: RequestParams) => Promise<HttpResponse<void, any>>;
     /**
      * No description
      *
