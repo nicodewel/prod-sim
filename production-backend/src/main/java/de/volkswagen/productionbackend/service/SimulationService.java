@@ -40,24 +40,12 @@ public class SimulationService {
         return true;
     }
 
-    public boolean pauseSimulation(ProductionLine productionLine){
+    public boolean stopSimulation(ProductionLine productionLine){
         if (!activeSimulations.containsKey(productionLine)) return false;
         activeSimulations.remove(productionLine);
         productionLine.setActive(false);
         productionLineRepository.save(productionLine);
         return true;
-    }
-
-
-
-
-
-    public void removeFromSimulation(ProductionLine productionLine){
-      activeSimulations.remove(productionLine);
-    }
-
-    public void changeModelForCurrentSimulation(ProductionLine productionLine){
-
     }
 
     public boolean modifySimSpeed(ProductionLine productionLine, long simSpeed){

@@ -40,8 +40,8 @@ public class SimulationController {
     }
 
     @DeleteMapping("/simulations")
-    public ResponseEntity<Void> removeFromSimulation(@RequestBody ProductionLine productionLine){
-        simulationService.removeFromSimulation(productionLine);
+    public ResponseEntity<Void> stopSimulation(@RequestBody ProductionLine productionLine){
+        simulationService.stopSimulation(productionLine);
         return ResponseEntity.noContent().build();
     }
 }
