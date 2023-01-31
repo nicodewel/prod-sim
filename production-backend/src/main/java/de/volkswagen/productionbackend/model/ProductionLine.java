@@ -32,7 +32,7 @@ public class ProductionLine {
     private long finishedParts = 0;
     @ManyToOne(cascade = CascadeType.ALL)
     private CarModel carModel;
-    @OneToMany(cascade = CascadeType.MERGE)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinTable(name = "production_componentOrder_mapping", joinColumns = {@JoinColumn(name = "productionLine_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "component_id", referencedColumnName = "id")})
     @MapKeyColumn(name = "step")
@@ -40,7 +40,7 @@ public class ProductionLine {
 
     public boolean validateConfiguration() {
         if (componentMap.size() < MINIMAL_STATION_COUNT) return false;
-        if (carModel.getComplexity() < 0.75 || carModel.getComplexity() > 1.25) return false;
+        //if (carModel.getComplexity() < 0.75f || carModel.getComplexity() > 1.25f) return false;
         if (componentMap.values().stream()
                 .filter(v -> v.getType() == Type.station)
                 .anyMatch(v -> v.getEmployees().isEmpty())

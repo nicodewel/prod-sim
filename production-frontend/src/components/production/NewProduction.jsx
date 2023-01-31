@@ -19,6 +19,7 @@ const NewProduction = () => {
         }
     });
 
+    const models = useSelector(state => state.ressources.carModels);
     const robotList = useSelector(state => state.ressources.robots).filter(comp => !comp.onDuty)
     const employeeList = useSelector(state => state.ressources.employees).filter(comp => !comp.onDuty)
     const stationList = useSelector(state => state.ressources.stations).filter(comp => !comp.onDuty)
@@ -53,9 +54,9 @@ const NewProduction = () => {
                 },
                 "componentMap": componentMap,
                 "active": false,
-                "runnable": checkRunnable()
+                //"runnable": checkRunnable()
             }
-            console.log("TOPOST:", newLine)
+            
             dispatch(buildNewProductionline(newLine));
 
         }
@@ -63,7 +64,7 @@ const NewProduction = () => {
     }
 
     const nextStep = () => {
-
+        addToMap();
         if (mapEntry.comp.id == undefined) {
             document.getElementById("staticBackdropLabel").innerHTML = "Schritt unvollständig"
             document.getElementsByClassName("model-body").innerHTML = "Eine Produktionsstraße besteht aus mindestens 3 Schritten. "
@@ -99,8 +100,8 @@ const NewProduction = () => {
                     <div className="col-sm-4">
                         <select className="form-select" aria-label="Default select example" onChange={(e) => setCarmodel(e.target.value)} >
                             <option defaultValue>Fahrzeugmodell wählen</option>
-                            <option value="Golf">Golf</option>
-                            <option value="Tiguan">Tiguan</option>
+                            {models?.map(mod => <option value={mod.id}>{mod.name}</option>)};
+                          
                         </select>
                     </div>
                 </div>

@@ -22,7 +22,14 @@ export const getAllProductionlines = createAsyncThunk(
 export const buildNewProductionline = createAsyncThunk(
     "ProductionLines/create",
     async (productionline) => {
-        const response = await api.productionLines.save2(productionline);
+        console.log("TOPOST:", productionline)
+    
+            const mapobj = {}
+            for (let [k,v] of productionline.componentMap){
+                mapobj[k] = v; 
+            };
+
+        const response = await api.productionLines.save({...productionline, componentMap: mapobj});
         const json = await response.json()
         return response;
     }

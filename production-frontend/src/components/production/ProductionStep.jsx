@@ -28,7 +28,6 @@ const ProductionStep = ({ order, addToMap, mapEntry, setMapEntry, robots, statio
     const handleSelection = (event, type, id) => {
         event.preventDefault();
         let comp;
-        let n;
         switch (type) {
             case "robot":
                 comp = robots.find(e => e.id == id);
@@ -38,7 +37,7 @@ const ProductionStep = ({ order, addToMap, mapEntry, setMapEntry, robots, statio
             case "employee":
                 if(!employees.find(emp => emp.id == stationEmp)){
                     alert("kein Mitarbeiter ausgewählt!")
-                }else{
+                } else{
                     let choosenEmp = employees.find(emp => emp.id == stationEmp)
                     choosenEmp = { ...choosenEmp, onDuty: true }
                     console.log("CHOOSEN: ", choosenEmp)
@@ -61,7 +60,7 @@ const ProductionStep = ({ order, addToMap, mapEntry, setMapEntry, robots, statio
             mapEntry.comp = { ...comp, onDuty: true }
             return mapEntry
         })
-        addToMap(mapEntry)
+        
     }
 
     const generateClassName = () => {
@@ -107,7 +106,7 @@ const ProductionStep = ({ order, addToMap, mapEntry, setMapEntry, robots, statio
                         </div>
 
                         <div className="col d-flex">
-                            <div className="d-flex">{`Bereits zugeordnet: `}</div>
+                            <div className="d-flex">{`Zugeordnet: `}</div>
                             {busyEmp.map(emp => <div>{emp.name}</div>)}
                         </div>
 

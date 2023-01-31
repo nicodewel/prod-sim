@@ -6,10 +6,13 @@ import { simulateProductionline } from "./productionlineSlice";
 const ProductionLine = ({ pl, number }) => {
 
     const dispatch = useDispatch();
-    const [carModel, setModel] = useState();
+    const [carModel, setCarModel] = useState(pl.carModel.id);
     const models = useSelector(state => state.ressources.carModels)
     
-    const startSimulation = (pl, speed) => {
+    const startSimulation = (speed) => {
+        console.log("MODELS. " ,models);
+        console.log("MODELS. " ,models);
+
         let newMod = models.find(mod => mod.id == carModel)
         let modLine = {...pl, carModel: newMod}
         dispatch(simulateProductionline({simSpeed: speed, modLine}))
@@ -20,7 +23,7 @@ const ProductionLine = ({ pl, number }) => {
             <th scope="row">{number + 1}</th>
             <td>{pl.name == null ? "Linienname" : pl.name}</td>
             <td>
-                <select className="form-select" onChange={e => setModel(e.target.value)} disabled={pl.active}>
+                <select className="form-select" onChange={e => setCarModel(e.target.value)} disabled={pl.active}>
                     {models.map((mod, i) => <option key={i} value={mod.id} selected={pl.carModel.name == mod.name ? "selected" : ""}>{mod.name}</option>)}    
                 </select>
                
@@ -28,7 +31,7 @@ const ProductionLine = ({ pl, number }) => {
             </td>
             <td>{pl.runnable ? "lauffähig" : "unvollständig"}</td>
             <td>{pl.active ? "läuft" : "läuft nicht"} </td>
-            <td><i className="bi bi-play iconhover" onClick={() => startSimulation(pl, 10)}></i><i className="bi bi-stop iconhover"></i><i className="bi bi-info-square iconhover"></i></td>
+            <td><i className="bi bi-play iconhover" onClick={() => startSimulation(10)}></i><i className="bi bi-stop iconhover"></i><i className="bi bi-info-square iconhover"></i></td>
         </tr>
     )
 
