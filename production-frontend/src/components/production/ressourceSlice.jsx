@@ -6,6 +6,7 @@ const initialState = {
     robots: [],
     stations: [],
     employees: [],
+    carModels: [],
     status: "idle",
 };
 
@@ -24,6 +25,15 @@ export const createNewRobot = createAsyncThunk(
         console.log(robot);
         const response = await api.productionLineComponents.save1(robot);
         return response;
+    }
+)
+
+export const getAllCarModels = createAsyncThunk(
+    "carModels/load",
+    async () => {
+        const response = await api.carModels.getAll3();
+        const json = await response.json();
+        return json; 
     }
 )
 
@@ -93,6 +103,9 @@ const ressourceSlice = createSlice({
             .addCase(getAllEmployees.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.employees = action.payload;
+            })
+            .addCase(getAllCarModels.fulfilled, (state, action) => {
+                state.carModels = action.payload;
             })
             .addCase(createNewEmployee.fulfilled, (state, action) => {
                 state.status = 'idle';
