@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { createNewRobot, createNewEmployee, createNewStation } from "./ressourceSlice";
 
@@ -12,13 +12,14 @@ const NewRessource = () => {
     const [name, setName] = useState();
     const [time, setTime] = useState();
 
+
     const checkTypeAndSave = (t) => {
         switch (t) {
             case "Roboter":
-                dispatch(createNewRobot({ productionTime: time, step: 0, liftime: 1000, name: name, type: "robot"}));
+                dispatch(createNewRobot({ productionTime: time, step: 0, liftime: 1000, name: name, type: "robot" }));
                 break;
             case "Station":
-                dispatch(createNewStation({ productionTime: time, step: 0, name: name , employees: [], type:"station"}));
+                dispatch(createNewStation({ productionTime: time, step: 0, name: name, employees: [], type: "station" }));
                 break;
             case "Mitarbeiter":
                 dispatch(createNewEmployee({ name: name }));
@@ -29,7 +30,7 @@ const NewRessource = () => {
     return (
 
 
-        <div>
+        <div className="container-fluid">
 
             <h1>Neue Ressource erstellen</h1>
             <form>
@@ -63,8 +64,8 @@ const NewRessource = () => {
 
 
             </form >
-            <button onClick={() => checkTypeAndSave(type)}>erstellen</button>
-            <NavLink to="/"><button>zurück</button></NavLink>
+            <button className="btn btn-primary m-1" onClick={() => checkTypeAndSave(type)}>erstellen</button>
+            <NavLink to="/"><button className="btn btn-primary m-1">zurück</button></NavLink>
 
         </div >
 

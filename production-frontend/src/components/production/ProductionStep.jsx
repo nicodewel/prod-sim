@@ -101,7 +101,7 @@ const ProductionStep = ({ order, addToMap, mapEntry, setMapEntry, robots, statio
                                 {ref.current.employees?.map((emp, i) => <option key={i} value={emp.id}>{emp.name}</option>)}
                             </select>
                             <div className="col">
-                                <i className="bi bi-person-add" onClick={(e) => handleSelection(e, "employee", e.target.value)}></i>
+                                <i className="bi bi-person-add" style={{"font-size": "1.5rem"}} onClick={(e) => handleSelection(e, "employee", e.target.value)}></i>
                             </div>
 
                         </div>

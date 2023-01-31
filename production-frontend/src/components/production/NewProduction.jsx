@@ -82,7 +82,7 @@ const NewProduction = () => {
 
     return (
 
-        <div>
+        <div className="container-fluid">
             <h1>Neue Produktionsstraße anlegen</h1>
 
 
@@ -125,10 +125,10 @@ const NewProduction = () => {
                 </div>
             </div>
 
-            <button id="modalBtn" data-bs-target="#staticBackdrop" onClick={() => nextStep()}>Schritt hinzufügen</button>
-            <button onClick={() => buildProduction()}>speichern</button>
+            <button className="btn btn-primary m-1" id="modalBtn" data-bs-target="#staticBackdrop" onClick={() => nextStep()}>Schritt hinzufügen</button>
+            <button className="btn btn-primary m-1" onClick={() => buildProduction()}>speichern</button>
             {/* <button onClick={() => setOrder(order.slice(0, -1))}>Schritt entfernen</button> */}
-            <NavLink to="/"><button>home</button></NavLink>
+            <NavLink to="/"><button className="btn btn-primary m-1">home</button></NavLink>
 
         </div>
     )

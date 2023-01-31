@@ -33,7 +33,7 @@ export const getAllCarModels = createAsyncThunk(
     async () => {
         const response = await api.carModels.getAll3();
         const json = await response.json();
-        return json; 
+        return json;
     }
 )
 
@@ -58,7 +58,7 @@ export const getAllEmployees = createAsyncThunk(
 export const createNewEmployee = createAsyncThunk(
     "employees/build",
     async (employee) => {
-        const response = await api.employees.save3(employee);
+        const response = await api.employees.save2(employee);
         return response;
     }
 )
@@ -72,21 +72,21 @@ const ressourceSlice = createSlice({
     initialState,
     reducers: {
         setCompBusy: (state, action) => {
-           
+
             if (action.payload.type == "station") {
                 console.log("ICH BIN EINE STATION");
                 let indexStation = state.stations.findIndex(s => s.id == action.payload.id);
-                state.stations[indexStation].onDuty = true;                
+                state.stations[indexStation].onDuty = true;
 
             } else {
                 console.log("ICH BIN EIN ROBOTER");
                 let index = state.robots.findIndex(r => r.id == action.payload.id);
                 state.robots[index].onDuty = true;
-            } 
+            }
         },
-        setEmployeeBusy: (state,action) => {
+        setEmployeeBusy: (state, action) => {
             let index = state.employees.findIndex(r => r.id == action.payload.id);
-                state.employees[index].onDuty = true;
+            state.employees[index].onDuty = true;
         }
 
     },
