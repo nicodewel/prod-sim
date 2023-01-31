@@ -32,7 +32,7 @@ public class ProductionLine {
     private long finishedParts = 0;
     @ManyToOne(cascade = CascadeType.ALL)
     private CarModel carModel;
-    @OneToMany(cascade = CascadeType.MERGE)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "production_componentOrder_mapping", joinColumns = {@JoinColumn(name = "productionLine_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "component_id", referencedColumnName = "id")})
     @MapKeyColumn(name = "step")
