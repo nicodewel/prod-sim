@@ -22,19 +22,19 @@ const Landing = () => {
     const lines = useSelector(state => state.productionlines.productionlines)
 
     return (
-        <div>
+        <div className="container-fluid">
             <h1>ProduktionsstraßenplanungsApp</h1>
             <h2>Übersicht</h2>
             <table className="table caption-top">
                 <caption>Aktuelle Produktionsstraßen</caption>
-                <thead>
+                <thead className="table-light">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
                         <th scope="col">Produziert</th>
                         <th scope="col">Status</th>
                         <th scope="col">Simulationsstatus</th>
-                        <th scope="col">Start/Stop/Bearbeiten</th>
+                        <th scope="col">Start/Stop/Statistik</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,13 +50,13 @@ const Landing = () => {
                         </td>
                         <td>{pl.runnable ? "lauffähig" : "unvollständig"}</td>
                         <td>{pl.active ? "läuft" : "läuft nicht"} </td>
-                        <td><i className="bi bi-play iconhover"></i><i className="bi bi-stop iconhover"><i className="bi bi-pencil-square iconhover" onClick={() => console.log("ICH BIN BEARBIOETN")}></i></i></td>
+                        <td><i className="bi bi-play iconhover" ></i><i className="bi bi-stop iconhover"></i><i class="bi bi-info-square iconhover"></i></td>
                     </tr>)}
                 </tbody>
             </table>
 
-            <NavLink to="/createproductionline"><button>Neue Produktionsstraße anlegen</button></NavLink>
-            <NavLink to="/createstation"><button>Neue Ressource anlegen</button></NavLink>
+            <NavLink to="/createproductionline"><button className="btn btn-primary m-1">Neue Produktionsstraße anlegen</button></NavLink>
+            <NavLink to="/createstation"><button className="btn btn-primary m-1" >Neue Ressource anlegen</button></NavLink>
 
 
         </div>
