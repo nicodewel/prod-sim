@@ -83,7 +83,7 @@ const NewProduction = () => {
     return (
 
         <div className="container-fluid">
-            <h1>Neue Produktionsstraße anlegen</h1>
+            <h1 className="mb-3">Neue Produktionsstraße anlegen</h1>
 
 
             <form>

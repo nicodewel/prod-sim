@@ -24,7 +24,6 @@ const Landing = () => {
     return (
         <div className="container-fluid">
             <h1>ProduktionsstraßenplanungsApp</h1>
-            <h2>Übersicht</h2>
             <table className="table caption-top">
                 <caption>Aktuelle Produktionsstraßen</caption>
                 <thead className="table-light">
@@ -39,7 +38,7 @@ const Landing = () => {
                 </thead>
                 <tbody>
                     {lines?.map((pl, i) => <tr key={i}>
-                        <th scope="row">{i}</th>
+                        <th scope="row">{i+1}</th>
                         <td>{pl.name == null ? "Linienname" : pl.name}</td>
                         <td>
                             {console.log(pl.active)}

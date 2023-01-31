@@ -22,8 +22,9 @@ export const getAllComponents = createAsyncThunk(
 export const createNewRobot = createAsyncThunk(
     "robots/build",
     async (robot) => {
-        console.log(robot);
         const response = await api.productionLineComponents.save1(robot);
+        const json = await response.json()
+        alert(`Der Roboter "${json.name}" wurde erfolgreich angelegt`)
         return response;
     }
 )
@@ -42,6 +43,8 @@ export const createNewStation = createAsyncThunk(
     "stations/build",
     async (station) => {
         const response = await api.productionLineComponents.save1(station);
+        const json = await response.json()
+        alert(`Die Station "${json.name}" wurde erfolgreich angelegt`)
         return response;
     }
 )
@@ -59,6 +62,8 @@ export const createNewEmployee = createAsyncThunk(
     "employees/build",
     async (employee) => {
         const response = await api.employees.save2(employee);
+        const json = await response.json()
+        alert(`Der Mitarbeiter "${json.name}" wurde erfolgreich angelegt`)
         return response;
     }
 )
