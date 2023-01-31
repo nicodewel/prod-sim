@@ -25,9 +25,9 @@ public class ProductionLine {
     private String name;
     private boolean isRunnable = false;
     private boolean isActive = false;
-    // Aktuelle Simulationszeit in ms
-    private long simTime = 0;
-    // Zeit bis Fertigstellung in ms
+    // Aktuelle Simulationszeit
+    private float simTime = 0;
+    // Zeit bis Fertigstellung
     private long timeToCompletion;
     private long finishedParts = 0;
     @ManyToOne(cascade = CascadeType.ALL)
@@ -40,22 +40,20 @@ public class ProductionLine {
 
     public boolean validateConfiguration() {
         if (componentMap.size() < MINIMAL_STATION_COUNT) return false;
-        if (!componentMap.values().stream()
+        if (carModel.getComplexity() < 0.75 || carModel.getComplexity() > 1.25) return false;
+        if (componentMap.values().stream()
                 .filter(v -> v.getType() == Type.station)
-                .filter(v -> v.getEmployees().isEmpty())
-                .findAny()
-                .isEmpty()
+                .anyMatch(v -> v.getEmployees().isEmpty())
         ) return false;
         timeToCompletion = componentMap.values().stream()
-                .map(v -> v.getProductionTime())
-                .reduce(0L, (a, b) -> a + b)
-                .longValue();
+                .map(ProductionLineComponent::getProductionTime)
+                .reduce(0L, Long::sum);
         isRunnable = true;
         return true;
     }
 
     public void addSimTime(long time) {
-        simTime += time;
+        simTime += time / carModel.getComplexity();
         while (simTime >= timeToCompletion) {
             simTime -= timeToCompletion;
             finishedParts += 1;
