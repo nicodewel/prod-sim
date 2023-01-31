@@ -23,6 +23,8 @@ export const buildNewProductionline = createAsyncThunk(
     "ProductionLines/create",
     async (productionline) => {
         const response = await api.productionLines.save2(productionline);
+        const json = await response.json()
+        alert(`Die Produktionslinie "${json.name}" wurde erfolgreich angelegt`)
         return response;
 
     }
