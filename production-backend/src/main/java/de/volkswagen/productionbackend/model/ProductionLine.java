@@ -26,6 +26,8 @@ public class ProductionLine {
     private String name;
     private boolean isRunnable = false;
     private boolean isActive = false;
+    // Aktuelle Simulationsgeschwindigkeit
+    private int simSpeed = 10;
     // Aktuelle Simulationszeit
     private float simTime = 0;
     // Zeit bis Fertigstellung
@@ -37,10 +39,11 @@ public class ProductionLine {
     @OneToMany(cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<ProductionLineComponent> components = new ArrayList<>();
-    
+
     public boolean validateConfiguration() {
         if (components.size() < MINIMAL_STATION_COUNT) return false;
-        //if (carModel.getComplexity() < 0.75f || carModel.getComplexity() > 1.25f) return false;
+        if (simSpeed <= 0) return false;
+        if (carModel.getComplexity() < 0.5f || carModel.getComplexity() > 1.5f) return false;
         if (components.stream()
                 .filter(v -> v.getType() == Type.station)
                 .anyMatch(v -> v.getEmployees().isEmpty())
@@ -53,7 +56,7 @@ public class ProductionLine {
     }
 
     public void addSimTime(long time) {
-        simTime += time / carModel.getComplexity();
+        simTime += time * simSpeed / carModel.getComplexity();
         while (simTime >= timeToCompletion) {
             simTime -= timeToCompletion;
             finishedParts += 1;
@@ -68,6 +71,14 @@ public class ProductionLine {
         ProductionLine that = (ProductionLine) o;
 
         return id == that.id;
+    }
+
+    public int getSimSpeed() {
+        return simSpeed;
+    }
+
+    public void setSimSpeed(int simSpeed) {
+        this.simSpeed = simSpeed;
     }
 
     @Override
