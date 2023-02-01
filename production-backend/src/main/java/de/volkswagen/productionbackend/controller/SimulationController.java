@@ -8,25 +8,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
 public class SimulationController {
 
-    private SimulationService simulationService;
+    private final SimulationService simulationService;
 
     public SimulationController(SimulationService simulationService) {
         this.simulationService = simulationService;
     }
 
     @GetMapping("/simulations")
-    public ResponseEntity<Map<ProductionLine, Long>> getActiveSimulations(){
+    public ResponseEntity<List<ProductionLine>>getActiveSimulations(){
         return ResponseEntity.ok(simulationService.getActiveSimulations());
     }
 
     @PostMapping("/simulations")
-    public ResponseEntity<ProductionLine> addToSimulation(@RequestBody ProductionLine productionLine, @RequestParam Long simSpeed){
-        if (simulationService.addToSimulation(productionLine, simSpeed)) {
+    public ResponseEntity<ProductionLine> addToSimulation(@RequestBody ProductionLine productionLine){
+        if (simulationService.addToSimulation(productionLine)) {
             productionLine.setActive(true);
             return ResponseEntity.ok(productionLine);
         }
@@ -34,8 +35,8 @@ public class SimulationController {
     }
 
     @PostMapping("/simulations/modifySpeed")
-    public ResponseEntity<Boolean> modifySimulationSpeed(@RequestBody ProductionLine productionLine, @RequestParam Long simSpeed){
-        if (simulationService.addToSimulation(productionLine, simSpeed)) return ResponseEntity.accepted().build();
+    public ResponseEntity<Boolean> modifySimulationSpeed(@RequestBody ProductionLine productionLine){
+        if (simulationService.addToSimulation(productionLine)) return ResponseEntity.accepted().build();
         return ResponseEntity.badRequest().build();
     }
 
