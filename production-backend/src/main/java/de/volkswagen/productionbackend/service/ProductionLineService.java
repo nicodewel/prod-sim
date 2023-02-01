@@ -15,12 +15,13 @@ public class ProductionLineService {
     private final ProductionLineRepository productionLineRepository;
     private final EmployeeRepository employeeRepository;
     private final ProductionLineComponentRepository componentRepository;
+    private final CarModelRepository carModelRepository;
 
-    public ProductionLineService(ProductionLineRepository productionLineRepository, EmployeeRepository employeeRepository, ProductionLineComponentRepository componentRepository) {
+    public ProductionLineService(ProductionLineRepository productionLineRepository, EmployeeRepository employeeRepository, ProductionLineComponentRepository componentRepository, CarModelRepository carModelRepository) {
         this.productionLineRepository = productionLineRepository;
         this.employeeRepository = employeeRepository;
         this.componentRepository = componentRepository;
-
+        this.carModelRepository = carModelRepository;
     }
 
     public List<ProductionLine> getAllProductionLines() {
@@ -49,6 +50,9 @@ public class ProductionLineService {
 
     public ProductionLine saveProductionLine(ProductionLine productionLine) {
         List<ProductionLineComponent> components = productionLine.getComponents();
+        CarModel carModel = productionLine.getCarModel();
+        productionLine.setCarModel(carModelRepository.save(carModel));
+
         productionLine.setComponents(new ArrayList<>());
         productionLineRepository.save(productionLine);
 

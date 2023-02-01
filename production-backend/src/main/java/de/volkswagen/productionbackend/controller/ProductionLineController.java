@@ -37,9 +37,8 @@ public class ProductionLineController {
 
     @PostMapping("/productionLines")
     public ResponseEntity<ProductionLine> save(@RequestBody ProductionLine productionLine){
-        if (productionLine.validateConfiguration()) productionLine.setRunnable(true);
-        //productionLineService.saveProductionLine(productionLine)
-        return ResponseEntity.ok(productionLine);
+        productionLine.validateConfiguration() ;
+        return ResponseEntity.ok(productionLineService.saveProductionLine(productionLine));
     }
 
 
