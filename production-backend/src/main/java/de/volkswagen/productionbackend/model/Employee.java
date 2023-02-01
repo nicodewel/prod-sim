@@ -1,12 +1,14 @@
 package de.volkswagen.productionbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.security.PrivateKey;
 
 @Entity
-
+@Data
 public class Employee {
 
     @Id
@@ -14,35 +16,9 @@ public class Employee {
     private long id;
     private String name;
     private boolean isOnDuty;
+
     @ManyToOne
-    private ProductionLineComponent productionLineComponent;
-
-    public long getId () {
-        return id;
-    }
-
-
-    public String getName () {
-        return name;
-    }
-
-    public void setName (String name) {
-        this.name = name;
-    }
-
-    public boolean isOnDuty () {
-        return isOnDuty;
-    }
-
-    public void setOnDuty (boolean onDuty) {
-        isOnDuty = onDuty;
-    }
-
-    public ProductionLineComponent getProductionLineComponent () {
-        return productionLineComponent;
-    }
-
-    public void setProductionLineComponent (ProductionLineComponent productionLineComponent) {
-        this.productionLineComponent = productionLineComponent;
-    }
+    @JoinColumn(name = "component_id")
+    @JsonBackReference
+    private ProductionLineComponent component;
 }

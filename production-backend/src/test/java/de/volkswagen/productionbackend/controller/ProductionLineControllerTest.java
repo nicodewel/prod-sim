@@ -16,9 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -41,13 +39,13 @@ public class ProductionLineControllerTest {
 
     @BeforeAll
     void setUp() {
-        Map<Long, ProductionLineComponent> productOrderMap = new HashMap<>();
+        List<ProductionLineComponent> productOrder = new ArrayList<>();
 
         ProductionLineComponent robot = new ProductionLineComponent();
         robot.setType(Type.robot);
         robot.setName("Robert");
         robot.setProductionTime(2);
-        productOrderMap.put(2l, robot);
+        productOrder.add( robot);
 
 
         Employee employee = new Employee();
@@ -58,7 +56,7 @@ public class ProductionLineControllerTest {
         station.setProductionTime(3);
         station.setName("Band1");
         station.setEmployees(Arrays.asList(employee));
-        productOrderMap.put(1l, station);
+        productOrder.add( station);
 
         CarModel carModel = new CarModel();
         carModel.setName("ID3");
@@ -67,7 +65,7 @@ public class ProductionLineControllerTest {
         ProductionLine line = ProductionLine.builder()
                 .name("Lenny")
                 .isActive(true)
-                .componentMap(productOrderMap)
+                .components(productOrder)
                 .isRunnable(true)
                 .carModel(carModel)
                 .build();
@@ -82,23 +80,19 @@ public class ProductionLineControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name").value("Lenny"))
                 .andExpect(jsonPath("$[0].carModel.name").value("ID3"))
-                .andExpect(jsonPath("$[0].componentMap", Matchers.hasKey("1")))
-                .andExpect(jsonPath("$[0].componentMap", Matchers.hasKey("2")))
                 .andExpect(jsonPath("$[0].active").value("true"))
         ;
     }
 
     @Test
     void postProductLine() throws Exception {
-        String request = "{\"name\":\"Franz\",\"carModel\":{\"name\":\"ID4\",\"complexity\":1},\"componentMap\":{\"1\":{\"productionTime\":2,\"employees\":[{\"name\":\"Hans\"}],\"name\":\"Band2\"},\"2\":{\"productionTime\":2,\"lifetime\":0,\"name\":\"Roberto\"}},\"active\":false,\"runnable\":true}";
+        String request = "{\"name\":\"Franz\",\"carModel\":{\"name\":\"ID4\",\"complexity\":1},\"components\":[{\"id\":\"2\",\"type\":\"station\",\"productionTime\":2,\"employees\":[{\"id\":\"1\",\"name\":\"Hans\"}],\"name\":\"Band2\"},{\"id\":\"1\",\"productionTime\":2,\"lifetime\":0,\"name\":\"Roberto\"}],\"active\":false,\"runnable\":true}";
         mockMvc.perform(post("/productionLines")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(request))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Franz"))
                 .andExpect(jsonPath("$.carModel.name").value("ID4"))
-                .andExpect(jsonPath("$.componentMap", Matchers.hasKey("1")))
-                .andExpect(jsonPath("$.componentMap", Matchers.hasKey("2")))
                 .andExpect(jsonPath("$.active").value("false"))
         ;
     }
