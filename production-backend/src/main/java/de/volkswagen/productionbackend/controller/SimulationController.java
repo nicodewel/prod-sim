@@ -26,8 +26,8 @@ public class SimulationController {
     }
 
     @PostMapping("/simulations")
-    public ResponseEntity<ProductionLine> addToSimulation(@RequestBody ProductionLine productionLine, @RequestParam Long simSpeed){
-        if (simulationService.addToSimulation(productionLine, simSpeed)) {
+    public ResponseEntity<ProductionLine> addToSimulation(@RequestBody ProductionLine productionLine){
+        if (simulationService.addToSimulation(productionLine)) {
             productionLine.setActive(true);
             return ResponseEntity.ok(productionLine);
         }
@@ -35,8 +35,8 @@ public class SimulationController {
     }
 
     @PostMapping("/simulations/modifySpeed")
-    public ResponseEntity<Boolean> modifySimulationSpeed(@RequestBody ProductionLine productionLine, @RequestParam Long simSpeed){
-        if (simulationService.addToSimulation(productionLine, simSpeed)) return ResponseEntity.accepted().build();
+    public ResponseEntity<Boolean> modifySimulationSpeed(@RequestBody ProductionLine productionLine){
+        if (simulationService.addToSimulation(productionLine)) return ResponseEntity.accepted().build();
         return ResponseEntity.badRequest().build();
     }
 

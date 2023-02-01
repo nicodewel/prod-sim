@@ -35,7 +35,7 @@ public class SimulationService {
         }));
     }
 
-    public boolean addToSimulation(ProductionLine productionLine, long simSpeed) {
+    public boolean addToSimulation(ProductionLine productionLine) {
         if (!productionLine.validateConfiguration()) return false;
         productionLine.setFinishedParts(0);
         activeSimulations.add(productionLine);
