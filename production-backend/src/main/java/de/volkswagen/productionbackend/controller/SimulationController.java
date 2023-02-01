@@ -3,13 +3,10 @@ package de.volkswagen.productionbackend.controller;
 
 import de.volkswagen.productionbackend.model.ProductionLine;
 import de.volkswagen.productionbackend.service.SimulationService;
-import org.apache.coyote.Response;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class SimulationController {
