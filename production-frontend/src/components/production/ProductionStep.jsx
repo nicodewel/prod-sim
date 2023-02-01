@@ -4,7 +4,7 @@ import { setEmployeeBusy } from "./ressourceSlice";
 
 
 
-const ProductionStep = ({ order, addToMap, mapEntry, setMapEntry, robots, stations, employees }) => {
+const ProductionStep = ({ order, componentList, setComponentList, robots, stations, employees }) => {
 
     const [step, setStep] = useState();
     const [stationEmp, setStationEmp] = useState()
@@ -18,12 +18,6 @@ const ProductionStep = ({ order, addToMap, mapEntry, setMapEntry, robots, statio
 
 
     let ref = useRef({ robots, stations, employees })
-
-    useEffect(() => {
-        console.log("REF: ", ref.current)
-    });
-
-
 
     const handleSelection = (event, type, id) => {
         event.preventDefault();
@@ -41,25 +35,32 @@ const ProductionStep = ({ order, addToMap, mapEntry, setMapEntry, robots, statio
                     let choosenEmp = employees.find(emp => emp.id == stationEmp)
                     choosenEmp = { ...choosenEmp, onDuty: true }
                     console.log("CHOOSEN: ", choosenEmp)
-                    comp = { ...mapEntry.comp, employees: [...mapEntry.comp?.employees, choosenEmp] };
+                    comp = { ...componentList[order - 1], employees: [...componentList[order - 1].employees, choosenEmp] };
                     setBusyEmp([...busyEmp, choosenEmp]);
                     dispatch(setEmployeeBusy(choosenEmp))
                     ref.current.employees = ref.current.employees.filter(e => e.id != choosenEmp.id);
                     document.getElementById("employee-selection").value= "Mitarbeiter zuordnen";
                     break;
-
                 }
               
             case "empty":
                 comp = null;
                 break;
         }
-        console.log({ order: order, comp: comp })
-        setMapEntry(mapEntry => {
-            mapEntry.order = order
-            mapEntry.comp = { ...comp, onDuty: true }
-            return mapEntry
+        console.log("COMP: ", comp)
+
+        let components = [...componentList]
+        components[order-1] = comp 
+        console.log("!!!!!!!!!", components)
+        setComponentList(componentList => {
+            return components
         })
+        
+        // setMapEntry(mapEntry => {
+        //     mapEntry = { ...comp, onDuty: true, step: order }
+        //     return mapEntry
+        // })
+        console.log("MAPENTRY: ", componentList[order - 1])
         
     }
 

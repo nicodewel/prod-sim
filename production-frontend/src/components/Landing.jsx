@@ -17,38 +17,45 @@ const Landing = () => {
         dispatch(getAllProductionlines())
     }, [])
 
+    const status = useSelector(state => state.ressources.status)
 
-    
+
     const lines = useSelector(state => state.productionlines.productionlines)
 
-   
+    const renderLoading = () => <div className="spinner-border position-absolute top-50 start-50" role="status"></div>;
 
-    return (
-        <div className="container-fluid">
-            <h1>ProduktionsstraßenplanungsApp</h1>
-            <table className="table caption-top">
-                <caption>Aktuelle Produktionsstraßen</caption>
-                <thead className="table-light">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Produziert</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Simulationsstatus</th>
-                        <th scope="col">Start/Stop/Statistik</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {lines?.map((pl, key) => <ProductionLine key={key} number={key} pl={pl}/>)}
-                </tbody>
-            </table>
+    const renderDefault = () => {
+        return (
+            <div className="container-fluid">
+                <h1>ProduktionsstraßenplanungsApp</h1>
+                <table className="table caption-top">
+                    <caption>Aktuelle Produktionsstraßen</caption>
+                    <thead className="table-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Produziert</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Simulationsstatus</th>
+                            <th scope="col">Stückzahl</th>
+                            <th className="col-2" scope="col">Speed</th>
+                            <th scope="col">Start/Stop/Statistik</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {lines?.map((pl, key) => <ProductionLine key={key} number={key} pl={pl} />)}
+                    </tbody>
+                </table>
 
-            <NavLink to="/createproductionline"><button className="btn btn-primary m-1">Neue Produktionsstraße anlegen</button></NavLink>
-            <NavLink to="/createstation"><button className="btn btn-primary m-1" >Neue Ressource anlegen</button></NavLink>
+                <NavLink to="/createproductionline"><button className="btn btn-primary m-1">Neue Produktionsstraße anlegen</button></NavLink>
+                <NavLink to="/createstation"><button className="btn btn-primary m-1" >Neue Ressource anlegen</button></NavLink>
 
 
-        </div>
-    )
+            </div>
+        )
+    }
+
+    return (status === "pending" ? renderLoading() : renderDefault());
 
 }
 

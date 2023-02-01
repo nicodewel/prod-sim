@@ -11,13 +11,8 @@ const NewProduction = () => {
     const [name, setName] = useState();
     const [carmodel, setCarmodel] = useState();
     const [order, setOrder] = useState([1]);
-    const [componentMap, setComponentMap] = useState(new Map());
-    const [mapEntry, setMapEntry] = useState({
-        order: "",
-        comp: {
-            employees: []
-        }
-    });
+    const [componentList, setComponentList] = useState([]);
+    // const [mapEntry, setMapEntry] = useState({});
 
     const models = useSelector(state => state.ressources.carModels);
     const robotList = useSelector(state => state.ressources.robots).filter(comp => !comp.onDuty)
@@ -30,15 +25,15 @@ const NewProduction = () => {
 
     //active default false
 
-    const addToMap = () => {
-        componentMap.set(mapEntry.order, mapEntry.comp)
-        console.log("MAP: ", componentMap);
-    }
+    // const addToMap = () => {
+    //     //setComponentList([...componentList, mapEntry])
+    //     console.log("MAP: ", componentMap);
+    // }
 
     const buildProduction = () => {
-        addToMap();
+        // daddToMap();
 
-        if (componentMap.size < 3) {
+        if (componentList.size < 3) {
             document.getElementById("staticBackdropLabel").innerHTML = "Nicht genügend Schritte."
             document.getElementsByClassName("model-body").innerHTML = "Eine Produktionsstraße besteht aus mindestens 3 Schritten. "
             document.getElementById("modalBtn").setAttribute("data-bs-toggle", "modal")
@@ -50,10 +45,10 @@ const NewProduction = () => {
             let newLine = {
                 "name": name,
                 "carModel": {
-                    "name": cm,
+                    "name": cm.name,
                     "complexity": 0
                 },
-                "componentMap": componentMap,
+                "components": componentList,
                 "active": false,
                 //"runnable": checkRunnable()
             }
@@ -65,8 +60,8 @@ const NewProduction = () => {
     }
 
     const nextStep = () => {
-        addToMap();
-        if (mapEntry.comp.id == undefined) {
+        //addToMap();
+        if (componentList[componentList.length -1].id == undefined) {
             document.getElementById("staticBackdropLabel").innerHTML = "Schritt unvollständig"
             document.getElementsByClassName("model-body").innerHTML = "Eine Produktionsstraße besteht aus mindestens 3 Schritten. "
             document.getElementById("modalBtn").setAttribute("data-bs-toggle", "modal")
@@ -74,7 +69,7 @@ const NewProduction = () => {
             document.getElementById("modalBtn").removeAttribute("data-bs-toggle", "modal")
         } else {
             setOrder([...order, order.length + 1])
-            dispatch(setCompBusy(mapEntry.comp));
+            dispatch(setCompBusy(componentList[componentList.length -1]));
             
             document.querySelectorAll(`.prodStep${order.length}`).forEach(element => element.setAttribute("disabled", true))
         }
@@ -107,7 +102,7 @@ const NewProduction = () => {
                     </div>
                 </div>
 
-                {order.map((o, i) => <ProductionStep key={i} order={o} addToMap={addToMap} mapEntry={mapEntry} setMapEntry={setMapEntry} robots={robotList} stations={stationList} employees={employeeList} />)}
+                {order.map((o, i) => <ProductionStep key={i} order={o} componentList ={componentList} setComponentList={setComponentList} robots={robotList} stations={stationList} employees={employeeList} />)}
             </form>
 
             <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
