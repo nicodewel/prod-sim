@@ -100,9 +100,15 @@ const ressourceSlice = createSlice({
                 state.robots = action.payload.filter(comp => comp.type == "robot")
                 state.stations = action.payload.filter(comp => comp.type == "station")
             })
+            .addCase(getAllEmployees.pending, (state, action) => {
+                state.status = 'pending';
+            })
             .addCase(getAllEmployees.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.employees = action.payload;
+            })
+            .addCase(getAllCarModels.pending, (state, action) => {
+                state.status = 'pending';
             })
             .addCase(getAllCarModels.fulfilled, (state, action) => {
                 state.carModels = action.payload;
