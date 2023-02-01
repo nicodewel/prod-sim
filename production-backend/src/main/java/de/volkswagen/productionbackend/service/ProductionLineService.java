@@ -15,20 +15,18 @@ public class ProductionLineService {
     private final ProductionLineRepository productionLineRepository;
     private final EmployeeRepository employeeRepository;
     private final ProductionLineComponentRepository componentRepository;
-    private final CarModelRepository carModelRepository;
 
-    public ProductionLineService(ProductionLineRepository productionLineRepository, EmployeeRepository employeeRepository, ProductionLineComponentRepository componentRepository, CarModelRepository carModelRepository) {
+    public ProductionLineService(ProductionLineRepository productionLineRepository, EmployeeRepository employeeRepository, ProductionLineComponentRepository componentRepository) {
         this.productionLineRepository = productionLineRepository;
         this.employeeRepository = employeeRepository;
         this.componentRepository = componentRepository;
-        this.carModelRepository = carModelRepository;
+
     }
 
     public List<ProductionLine> getAllProductionLines(){
         List<ProductionLineComponent> components = this.componentRepository.findAll();
         List<ProductionLine> productionLines = this.productionLineRepository.findAll();
-        List<CarModel> carModels = this.carModelRepository.findAll();
-        productionLines.forEach(pl -> components.forEach(c -> {
+        productionLines.forEach(pl -> components.stream().filter(c -> c.getProductionLine() != null).forEach(c -> {
             if (c.getProductionLine().getId() == pl.getId())
             pl.getComponents().add(c);}));
 
