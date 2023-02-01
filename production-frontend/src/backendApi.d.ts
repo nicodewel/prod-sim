@@ -20,12 +20,15 @@ export interface Employee {
   /** @format int64 */
   id?: number;
   name?: string;
+  component?: ProductionLineComponent;
   onDuty?: boolean;
 }
 export interface ProductionLine {
   /** @format int64 */
   id?: number;
   name?: string;
+  /** @format int32 */
+  simSpeed?: number;
   /** @format float */
   simTime?: number;
   /** @format int64 */
@@ -33,7 +36,7 @@ export interface ProductionLine {
   /** @format int64 */
   finishedParts?: number;
   carModel?: CarModel;
-  componentMap?: Record<string, ProductionLineComponent>;
+  components?: ProductionLineComponent[];
   active?: boolean;
   runnable?: boolean;
 }
@@ -42,9 +45,12 @@ export interface ProductionLineComponent {
   id?: number;
   name?: string;
   /** @format int64 */
+  step?: number;
+  /** @format int64 */
   productionTime?: number;
   employees?: Employee[];
   type?: "robot" | "station";
+  productionLine?: ProductionLine;
   onDuty?: boolean;
 }
 export declare type QueryParamsType = Record<string | number, any>;
@@ -129,7 +135,7 @@ export declare class Api<SecurityDataType extends unknown> extends HttpClient<Se
      * @name GetActiveSimulations
      * @request GET:/simulations
      */
-    getActiveSimulations: (params?: RequestParams) => Promise<HttpResponse<Record<string, number>, any>>;
+    getActiveSimulations: (params?: RequestParams) => Promise<HttpResponse<ProductionLine[], any>>;
     /**
      * No description
      *
@@ -137,14 +143,7 @@ export declare class Api<SecurityDataType extends unknown> extends HttpClient<Se
      * @name AddToSimulation
      * @request POST:/simulations
      */
-    addToSimulation: (
-      query: {
-        /** @format int64 */
-        simSpeed: number;
-      },
-      data: ProductionLine,
-      params?: RequestParams,
-    ) => Promise<HttpResponse<ProductionLine, any>>;
+    addToSimulation: (data: ProductionLine, params?: RequestParams) => Promise<HttpResponse<ProductionLine, any>>;
     /**
      * No description
      *
@@ -160,14 +159,7 @@ export declare class Api<SecurityDataType extends unknown> extends HttpClient<Se
      * @name ModifySimulationSpeed
      * @request POST:/simulations/modifySpeed
      */
-    modifySimulationSpeed: (
-      query: {
-        /** @format int64 */
-        simSpeed: number;
-      },
-      data: ProductionLine,
-      params?: RequestParams,
-    ) => Promise<HttpResponse<boolean, any>>;
+    modifySimulationSpeed: (data: ProductionLine, params?: RequestParams) => Promise<HttpResponse<boolean, any>>;
   };
   productionLines: {
     /**

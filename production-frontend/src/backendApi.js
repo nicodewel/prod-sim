@@ -178,11 +178,10 @@ export class Api extends HttpClient {
      * @name AddToSimulation
      * @request POST:/simulations
      */
-    addToSimulation: (query, data, params = {}) =>
+    addToSimulation: (data, params = {}) =>
       this.request({
         path: `/simulations`,
         method: "POST",
-        query: query,
         body: data,
         type: ContentType.Json,
         ...params,
@@ -209,11 +208,10 @@ export class Api extends HttpClient {
      * @name ModifySimulationSpeed
      * @request POST:/simulations/modifySpeed
      */
-    modifySimulationSpeed: (query, data, params = {}) =>
+    modifySimulationSpeed: (data, params = {}) =>
       this.request({
         path: `/simulations/modifySpeed`,
         method: "POST",
-        query: query,
         body: data,
         type: ContentType.Json,
         ...params,
