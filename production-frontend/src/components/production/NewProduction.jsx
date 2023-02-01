@@ -46,10 +46,11 @@ const NewProduction = () => {
             document.getElementById("modalBtn").removeAttribute("data-bs-toggle", "modal")
 
         } else {
+            let cm = models.find(mod => carmodel == mod.id)
             let newLine = {
                 "name": name,
                 "carModel": {
-                    "name": carmodel,
+                    "name": cm,
                     "complexity": 0
                 },
                 "componentMap": componentMap,
