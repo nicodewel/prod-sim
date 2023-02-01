@@ -25,6 +25,7 @@ const NewRessource = () => {
                 dispatch(createNewEmployee({ name: name }));
                 break;
         }
+        document.getElementById("colFormLabel").value = "Ressourcenname";
     }
 
     return (
@@ -49,7 +50,7 @@ const NewRessource = () => {
                 <div className="row mb-3">
                     <label htmlFor="colFormLabel" className="col-sm-2 col-form-label">Name:</label>
                     <div className="col-sm-10">
-                        <input type="email" className="form-control" id="colFormLabel" placeholder="Stationsname" onChange={(e) => { setName(e.target.value) }} />
+                        <input type="email" className="form-control" id="colFormLabel" placeholder="Ressourcenname" onChange={(e) => { setName(e.target.value) }} />
                     </div>
                 </div>
 
