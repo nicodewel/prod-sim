@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,7 +20,7 @@ public class ProductionLineComponent {
     private boolean isOnDuty;
     @OneToMany(cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<Employee> employees;
+    private List<Employee> employees = new ArrayList<>();
     @Enumerated(EnumType.STRING)
     private Type type;
     @ManyToOne

@@ -5,7 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import de.volkswagen.productionbackend.model.*;
+import de.volkswagen.productionbackend.repository.CarModelRepository;
+import de.volkswagen.productionbackend.repository.EmployeeRepository;
+import de.volkswagen.productionbackend.repository.ProductionLineComponentRepository;
 import de.volkswagen.productionbackend.repository.ProductionLineRepository;
+import de.volkswagen.productionbackend.service.ProductionLineService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -31,7 +35,13 @@ public class ProductionLineControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
-    private ProductionLineRepository productionLineRepository;
+    private ProductionLineService productionLineService;
+    @Autowired
+    private ProductionLineComponentRepository productionLineComponentRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
+    @Autowired
+    private CarModelRepository carRepository;
 
     public ProductionLineControllerTest() {
 
@@ -45,32 +55,37 @@ public class ProductionLineControllerTest {
         robot.setType(Type.robot);
         robot.setName("Robert");
         robot.setProductionTime(2);
-        productOrder.add( robot);
-
+        productOrder.add( productionLineComponentRepository.save(robot));
 
         Employee employee = new Employee();
         employee.setName("Erwin");
+        Employee empToSave = employeeRepository.save(employee);
+
 
         ProductionLineComponent station = new ProductionLineComponent();
         station.setType(Type.station);
         station.setProductionTime(3);
         station.setName("Band1");
-        station.setEmployees(Arrays.asList(employee));
-        productOrder.add( station);
+        ProductionLineComponent stationToSave = productionLineComponentRepository.save(station);
+        stationToSave.getEmployees().add(empToSave);
+        productOrder.add( stationToSave);
 
         CarModel carModel = new CarModel();
         carModel.setName("ID3");
         carModel.setComplexity(1.0f);
+        CarModel carToAdd = carRepository.save(carModel);
 
         ProductionLine line = ProductionLine.builder()
                 .name("Lenny")
                 .isActive(true)
                 .components(productOrder)
                 .isRunnable(true)
-                .carModel(carModel)
                 .build();
 
-        productionLineRepository.save(line);
+        ProductionLine line1 = productionLineService.saveProductionLine(line);
+        line1.setCarModel(carToAdd);
+        ProductionLine line2 = productionLineService.saveProductionLine(line1);
+
     }
 
 
@@ -81,7 +96,7 @@ public class ProductionLineControllerTest {
                 .andExpect(jsonPath("$[0].name").value("Lenny"))
                 .andExpect(jsonPath("$[0].carModel.name").value("ID3"))
                 .andExpect(jsonPath("$[0].active").value("true"))
-        ;
+                .andExpect(jsonPath("$[0].components.length()").value(2));
     }
 
     @Test

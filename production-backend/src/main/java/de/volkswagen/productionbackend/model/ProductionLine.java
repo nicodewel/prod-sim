@@ -32,6 +32,7 @@ public class ProductionLine {
     private long timeToCompletion;
     private long finishedParts = 0;
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "carModel_id")
     private CarModel carModel;
     @OneToMany(cascade = CascadeType.ALL)
     @JsonManagedReference

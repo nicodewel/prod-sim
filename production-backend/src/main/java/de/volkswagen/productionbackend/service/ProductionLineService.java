@@ -1,6 +1,7 @@
 package de.volkswagen.productionbackend.service;
 
 import de.volkswagen.productionbackend.model.*;
+import de.volkswagen.productionbackend.repository.CarModelRepository;
 import de.volkswagen.productionbackend.repository.EmployeeRepository;
 import de.volkswagen.productionbackend.repository.ProductionLineComponentRepository;
 import de.volkswagen.productionbackend.repository.ProductionLineRepository;
@@ -19,10 +20,17 @@ public class ProductionLineService {
         this.productionLineRepository = productionLineRepository;
         this.employeeRepository = employeeRepository;
         this.componentRepository = componentRepository;
+
     }
 
     public List<ProductionLine> getAllProductionLines(){
-        return productionLineRepository.findAll();
+        List<ProductionLineComponent> components = this.componentRepository.findAll();
+        List<ProductionLine> productionLines = this.productionLineRepository.findAll();
+        productionLines.forEach(pl -> components.stream().filter(c -> c.getProductionLine() != null).forEach(c -> {
+            if (c.getProductionLine().getId() == pl.getId())
+            pl.getComponents().add(c);}));
+
+        return productionLines;
     }
 
     public Optional<ProductionLine> getProductionLineById(long id){
@@ -55,6 +63,6 @@ public class ProductionLineService {
             componentRepository.save(pc);
         });
         productionLine.setComponents(components);
-        return productionLine;
+        return productionLineRepository.save(productionLine);
     }
 }
