@@ -38,7 +38,7 @@ const Landing = () => {
                             <th scope="col">Status</th>
                             <th scope="col">Simulationsstatus</th>
                             <th scope="col">Stückzahl</th>
-                            <th className="col-2" scope="col">Speed</th>
+                            <th  scope="col">Speed</th>
                             <th scope="col">Start/Stop/Statistik</th>
                         </tr>
                     </thead>

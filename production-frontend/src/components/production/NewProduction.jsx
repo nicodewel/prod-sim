@@ -45,8 +45,9 @@ const NewProduction = () => {
             let newLine = {
                 "name": name,
                 "carModel": {
+                    "id": cm.id,
                     "name": cm.name,
-                    "complexity": 0
+                    "complexity": cm.complexity
                 },
                 "components": componentList,
                 "active": false,
