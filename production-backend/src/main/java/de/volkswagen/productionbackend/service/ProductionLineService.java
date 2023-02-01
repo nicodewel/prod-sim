@@ -23,26 +23,32 @@ public class ProductionLineService {
 
     }
 
-    public List<ProductionLine> getAllProductionLines(){
-        List<ProductionLineComponent> components = this.componentRepository.findAll();
+    public List<ProductionLine> getAllProductionLines() {
         List<ProductionLine> productionLines = this.productionLineRepository.findAll();
-        productionLines.forEach(pl -> components.stream().filter(c -> c.getProductionLine() != null).forEach(c -> {
-            if (c.getProductionLine().getId() == pl.getId())
-            pl.getComponents().add(c);}));
-
-        return productionLines;
+        List<ProductionLineComponent> components = this.componentRepository.findAll();
+        productionLines.forEach(pl -> {
+                    if (pl.getComponents().isEmpty()) {
+                        components.stream().filter(c -> c.getProductionLine() != null).forEach(c -> {
+                                    if (c.getProductionLine().getId() == pl.getId())
+                                        pl.getComponents().add(c);
+                                }
+                        );
+                    }
+                }
+        );
+        return this.productionLineRepository.findAll();
     }
 
-    public Optional<ProductionLine> getProductionLineById(long id){
+    public Optional<ProductionLine> getProductionLineById(long id) {
         return productionLineRepository.findById(id);
     }
 
-    public void deleteProductionLineById(long id){
+    public void deleteProductionLineById(long id) {
         productionLineRepository.deleteById(id);
     }
 
-    public ProductionLine saveProductionLine(ProductionLine productionLine){
-        List<ProductionLineComponent>  components = productionLine.getComponents();
+    public ProductionLine saveProductionLine(ProductionLine productionLine) {
+        List<ProductionLineComponent> components = productionLine.getComponents();
         productionLine.setComponents(new ArrayList<>());
         productionLineRepository.save(productionLine);
 
@@ -51,7 +57,7 @@ public class ProductionLineService {
             pc.setEmployees(null);
             pc.setOnDuty(true);
             pc.setProductionLine(productionLine);
-            if (pc.getType() == Type.station){
+            if (pc.getType() == Type.station) {
                 pc.setEmployees(new ArrayList<>());
                 employees.forEach(emp -> {
                     emp.setOnDuty(true);
