@@ -13,17 +13,22 @@ const ProductionLine = ({ pl, number }) => {
     const models = useSelector(state => state.ressources.carModels)
     
     useEffect(() => {
-        simSpeed instanceof Number ? console.log("JAAAAA") : console.log("NEEEEE")
+        console.log(parseInt(simSpeed))
+        isNaN(simSpeed) ? console.log("NOT A NUMBER") : console.log("A Number")
     })
 
-    const startSimulation = (speed) => {
-        console.log("MODELS. " ,models);
-        console.log("MODELS. " ,models);
+    const startSimulation = () => {
         let newMod = models.find(mod => mod.id == carModel)
         let modLine = {...pl, carModel: newMod}
-        simSpeed.trim() > 0 ? console.log("JAAAAA") : console.log("NEEEEE")
 
-        dispatch(simulateProductionline({simSpeed: simSpeed, modLine}))
+        if(!isNaN(simSpeed)){
+            dispatch(simulateProductionline({simSpeed: simSpeed, modLine}))
+        }else{
+            alert("Speed ist keine Zahl")
+        }
+
+
+        
     }
 
     return (

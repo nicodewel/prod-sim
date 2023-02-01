@@ -24,11 +24,9 @@ export const buildNewProductionline = createAsyncThunk(
     "ProductionLines/create",
     async (productionline) => {
         console.log("TOPOST:", productionline)
-    
-
         const response = await api.productionLines.save(productionline);
         const json = await response.json()
-        return response;
+        return json;
     }
 )
 

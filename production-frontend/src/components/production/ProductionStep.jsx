@@ -50,7 +50,7 @@ const ProductionStep = ({ order, componentList, setComponentList, robots, statio
         console.log("COMP: ", comp)
 
         let components = [...componentList]
-        components[order-1] = comp 
+        components[order-1] = {...comp, step: order}
         console.log("!!!!!!!!!", components)
         setComponentList(componentList => {
             return components
