@@ -23,7 +23,8 @@ public class ProductionLineController {
 
     @GetMapping("/productionLines")
     public ResponseEntity<List<ProductionLine>> getAll(){
-        return ResponseEntity.ok(productionLineService.getAllProductionLines());
+        List<ProductionLine> list = productionLineService.getAllProductionLines();
+        return ResponseEntity.ok(list);
     }
 
     @GetMapping("/productionLines/{id}")

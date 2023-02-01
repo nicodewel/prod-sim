@@ -1,6 +1,7 @@
 package de.volkswagen.productionbackend.service;
 
 import de.volkswagen.productionbackend.model.*;
+import de.volkswagen.productionbackend.repository.CarModelRepository;
 import de.volkswagen.productionbackend.repository.EmployeeRepository;
 import de.volkswagen.productionbackend.repository.ProductionLineComponentRepository;
 import de.volkswagen.productionbackend.repository.ProductionLineRepository;
@@ -14,15 +15,24 @@ public class ProductionLineService {
     private final ProductionLineRepository productionLineRepository;
     private final EmployeeRepository employeeRepository;
     private final ProductionLineComponentRepository componentRepository;
+    private final CarModelRepository carModelRepository;
 
-    public ProductionLineService(ProductionLineRepository productionLineRepository, EmployeeRepository employeeRepository, ProductionLineComponentRepository componentRepository) {
+    public ProductionLineService(ProductionLineRepository productionLineRepository, EmployeeRepository employeeRepository, ProductionLineComponentRepository componentRepository, CarModelRepository carModelRepository) {
         this.productionLineRepository = productionLineRepository;
         this.employeeRepository = employeeRepository;
         this.componentRepository = componentRepository;
+        this.carModelRepository = carModelRepository;
     }
 
     public List<ProductionLine> getAllProductionLines(){
-        return productionLineRepository.findAll();
+        List<ProductionLineComponent> components = this.componentRepository.findAll();
+        List<ProductionLine> productionLines = this.productionLineRepository.findAll();
+        List<CarModel> carModels = this.carModelRepository.findAll();
+        productionLines.forEach(pl -> components.forEach(c -> {
+            if (c.getProductionLine().getId() == pl.getId())
+            pl.getComponents().add(c);}));
+
+        return productionLines;
     }
 
     public Optional<ProductionLine> getProductionLineById(long id){
@@ -55,6 +65,6 @@ public class ProductionLineService {
             componentRepository.save(pc);
         });
         productionLine.setComponents(components);
-        return productionLine;
+        return productionLineRepository.save(productionLine);
     }
 }
