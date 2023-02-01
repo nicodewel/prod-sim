@@ -72,14 +72,11 @@ const ressourceSlice = createSlice({
     initialState,
     reducers: {
         setCompBusy: (state, action) => {
-
             if (action.payload.type == "station") {
-                console.log("ICH BIN EINE STATION");
                 let indexStation = state.stations.findIndex(s => s.id == action.payload.id);
                 state.stations[indexStation].onDuty = true;
 
             } else {
-                console.log("ICH BIN EIN ROBOTER");
                 let index = state.robots.findIndex(r => r.id == action.payload.id);
                 state.robots[index].onDuty = true;
             }
@@ -116,17 +113,17 @@ const ressourceSlice = createSlice({
             .addCase(createNewEmployee.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.employees = [...state.employees, action.payload]
-                alert(`Der Mitarbeiter "${action.payload.name}" wurde erfolgreich angelegt`)
+                alert(`Der Mitarbeiter wurde erfolgreich angelegt`)
             })
             .addCase(createNewRobot.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.robots = [...state.robots, action.payload]
-                alert(`Der Roboter "${action.payload.name}" wurde erfolgreich angelegt`)
+                alert(`Der Roboter wurde erfolgreich angelegt`)
             })
             .addCase(createNewStation.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.stations = [...state.stations, action.payload]
-                alert(`Die Station "${action.payload.name}" wurde erfolgreich angelegt`)
+                alert(`Die Station wurde erfolgreich angelegt`)
             });
     },
 })

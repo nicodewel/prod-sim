@@ -13,22 +13,23 @@ const ProductionLine = ({ pl, number }) => {
     const models = useSelector(state => state.ressources.carModels)
     
     useEffect(() => {
-        console.log(parseInt(simSpeed))
         isNaN(simSpeed) ? console.log("NOT A NUMBER") : console.log("A Number")
     })
 
     const startSimulation = () => {
         let newMod = models.find(mod => mod.id == carModel)
-        let modLine = {...pl, carModel: newMod}
+        let modLine = {...pl, carModel: newMod, simSpeed: simSpeed}
 
         if(!isNaN(simSpeed)){
-            dispatch(simulateProductionline({simSpeed: simSpeed, modLine}))
+            dispatch(simulateProductionline(modLine))
         }else{
-            alert("Speed ist keine Zahl")
+            alert("Bitte eine Ganzahl eintragen")
         }
 
+    }
 
-        
+    const stopSimulation = () => {
+        dispatch(stopSimulation(pl))
     }
 
     return (
@@ -45,8 +46,8 @@ const ProductionLine = ({ pl, number }) => {
             <td>{pl.runnable ? "lauffähig" : "unvollständig"}</td>
             <td>{pl.active ? "läuft" : "läuft nicht"} </td>
             <td>{pl.finishedParts}</td>
-            <td><input className="col-2" placeholder={pl.simTime}  onChange={(e) => setSimSpeed(e.target.value)} /></td>
-            <td> <i className="bi bi-play iconhover" onClick={() => startSimulation()}></i><i className="bi bi-stop iconhover"></i><i className="bi bi-info-square iconhover"></i></td>
+            <td><input className="col-4" placeholder={pl.simSpeed}  onChange={(e) => setSimSpeed(e.target.value)} /></td>
+            <td> <i className="bi bi-play iconhover" onClick={() => startSimulation()}></i><i className="bi bi-stop iconhover" onClick={() => stopSimulation()} ></i><i className="bi bi-info-square iconhover"></i></td>
         </tr>
     )
 

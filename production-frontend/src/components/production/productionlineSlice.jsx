@@ -26,7 +26,7 @@ export const buildNewProductionline = createAsyncThunk(
         console.log("TOPOST:", productionline)
         const response = await api.productionLines.save(productionline);
         const json = await response.json()
-        return json;
+        return response.json();
     }
 )
 
@@ -34,7 +34,7 @@ export const simulateProductionline = createAsyncThunk(
     "ProductionLines/simulate",
     async (productionline) => {
         console.log("PRODUCTIONLINE IN ACTION: ", productionline)
-        const response = await api.simulations.addToSimulation({simSpeed: productionline.simSpeed}, productionline.modLine);
+        const response = await api.simulations.addToSimulation(productionline);
         return response;
     }
 )
@@ -57,7 +57,7 @@ const productionlineSlice = createSlice({
             .addCase(buildNewProductionline.fulfilled, (state, action) => {
                 state.status = "idle";
                 state.productionlines = [...state.productionlines, action.payload]
-                alert(`Die Produktionslinie "${action.payload.name}" wurde erfolgreich angelegt`)
+                alert(`Die Produktionslinie  wurde erfolgreich angelegt`)
             })
             .addCase(simulateProductionline.pending, (state, action) => {
                 state.status = 'loading';
@@ -66,7 +66,7 @@ const productionlineSlice = createSlice({
                 state.status = "idle";
                 let index = state.productionlines.findIndex(s => s.id == action.payload.id);
                 state.productionlines[index] = action.payload;
-                alert(`Die Produktionslinie "${action.payload.name}" wurde erfolgreich gestartet`)
+                alert(`Die Produktionslinie  wurde erfolgreich gestartet`)
             })
     }
 })
