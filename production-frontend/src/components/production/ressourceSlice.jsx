@@ -69,15 +69,19 @@ const ressourceSlice = createSlice({
     initialState,
     reducers: {
         setCompBusy: (state, action) => {
+            // eslint-disable-next-line
             if (action.payload.type == "station") {
+                // eslint-disable-next-line
                 let indexStation = state.stations.findIndex(s => s.id == action.payload.id);
                 state.stations[indexStation].onDuty = true;
             } else {
+                // eslint-disable-next-line
                 let index = state.robots.findIndex(r => r.id == action.payload.id);
                 state.robots[index].onDuty = true;
             }
         },
         setEmployeeBusy: (state, action) => {
+            // eslint-disable-next-line
             let index = state.employees.findIndex(r => r.id == action.payload.id);
             state.employees[index].onDuty = true;
         }
@@ -90,7 +94,9 @@ const ressourceSlice = createSlice({
                 state.status = 'pending';
             })
             .addCase(getAllComponents.fulfilled, (state, action) => {
+                // eslint-disable-next-line
                 state.robots = action.payload.filter(comp => comp.type == "robot")
+                // eslint-disable-next-line
                 state.stations = action.payload.filter(comp => comp.type == "station")
             })
             .addCase(getAllEmployees.pending, (state, action) => {

@@ -11,6 +11,7 @@ const Landing = () => {
 
 
     useEffect(() => {
+        document.title = "Prod Simulation"
         dispatch(getAllComponents());
         dispatch(getAllCarModels())
         dispatch(getAllEmployees())

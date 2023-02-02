@@ -4,6 +4,6 @@ import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
 export const store = configureStore({
-    reducer: rootReducer,
-    middleware: [logger, thunk],
-  });
+  reducer: rootReducer,
+  middleware: [logger, thunk],
+});
