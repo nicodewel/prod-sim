@@ -29,12 +29,12 @@ const ProductionStep = ({ order, componentList, setComponentList, robots, statio
             case "employee":
                 /* eslint-disable-next-line */
                 if (!employees.find(emp => emp.id == stationEmp)) {
+                    comp = { ...componentList[order - 1], employees: [...componentList[order - 1].employees] };
                     alert("kein Mitarbeiter ausgewählt!")
                 } else {
                     /* eslint-disable-next-line */
                     let choosenEmp = employees.find(emp => emp.id == stationEmp)
                     choosenEmp = { ...choosenEmp, onDuty: true }
-                    console.log("CHOOSEN: ", choosenEmp)
                     comp = { ...componentList[order - 1], employees: [...componentList[order - 1].employees, choosenEmp] };
                     setBusyEmp([...busyEmp, choosenEmp]);
                     dispatch(setEmployeeBusy(choosenEmp))
@@ -88,13 +88,13 @@ const ProductionStep = ({ order, componentList, setComponentList, robots, statio
                                 <option selected="selected2">Mitarbeiter zuordnen</option>
                                 {ref.current.employees?.map((emp, i) => <option key={i} value={emp.id}>{emp.name}</option>)}
                             </select>
-                            <div className="col">
-                                <i className="bi bi-person-add" style={{ "font-size": "1.5rem" }} onClick={(e) => handleSelection(e, "employee", e.target.value)}></i>
-                            </div>
+
                         </div>
-                        <div className="col d-flex">
-                            <div className="d-flex">{`Zugeordnet: `}</div>
-                            {busyEmp.map(emp => <div>{emp.name}</div>)}
+                        <i className="bi bi-person-add" style={{ "font-size": "1.5rem" }} onClick={(e) => handleSelection(e, "employee", e.target.value)}></i>
+                        <div className=" d-flex">
+                            <div className="">{`Zugeordnet: `}</div>
+                            {/* eslint-disable-next-line */}
+                            {busyEmp.map(emp => emp == busyEmp[busyEmp.length - 1] ? `${emp.name}` : `${emp.name}, `)}
                         </div>
                     </div>
                 );

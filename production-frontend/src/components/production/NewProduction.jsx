@@ -4,6 +4,7 @@ import ProductionStep from "./ProductionStep";
 import { useSelector, useDispatch } from "react-redux";
 import { setCompBusy } from "./ressourceSlice";
 import { buildNewProductionline } from "./productionlineSlice";
+import Header from "../Header";
 
 const NewProduction = () => {
 
@@ -57,9 +58,11 @@ const NewProduction = () => {
         }
     }
 
+    const backBtn = <NavLink to="/"><button className="vw-btn m-1"><i class="bi bi-box-arrow-left"></i> zurück</button></NavLink>;
+
     return (
         <div className="container-fluid">
-            <h1 className="mb-3">Neue Produktionsstraße anlegen</h1>
+            <Header headline="Neue Produktionsstraße anlegen" btnArr={[backBtn]} />
             <form>
                 <div className="row mb-3">
                     <label htmlFor="colFormLabel" className="col-sm-2 col-form-label">Name</label>
@@ -94,9 +97,9 @@ const NewProduction = () => {
                     </div>
                 </div>
             </div>
-            <button className="btn btn-primary m-1" id="modalBtn" data-bs-target="#staticBackdrop" onClick={() => nextStep()}>Schritt hinzufügen</button>
-            <button className="btn btn-primary m-1" onClick={() => buildProduction()}>speichern</button>
-            <NavLink to="/"><button className="btn btn-primary m-1">home</button></NavLink>
+            <button className="vw-btn m-1" id="modalBtn" data-bs-target="#staticBackdrop" onClick={() => nextStep()}>Schritt hinzufügen</button>
+            <button className="vw-btn m-1" onClick={() => buildProduction()}>speichern</button>
+
         </div>
     )
 }

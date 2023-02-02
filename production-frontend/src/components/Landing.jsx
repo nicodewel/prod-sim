@@ -4,10 +4,13 @@ import { NavLink } from "react-router-dom";
 import ProductionLine from "./production/ProductionLine";
 import { getAllProductionlines, getActiveSimulations } from "./production/productionlineSlice";
 import { getAllComponents, getAllEmployees, getAllCarModels } from "./production/ressourceSlice";
+import Header from "./Header";
+import { useRef } from "react";
 
 const Landing = () => {
 
     const dispatch = useDispatch();
+    const interval = useRef();
 
 
     useEffect(() => {
@@ -20,22 +23,51 @@ const Landing = () => {
         // eslint-disable-next-line
     }, [])
 
+    const toggleRefresh = () => {
+        if (!interval.current) {
+            interval.current = setInterval(() => dispatch(getActiveSimulations()), 2000);
+        } else {
+            clearInterval(interval.current)
+            interval.current = null;
+        }
+    }
 
     const status = useSelector(state => state.ressources.status)
     const lines = useSelector(state => state.productionlines.productionlines)
 
     const renderLoading = () => <div className="spinner-border position-absolute top-50 start-50" role="status"></div>;
 
+    const createPlBtn = <NavLink to="/createproductionline"><button className="vw-btn m-1">Neue Produktionsstraße anlegen</button></NavLink>;
+    const createResBtn = <NavLink to="/createstation"><button className="vw-btn m-1" >Neue Ressource anlegen</button></NavLink>;
+    const headBtns = [createPlBtn, createResBtn];
+
+
+    const mainHeadline = "Production Simulator"
+
+
     const renderDefault = () => {
         return (
             <div className="container-fluid">
-                <h1>ProduktionsstraßenplanungsApp</h1>
-                <NavLink to="/createproductionline"><button className="btn btn-primary m-1">Neue Produktionsstraße anlegen</button></NavLink>
-                <NavLink to="/createstation"><button className="btn btn-primary m-1" >Neue Ressource anlegen</button></NavLink>
-                <div className="d-flex justify-content-between ">Aktuelle Produktionsstraßen <button className="btn btn-light m-1" ><i className="bi bi-arrow-clockwise"></i>
-                    Aktualisieren</button></div>
-                <table className="table caption-top">
-                    <thead className="table-light">
+                <Header headline={mainHeadline} btnArr={headBtns} />
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                    <h3>Aktuelle Produktionsstraßen</h3>
+                    <div>
+                        <div>
+                            <button id="toggleRefresh" className="vw-btn m-1" onClick={() => dispatch(getActiveSimulations())}>
+                                <i className="bi bi-arrow-clockwise" />Aktualisieren
+                            </button>
+                        </div>
+
+                        <div className="form-check form-switch ms-2">
+                            <input className="form-check-input vw-checkbox" type="checkbox" id="flexSwitchCheckDefault" onChange={() => toggleRefresh()} />
+                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault" style={{ "font-size": "0.8em" }}>AutoRefresh</label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <table className="table caption-top ">
+                    <thead className="table-light vw-blue">
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
@@ -44,7 +76,8 @@ const Landing = () => {
                             <th scope="col">Simulationsstatus</th>
                             <th scope="col">Stückzahl</th>
                             <th scope="col">Speed</th>
-                            <th scope="col">Start/Stop</th>
+                            <th scope="col">Start </th>
+                            <th className="text-center" scope="col">Stop</th>
                         </tr>
                     </thead>
                     <tbody>

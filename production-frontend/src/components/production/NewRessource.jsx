@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { createNewRobot, createNewEmployee, createNewStation } from "./ressourceSlice";
+import Header from "../Header";
 
 const NewRessource = () => {
 
@@ -11,7 +12,7 @@ const NewRessource = () => {
     const [time, setTime] = useState(10);
 
     const checkTypeAndSave = (t) => {
-        var regexName = /^[a-zA-Z0-9]{3,}$/g;
+        var regexName = /^[a-zA-Z0-9 ]{3,}$/g;
         var regexTime = /^[0-9]{1,6}$/g;
         if (!name.match(regexName)) {
             alert("Name mus mindestens 3 Zeichen lang sein und darf keine Sonderzeichen enthalten.")
@@ -37,9 +38,13 @@ const NewRessource = () => {
         }
     }
 
+    const backBtn = <NavLink to="/"><button className="vw-btn m-1"><i class="bi bi-box-arrow-left"></i> zurück</button></NavLink>;
+
     return (
         <div className="container-fluid">
-            <h1>Neue Ressource erstellen</h1>
+
+            <Header headline="Neue Ressource erstellen" btnArr={[backBtn]} />
+
             <form>
                 <div className="row mb-3">
                     <label htmlFor="colFormLabel" className="col-sm-2 col-form-label">Typ:</label>
@@ -69,8 +74,8 @@ const NewRessource = () => {
                     </div> : <div></div>}
 
             </form >
-            <button className="btn btn-primary m-1" onClick={() => checkTypeAndSave(type)}>erstellen</button>
-            <NavLink to="/"><button className="btn btn-primary m-1">zurück</button></NavLink>
+            <button className="vw-btn m-1" onClick={() => checkTypeAndSave(type)}>erstellen</button>
+
         </div >
     )
 }
