@@ -75,26 +75,31 @@ const ProductionStep = ({ order, componentList, setComponentList, robots, statio
                 );
             case "Station":
                 return (
+                    <div className="col">
+                        <div className="col d-flex">
+                            <div className="col-5 mb-2 me-4">
+                                <select className={generateClassName()} onChange={(e) => handleSelection(e, "station", e.target.value)} >
+                                    <option selected="selected1">Station auswählen</option>
+                                    {ref.current.stations?.map((station, i) => <option key={i} value={station.id}>{station.name}</option>)}
+                                </select>
+                            </div>
 
-                    <div className="col-sm-3">
-                        <div className="col">
-                            <select className={generateClassName()} onChange={(e) => handleSelection(e, "station", e.target.value)} >
-                                <option selected="selected1">Station auswählen</option>
-                                {ref.current.stations?.map((station, i) => <option key={i} value={station.id}>{station.name}</option>)}
-                            </select>
-                        </div>
-                        <div className=" col d-flex">
-                            <select className={generateClassName()} id="employee-selection" onChange={(e) => setStationEmp(e.target.value)} >
-                                <option selected="selected2">Mitarbeiter zuordnen</option>
-                                {ref.current.employees?.map((emp, i) => <option key={i} value={emp.id}>{emp.name}</option>)}
-                            </select>
+                            <div className=" col-5 me-2">
+                                <select className={generateClassName()} id="employee-selection" onChange={(e) => setStationEmp(e.target.value)} >
+                                    <option selected="selected2">Mitarbeiter zuordnen</option>
+                                    {ref.current.employees?.map((emp, i) => <option key={i} value={emp.id}>{emp.name}</option>)}
+                                </select>
+                            </div>
+
+                            <i className="bi bi-person-add" style={{ "font-size": "1.5rem" }} onClick={(e) => handleSelection(e, "employee", e.target.value)}></i>
+
+
 
                         </div>
-                        <i className="bi bi-person-add" style={{ "font-size": "1.5rem" }} onClick={(e) => handleSelection(e, "employee", e.target.value)}></i>
                         <div className=" d-flex">
-                            <div className="">{`Zugeordnet: `}</div>
+                            <pre><i style={{ "font-size": "1.1rem" }} className="bi bi-people"></i> </pre>
                             {/* eslint-disable-next-line */}
-                            {busyEmp.map(emp => emp == busyEmp[busyEmp.length - 1] ? `${emp.name}` : `${emp.name}, `)}
+                            {busyEmp.map(emp => emp == busyEmp[busyEmp.length - 1] ? ` ${emp.name}` : `${emp.name}, `)}
                         </div>
                     </div>
                 );

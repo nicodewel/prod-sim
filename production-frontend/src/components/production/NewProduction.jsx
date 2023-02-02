@@ -20,9 +20,11 @@ const NewProduction = () => {
     const stationList = useSelector(state => state.ressources.stations).filter(comp => !comp.onDuty)
 
     const buildProduction = () => {
-        if (componentList.size < 3) {
+
+
+        if (componentList.length < 3) {
             document.getElementById("staticBackdropLabel").innerHTML = "Nicht genügend Schritte."
-            document.getElementsByClassName("model-body").innerHTML = "Eine Produktionsstraße besteht aus mindestens 3 Schritten. "
+            document.getElementById("modal-body").innerHTML = "Eine Produktionsstraße besteht aus mindestens 3 Schritten. "
             document.getElementById("modalBtn").setAttribute("data-bs-toggle", "modal")
             document.getElementById("modalBtn").click();
             document.getElementById("modalBtn").removeAttribute("data-bs-toggle", "modal")
@@ -45,9 +47,9 @@ const NewProduction = () => {
 
     const nextStep = () => {
         // eslint-disable-next-line
-        if (componentList[componentList.length - 1].id == undefined) {
+        if (componentList[componentList.length - 1].id == undefined || componentList.length != order.length) {
             document.getElementById("staticBackdropLabel").innerHTML = "Schritt unvollständig"
-            document.getElementsByClassName("model-body").innerHTML = "Eine Produktionsstraße besteht aus mindestens 3 Schritten. "
+            document.getElementById("modal-body").innerHTML = "Bitte eine Komponente auswählen."
             document.getElementById("modalBtn").setAttribute("data-bs-toggle", "modal")
             document.getElementById("modalBtn").click();
             document.getElementById("modalBtn").removeAttribute("data-bs-toggle", "modal")
@@ -58,7 +60,7 @@ const NewProduction = () => {
         }
     }
 
-    const backBtn = <NavLink to="/"><button className="vw-btn m-1"><i class="bi bi-box-arrow-left"></i> zurück</button></NavLink>;
+    const backBtn = <NavLink to="/"><button className="vw-btn m-1"><i className="bi bi-box-arrow-left"></i> zurück</button></NavLink>;
 
     return (
         <div className="container-fluid">
@@ -66,13 +68,13 @@ const NewProduction = () => {
             <form>
                 <div className="row mb-3">
                     <label htmlFor="colFormLabel" className="col-sm-2 col-form-label">Name</label>
-                    <div className="col-sm-4">
+                    <div className="col-sm-10">
                         <input type="email" className="form-control" id="colFormLabel" placeholder="Produktionsstraßenname" onChange={(e) => setName(e.target.value)} />
                     </div>
                 </div>
                 <div className="row mb-3">
                     <label htmlFor="colFormLabel" className="col-sm-2 col-form-label">Modell</label>
-                    <div className="col-sm-4">
+                    <div className="col-sm-10">
                         <select className="form-select" aria-label="Default select example" onChange={(e) => setCarmodel(e.target.value)} >
                             <option defaultValue>Fahrzeugmodell wählen</option>
                             {models?.map(mod => <option value={mod.id}>{mod.name}</option>)};
@@ -88,7 +90,7 @@ const NewProduction = () => {
                             <h1 className="modal-title fs-5" id="staticBackdropLabel">Schritt unvollständig</h1>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div className="modal-body">
+                        <div id="modal-body" className="modal-body">
                             Bitte eine Komponente auswählen.
                         </div>
                         <div className="modal-footer">
