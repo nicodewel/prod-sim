@@ -2,10 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setEmployeeBusy } from "./ressourceSlice";
 
-
-
 const ProductionStep = ({ order, componentList, setComponentList, robots, stations, employees }) => {
-
     const [step, setStep] = useState();
     const [stationEmp, setStationEmp] = useState()
     const [busyEmp, setBusyEmp] = useState([]);
@@ -15,7 +12,6 @@ const ProductionStep = ({ order, componentList, setComponentList, robots, statio
         setStep(value);
         handleSelection(e, "empty", 0)
     }
-
 
     let ref = useRef({ robots, stations, employees })
 
@@ -29,9 +25,9 @@ const ProductionStep = ({ order, componentList, setComponentList, robots, statio
             case "station": comp = stations.find(e => e.id == id);
                 break;
             case "employee":
-                if(!employees.find(emp => emp.id == stationEmp)){
+                if (!employees.find(emp => emp.id == stationEmp)) {
                     alert("kein Mitarbeiter ausgewählt!")
-                } else{
+                } else {
                     let choosenEmp = employees.find(emp => emp.id == stationEmp)
                     choosenEmp = { ...choosenEmp, onDuty: true }
                     console.log("CHOOSEN: ", choosenEmp)
@@ -39,29 +35,19 @@ const ProductionStep = ({ order, componentList, setComponentList, robots, statio
                     setBusyEmp([...busyEmp, choosenEmp]);
                     dispatch(setEmployeeBusy(choosenEmp))
                     ref.current.employees = ref.current.employees.filter(e => e.id != choosenEmp.id);
-                    document.getElementById("employee-selection").value= "Mitarbeiter zuordnen";
+                    document.getElementById("employee-selection").value = "Mitarbeiter zuordnen";
                     break;
                 }
-              
             case "empty":
                 comp = null;
                 break;
         }
-        console.log("COMP: ", comp)
-
         let components = [...componentList]
-        components[order-1] = {...comp, step: order}
-        console.log("!!!!!!!!!", components)
+        components[order - 1] = { ...comp, step: order }
         setComponentList(componentList => {
             return components
         })
-        
-        // setMapEntry(mapEntry => {
-        //     mapEntry = { ...comp, onDuty: true, step: order }
-        //     return mapEntry
-        // })
-        console.log("MAPENTRY: ", componentList[order - 1])
-        
+
     }
 
     const generateClassName = () => {
@@ -92,36 +78,20 @@ const ProductionStep = ({ order, componentList, setComponentList, robots, statio
                                 {ref.current.stations?.map((station, i) => <option key={i} value={station.id}>{station.name}</option>)}
                             </select>
                         </div>
-
-
-
                         <div className=" col d-flex">
                             <select className={generateClassName()} id="employee-selection" onChange={(e) => setStationEmp(e.target.value)} >
                                 <option selected="selected2">Mitarbeiter zuordnen</option>
                                 {ref.current.employees?.map((emp, i) => <option key={i} value={emp.id}>{emp.name}</option>)}
                             </select>
                             <div className="col">
-                                <i className="bi bi-person-add" style={{"font-size": "1.5rem"}} onClick={(e) => handleSelection(e, "employee", e.target.value)}></i>
+                                <i className="bi bi-person-add" style={{ "font-size": "1.5rem" }} onClick={(e) => handleSelection(e, "employee", e.target.value)}></i>
                             </div>
-
                         </div>
-
                         <div className="col d-flex">
                             <div className="d-flex">{`Zugeordnet: `}</div>
                             {busyEmp.map(emp => <div>{emp.name}</div>)}
                         </div>
-
-
                     </div>
-
-
-
-
-
-
-
-
-
                 );
             default:
                 return (<div></div>)
@@ -129,7 +99,6 @@ const ProductionStep = ({ order, componentList, setComponentList, robots, statio
     }
 
     return (
-
         <div className="row mb-3" >
             <label htmlFor="colFormLabel" className="col-sm-2 col-form-label">Schritt {order}</label>
             <div className="col-sm-3">
@@ -141,9 +110,7 @@ const ProductionStep = ({ order, componentList, setComponentList, robots, statio
             </div>
             {checkTypeSelection(step)}
         </div>
-
     )
-
 }
 
 export default ProductionStep;

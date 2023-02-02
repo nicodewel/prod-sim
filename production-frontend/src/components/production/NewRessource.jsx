@@ -6,23 +6,20 @@ import { createNewRobot, createNewEmployee, createNewStation } from "./ressource
 const NewRessource = () => {
 
     const dispatch = useDispatch();
-
-
     const [type, setType] = useState();
     const [name, setName] = useState();
     const [time, setTime] = useState();
 
-
     const checkTypeAndSave = (t) => {
-
-
-        var regex = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{3,}$/g;
-        if (!name.match(regex)) {
-            alert("Name muss mindestens 3 Zeichen enthalten und darf keine Sonderzeichen enthalten.")
+        var regexName = /^[a-zA-Z0-9]{3,}$/g;
+        var regexTime = /^[0-9]{1,6}$/g;
+        if (!name.match(regexName)) {
+            alert("Name mus mindestens 3 Zeichen lang sein und darf keine Sonderzeichen enthalten.")
+            return;
+        } else if (!time.match(regexTime)) {
+            alert("Ein Arbeitsschritt darf maximal 999999 Sekunden dauern und darf keine Buchstaben oder Sonderzeichen enthalten.")
             return;
         }
-
-
         switch (t) {
             case "Roboter":
                 dispatch(createNewRobot({ productionTime: time, step: 0, liftime: 1000, name: name, type: "robot" }));
@@ -34,7 +31,6 @@ const NewRessource = () => {
                 dispatch(createNewEmployee({ name: name }));
                 break;
         }
-        document.getElementById("colFormLabel").value = "Ressourcenname";
     }
 
     return (

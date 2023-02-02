@@ -18,10 +18,6 @@ const NewProduction = () => {
     const employeeList = useSelector(state => state.ressources.employees).filter(comp => !comp.onDuty)
     const stationList = useSelector(state => state.ressources.stations).filter(comp => !comp.onDuty)
 
-    const checkRunnable = () => {
-        return false;
-    }
-
     const buildProduction = () => {
         if (componentList.size < 3) {
             document.getElementById("staticBackdropLabel").innerHTML = "Nicht genügend Schritte."
@@ -30,6 +26,7 @@ const NewProduction = () => {
             document.getElementById("modalBtn").click();
             document.getElementById("modalBtn").removeAttribute("data-bs-toggle", "modal")
         } else {
+            // eslint-disable-next-line
             let cm = models.find(mod => carmodel == mod.id)
             let newLine = {
                 "name": name,
@@ -46,6 +43,7 @@ const NewProduction = () => {
     }
 
     const nextStep = () => {
+        // eslint-disable-next-line
         if (componentList[componentList.length - 1].id == undefined) {
             document.getElementById("staticBackdropLabel").innerHTML = "Schritt unvollständig"
             document.getElementsByClassName("model-body").innerHTML = "Eine Produktionsstraße besteht aus mindestens 3 Schritten. "
@@ -58,8 +56,6 @@ const NewProduction = () => {
             document.querySelectorAll(`.prodStep${order.length}`).forEach(element => element.setAttribute("disabled", true))
         }
     }
-
-
 
     return (
         <div className="container-fluid">

@@ -37,7 +37,6 @@ export const getAllCarModels = createAsyncThunk(
     }
 )
 
-
 export const createNewStation = createAsyncThunk(
     "stations/build",
     async (station) => {
@@ -63,10 +62,6 @@ export const createNewEmployee = createAsyncThunk(
     }
 )
 
-
-
-
-
 const ressourceSlice = createSlice({
     name: "robots",
     initialState,
@@ -75,7 +70,6 @@ const ressourceSlice = createSlice({
             if (action.payload.type == "station") {
                 let indexStation = state.stations.findIndex(s => s.id == action.payload.id);
                 state.stations[indexStation].onDuty = true;
-
             } else {
                 let index = state.robots.findIndex(r => r.id == action.payload.id);
                 state.robots[index].onDuty = true;
@@ -129,7 +123,5 @@ const ressourceSlice = createSlice({
 })
 
 export const { setCompBusy, setEmployeeBusy } = ressourceSlice.actions;
-
-
 
 export default ressourceSlice.reducer; 

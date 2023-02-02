@@ -1,7 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Api } from "../../backendApi";
-import { useDispatch } from "react-redux";
-import { addSimulation, removeSimulation } from "./simulationSlice";
 
 const api = new Api();
 const initialState = {
@@ -9,10 +7,6 @@ const initialState = {
     simulatedLines: [],
     status: "idle",
 };
-
-
-
-
 
 export const getAllProductionlines = createAsyncThunk(
     "Productionlines/load",
@@ -26,9 +20,7 @@ export const getAllProductionlines = createAsyncThunk(
 export const buildNewProductionline = createAsyncThunk(
     "ProductionLines/create",
     async (productionline) => {
-        console.log("TOPOST:", productionline)
         const response = await api.productionLines.save(productionline);
-        const json = await response.json()
         return response.json();
     }
 )
@@ -85,6 +77,7 @@ const productionlineSlice = createSlice({
             })
             .addCase(simulateProductionline.fulfilled, (state, action) => {
                 state.status = "idle";
+                // eslint-disable-next-line
                 let index = state.productionlines.findIndex(s => s.id == action.payload.id);
                 state.productionlines[index] = action.payload;
                 state.simulatedLines = [...state.simulatedLines, action.payload];
@@ -96,8 +89,10 @@ const productionlineSlice = createSlice({
             })
             .addCase(stopSimulation.fulfilled, (state, action) => {
                 state.status = "idle";
+                // eslint-disable-next-line
                 let index = state.productionlines.findIndex(s => s.id == action.payload.id);
                 state.productionlines[index] = action.payload;
+                // eslint-disable-next-line
                 state.simulatedLines = state.simulatedLines.filter(s => s.id != action.payload.id)
                 alert(`Die Produktionslinie wurde erfolgreich gestoppt`)
             })
@@ -110,6 +105,5 @@ const productionlineSlice = createSlice({
             })
     }
 })
-
 
 export default productionlineSlice.reducer; 

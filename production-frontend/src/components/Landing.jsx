@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import ProductionLine from "./production/ProductionLine";
-import { getAllProductionlines } from "./production/productionlineSlice";
+import { getAllProductionlines, getActiveSimulations } from "./production/productionlineSlice";
 import { getAllComponents, getAllEmployees, getAllCarModels } from "./production/ressourceSlice";
-import { getActiveSimulations } from "./production/simulationSlice";
-
 
 const Landing = () => {
 
-
     const dispatch = useDispatch();
+
 
     useEffect(() => {
         dispatch(getAllComponents());
@@ -18,15 +16,12 @@ const Landing = () => {
         dispatch(getAllEmployees())
         dispatch(getAllProductionlines())
         dispatch(getActiveSimulations());
+        // eslint-disable-next-line
     }, [])
 
+
     const status = useSelector(state => state.ressources.status)
-
-
-
     const lines = useSelector(state => state.productionlines.productionlines)
-
-
 
     const renderLoading = () => <div className="spinner-border position-absolute top-50 start-50" role="status"></div>;
 
@@ -36,8 +31,8 @@ const Landing = () => {
                 <h1>ProduktionsstraßenplanungsApp</h1>
                 <NavLink to="/createproductionline"><button className="btn btn-primary m-1">Neue Produktionsstraße anlegen</button></NavLink>
                 <NavLink to="/createstation"><button className="btn btn-primary m-1" >Neue Ressource anlegen</button></NavLink>
-                <caption className="d-flex justify-content-between ">Aktuelle Produktionsstraßen <button className="btn btn-light m-1" ><i className="bi bi-arrow-clockwise"></i>
-                    Aktualisieren</button></caption>
+                <div className="d-flex justify-content-between ">Aktuelle Produktionsstraßen <button className="btn btn-light m-1" ><i className="bi bi-arrow-clockwise"></i>
+                    Aktualisieren</button></div>
                 <table className="table caption-top">
                     <thead className="table-light">
                         <tr>
@@ -55,16 +50,11 @@ const Landing = () => {
                         {lines?.map((pl, key) => <ProductionLine key={key} number={key} pl={pl} />)}
                     </tbody>
                 </table>
-
-
-
-
             </div>
         )
     }
 
     return (status === "pending" ? renderLoading() : renderDefault());
-
 }
 
 export default Landing;
