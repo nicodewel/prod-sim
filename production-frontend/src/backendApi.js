@@ -17,7 +17,7 @@ export var ContentType;
   ContentType["Text"] = "text/plain";
 })(ContentType || (ContentType = {}));
 export class HttpClient {
-  baseUrl = "http://localhost:8080";
+  baseUrl = "https://prodplanner.azurewebsites.net";
   securityData = null;
   securityWorker;
   abortControllers = new Map();
@@ -68,8 +68,8 @@ export class HttpClient {
           property instanceof Blob
             ? property
             : typeof property === "object" && property !== null
-            ? JSON.stringify(property)
-            : `${property}`,
+              ? JSON.stringify(property)
+              : `${property}`,
         );
         return formData;
       }, new FormData()),
@@ -131,18 +131,18 @@ export class HttpClient {
       const data = !responseFormat
         ? r
         : await response[responseFormat]()
-            .then((data) => {
-              if (r.ok) {
-                r.data = data;
-              } else {
-                r.error = data;
-              }
-              return r;
-            })
-            .catch((e) => {
-              r.error = e;
-              return r;
-            });
+          .then((data) => {
+            if (r.ok) {
+              r.data = data;
+            } else {
+              r.error = data;
+            }
+            return r;
+          })
+          .catch((e) => {
+            r.error = e;
+            return r;
+          });
       if (cancelToken) {
         this.abortControllers.delete(cancelToken);
       }
