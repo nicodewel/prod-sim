@@ -51,7 +51,10 @@ public class ProductionLineService {
     public ProductionLine saveProductionLine(ProductionLine productionLine) {
         List<ProductionLineComponent> components = productionLine.getComponents();
         CarModel carModel = productionLine.getCarModel();
-        productionLine.setCarModel(carModelRepository.save(carModel));
+        if(carModel != null){
+            productionLine.setCarModel(carModelRepository.save(carModel));
+        }
+
 
         productionLine.setComponents(new ArrayList<>());
         productionLineRepository.save(productionLine);
