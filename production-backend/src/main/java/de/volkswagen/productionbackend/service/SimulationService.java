@@ -30,31 +30,32 @@ public class SimulationService {
     // Dabei wird bei einem minimalen Simulationsgeschwindigkeit (simSpeed) von 1 eine Produktionszeit von 1s hinzugefügt
     @Scheduled(fixedRate = 1000)
     public void executeProductionStep() {
-        activeSimulations.forEach(((productionLine) -> {
-            productionLine.addSimTime(1);
-        }));
+        activeSimulations.forEach(((productionLine) -> productionLine.addSimTime(1)));
     }
 
     public boolean addToSimulation(ProductionLine productionLine) {
-        if (!productionLine.validateConfiguration()) return false;
-        productionLine.setFinishedParts(0);
-        activeSimulations.add(productionLine);
+        int index = activeSimulations.indexOf(productionLine);
+        if (index == -1) {
+            if (!productionLine.validateConfiguration()) return false;
+            productionLine.setFinishedParts(0);
+            activeSimulations.add(productionLine);
+            return true;
+        }
+        activeSimulations.get(index).setSimSpeed(productionLine.getSimSpeed());
         return true;
     }
 
-    public boolean stopSimulation(ProductionLine productionLine){
-        if (!activeSimulations.contains(productionLine)) return false;
+    public ProductionLine stopSimulation(ProductionLine productionLine){
+        int index = activeSimulations.indexOf(productionLine);
+        if (index == -1) {
+            productionLine.setActive(false);
+            return productionLine;
+        }
+        ProductionLine pl = activeSimulations.get(index);
+        pl.setActive(false);
+        ProductionLine finishedSim = productionLineRepository.save(pl);
         activeSimulations.remove(productionLine);
-        productionLine.setActive(false);
-        productionLineRepository.save(productionLine);
-        return true;
-    }
-
-    public boolean modifySimSpeed(ProductionLine productionLine, int simSpeed){
-        if (!activeSimulations.contains(productionLine)) return false;
-        productionLine.setSimSpeed(simSpeed);
-        activeSimulations.add(productionLine);
-        return true;
+        return finishedSim;
     }
 
 }
