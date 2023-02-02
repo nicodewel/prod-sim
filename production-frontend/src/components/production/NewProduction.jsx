@@ -12,7 +12,6 @@ const NewProduction = () => {
     const [carmodel, setCarmodel] = useState();
     const [order, setOrder] = useState([1]);
     const [componentList, setComponentList] = useState([]);
-    // const [mapEntry, setMapEntry] = useState({});
 
     const models = useSelector(state => state.ressources.carModels);
     const robotList = useSelector(state => state.ressources.robots).filter(comp => !comp.onDuty)
@@ -23,23 +22,13 @@ const NewProduction = () => {
         return false;
     }
 
-    //active default false
-
-    // const addToMap = () => {
-    //     //setComponentList([...componentList, mapEntry])
-    //     console.log("MAP: ", componentMap);
-    // }
-
     const buildProduction = () => {
-        // daddToMap();
-
         if (componentList.size < 3) {
             document.getElementById("staticBackdropLabel").innerHTML = "Nicht genügend Schritte."
             document.getElementsByClassName("model-body").innerHTML = "Eine Produktionsstraße besteht aus mindestens 3 Schritten. "
             document.getElementById("modalBtn").setAttribute("data-bs-toggle", "modal")
             document.getElementById("modalBtn").click();
             document.getElementById("modalBtn").removeAttribute("data-bs-toggle", "modal")
-
         } else {
             let cm = models.find(mod => carmodel == mod.id)
             let newLine = {
@@ -51,18 +40,13 @@ const NewProduction = () => {
                 },
                 "components": componentList,
                 "active": false,
-                //"runnable": checkRunnable()
             }
-            
             dispatch(buildNewProductionline(newLine));
-
         }
-
     }
 
     const nextStep = () => {
-        //addToMap();
-        if (componentList[componentList.length -1].id == undefined) {
+        if (componentList[componentList.length - 1].id == undefined) {
             document.getElementById("staticBackdropLabel").innerHTML = "Schritt unvollständig"
             document.getElementsByClassName("model-body").innerHTML = "Eine Produktionsstraße besteht aus mindestens 3 Schritten. "
             document.getElementById("modalBtn").setAttribute("data-bs-toggle", "modal")
@@ -70,8 +54,7 @@ const NewProduction = () => {
             document.getElementById("modalBtn").removeAttribute("data-bs-toggle", "modal")
         } else {
             setOrder([...order, order.length + 1])
-            dispatch(setCompBusy(componentList[componentList.length -1]));
-            
+            dispatch(setCompBusy(componentList[componentList.length - 1]));
             document.querySelectorAll(`.prodStep${order.length}`).forEach(element => element.setAttribute("disabled", true))
         }
     }
@@ -79,11 +62,8 @@ const NewProduction = () => {
 
 
     return (
-
         <div className="container-fluid">
             <h1 className="mb-3">Neue Produktionsstraße anlegen</h1>
-
-
             <form>
                 <div className="row mb-3">
                     <label htmlFor="colFormLabel" className="col-sm-2 col-form-label">Name</label>
@@ -91,21 +71,17 @@ const NewProduction = () => {
                         <input type="email" className="form-control" id="colFormLabel" placeholder="Produktionsstraßenname" onChange={(e) => setName(e.target.value)} />
                     </div>
                 </div>
-
                 <div className="row mb-3">
                     <label htmlFor="colFormLabel" className="col-sm-2 col-form-label">Modell</label>
                     <div className="col-sm-4">
                         <select className="form-select" aria-label="Default select example" onChange={(e) => setCarmodel(e.target.value)} >
                             <option defaultValue>Fahrzeugmodell wählen</option>
                             {models?.map(mod => <option value={mod.id}>{mod.name}</option>)};
-                          
                         </select>
                     </div>
                 </div>
-
-                {order.map((o, i) => <ProductionStep key={i} order={o} componentList ={componentList} setComponentList={setComponentList} robots={robotList} stations={stationList} employees={employeeList} />)}
+                {order.map((o, i) => <ProductionStep key={i} order={o} componentList={componentList} setComponentList={setComponentList} robots={robotList} stations={stationList} employees={employeeList} />)}
             </form>
-
             <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
@@ -122,12 +98,9 @@ const NewProduction = () => {
                     </div>
                 </div>
             </div>
-
             <button className="btn btn-primary m-1" id="modalBtn" data-bs-target="#staticBackdrop" onClick={() => nextStep()}>Schritt hinzufügen</button>
             <button className="btn btn-primary m-1" onClick={() => buildProduction()}>speichern</button>
-            {/* <button onClick={() => setOrder(order.slice(0, -1))}>Schritt entfernen</button> */}
             <NavLink to="/"><button className="btn btn-primary m-1">home</button></NavLink>
-
         </div>
     )
 }

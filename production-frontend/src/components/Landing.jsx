@@ -21,7 +21,7 @@ const Landing = () => {
     }, [])
 
     const status = useSelector(state => state.ressources.status)
-    const simulations = useSelector(state => state.productionlines.simulatedLines)
+
 
 
     const lines = useSelector(state => state.productionlines.productionlines)
@@ -34,8 +34,11 @@ const Landing = () => {
         return (
             <div className="container-fluid">
                 <h1>ProduktionsstraßenplanungsApp</h1>
+                <NavLink to="/createproductionline"><button className="btn btn-primary m-1">Neue Produktionsstraße anlegen</button></NavLink>
+                <NavLink to="/createstation"><button className="btn btn-primary m-1" >Neue Ressource anlegen</button></NavLink>
+                <caption className="d-flex justify-content-between ">Aktuelle Produktionsstraßen <button className="btn btn-light m-1" ><i className="bi bi-arrow-clockwise"></i>
+                    Aktualisieren</button></caption>
                 <table className="table caption-top">
-                    <caption>Aktuelle Produktionsstraßen</caption>
                     <thead className="table-light">
                         <tr>
                             <th scope="col">#</th>
@@ -45,7 +48,7 @@ const Landing = () => {
                             <th scope="col">Simulationsstatus</th>
                             <th scope="col">Stückzahl</th>
                             <th scope="col">Speed</th>
-                            <th scope="col">Start/Stop/Statistik</th>
+                            <th scope="col">Start/Stop</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,8 +56,7 @@ const Landing = () => {
                     </tbody>
                 </table>
 
-                <NavLink to="/createproductionline"><button className="btn btn-primary m-1">Neue Produktionsstraße anlegen</button></NavLink>
-                <NavLink to="/createstation"><button className="btn btn-primary m-1" >Neue Ressource anlegen</button></NavLink>
+
 
 
             </div>

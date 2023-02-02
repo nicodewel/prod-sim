@@ -14,6 +14,15 @@ const NewRessource = () => {
 
 
     const checkTypeAndSave = (t) => {
+
+
+        var regex = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{3,}$/g;
+        if (!name.match(regex)) {
+            alert("Name muss mindestens 3 Zeichen enthalten und darf keine Sonderzeichen enthalten.")
+            return;
+        }
+
+
         switch (t) {
             case "Roboter":
                 dispatch(createNewRobot({ productionTime: time, step: 0, liftime: 1000, name: name, type: "robot" }));
@@ -29,10 +38,7 @@ const NewRessource = () => {
     }
 
     return (
-
-
         <div className="container-fluid">
-
             <h1>Neue Ressource erstellen</h1>
             <form>
                 <div className="row mb-3">
@@ -45,7 +51,6 @@ const NewRessource = () => {
                             <option value="Mitarbeiter">Mitarbeiter</option>
                         </select>
                     </div>
-
                 </div>
                 <div className="row mb-3">
                     <label htmlFor="colFormLabel" className="col-sm-2 col-form-label">Name:</label>
@@ -53,7 +58,6 @@ const NewRessource = () => {
                         <input type="email" className="form-control" id="colFormLabel" placeholder="Ressourcenname" onChange={(e) => { setName(e.target.value) }} />
                     </div>
                 </div>
-
                 {type != "Mitarbeiter" ? <div className="row mb-3">
                     <label htmlFor="colFormLabel" className="col-sm-2 col-form-label">Benötigte Zeit:</label>
                     <div className="col-sm-10">
@@ -61,21 +65,11 @@ const NewRessource = () => {
                     </div>
                 </div> : <div></div>}
 
-
-
-
             </form >
             <button className="btn btn-primary m-1" onClick={() => checkTypeAndSave(type)}>erstellen</button>
             <NavLink to="/"><button className="btn btn-primary m-1">zurück</button></NavLink>
-
         </div >
-
-
-
-
     )
-
-
 }
 
 export default NewRessource;

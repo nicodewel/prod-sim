@@ -7,8 +7,6 @@ import simulationSlice from "../components/production/simulationSlice";
 const rootReducer = combineReducers({
     ressources: ressourceSlice,
     productionlines: productionlineSlice,
-    simulations: simulationSlice
-
 });
 
 export default rootReducer;

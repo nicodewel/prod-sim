@@ -19,7 +19,6 @@ export const getAllProductionlines = createAsyncThunk(
     async () => {
         const response = await api.productionLines.getAll();
         const json = await response.json()
-        console.log("PRODLINES: ", json)
         return json;
     }
 )
@@ -38,7 +37,8 @@ export const simulateProductionline = createAsyncThunk(
     "ProductionLines/simulate/start",
     async (productionline) => {
         const response = await api.simulations.addToSimulation(productionline);
-        return response;
+        const json = response.json();
+        return json;
     }
 )
 
@@ -46,7 +46,8 @@ export const stopSimulation = createAsyncThunk(
     "ProductionLines/simulate/stop",
     async (productionline) => {
         const response = await api.simulations.stopSimulation(productionline)
-        return response;
+        const json = response.json();
+        return json;
     }
 )
 
