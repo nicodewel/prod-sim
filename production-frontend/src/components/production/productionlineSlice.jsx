@@ -1,11 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Api } from "../../backendApi";
+import { useDispatch } from "react-redux";
+import { addSimulation, removeSimulation } from "./simulationSlice";
 
 const api = new Api();
 const initialState = {
     productionlines: [],
+    simulatedLines: [],
     status: "idle",
 };
+
 
 
 
@@ -31,11 +35,27 @@ export const buildNewProductionline = createAsyncThunk(
 )
 
 export const simulateProductionline = createAsyncThunk(
-    "ProductionLines/simulate",
+    "ProductionLines/simulate/start",
     async (productionline) => {
-        console.log("PRODUCTIONLINE IN ACTION: ", productionline)
         const response = await api.simulations.addToSimulation(productionline);
         return response;
+    }
+)
+
+export const stopSimulation = createAsyncThunk(
+    "ProductionLines/simulate/stop",
+    async (productionline) => {
+        const response = await api.simulations.stopSimulation(productionline)
+        return response;
+    }
+)
+
+export const getActiveSimulations = createAsyncThunk(
+    "simulations/load",
+    async () => {
+        const response = await api.simulations.getActiveSimulations();
+        const json = await response.json()
+        return json;
     }
 )
 
@@ -66,7 +86,26 @@ const productionlineSlice = createSlice({
                 state.status = "idle";
                 let index = state.productionlines.findIndex(s => s.id == action.payload.id);
                 state.productionlines[index] = action.payload;
+                state.simulatedLines = [...state.simulatedLines, action.payload];
                 alert(`Die Produktionslinie  wurde erfolgreich gestartet`)
+
+            })
+            .addCase(stopSimulation.pending, (state, action) => {
+                state.status = 'loading';
+            })
+            .addCase(stopSimulation.fulfilled, (state, action) => {
+                state.status = "idle";
+                let index = state.productionlines.findIndex(s => s.id == action.payload.id);
+                state.productionlines[index] = action.payload;
+                state.simulatedLines = state.simulatedLines.filter(s => s.id != action.payload.id)
+                alert(`Die Produktionslinie wurde erfolgreich gestoppt`)
+            })
+            .addCase(getActiveSimulations.pending, (state, action) => {
+                state.status = "loading";
+            })
+            .addCase(getActiveSimulations.fulfilled, (state, action) => {
+                state.status = "idle";
+                state.simulatedLines = action.payload;
             })
     }
 })

@@ -151,7 +151,7 @@ export declare class Api<SecurityDataType extends unknown> extends HttpClient<Se
      * @name StopSimulation
      * @request DELETE:/simulations
      */
-    stopSimulation: (data: ProductionLine, params?: RequestParams) => Promise<HttpResponse<void, any>>;
+    stopSimulation: (data: ProductionLine, params?: RequestParams) => Promise<HttpResponse<ProductionLine, any>>;
     /**
      * No description
      *

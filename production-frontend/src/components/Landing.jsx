@@ -4,6 +4,8 @@ import { NavLink } from "react-router-dom";
 import ProductionLine from "./production/ProductionLine";
 import { getAllProductionlines } from "./production/productionlineSlice";
 import { getAllComponents, getAllEmployees, getAllCarModels } from "./production/ressourceSlice";
+import { getActiveSimulations } from "./production/simulationSlice";
+
 
 const Landing = () => {
 
@@ -15,12 +17,16 @@ const Landing = () => {
         dispatch(getAllCarModels())
         dispatch(getAllEmployees())
         dispatch(getAllProductionlines())
+        dispatch(getActiveSimulations());
     }, [])
 
     const status = useSelector(state => state.ressources.status)
+    const simulations = useSelector(state => state.productionlines.simulatedLines)
 
 
     const lines = useSelector(state => state.productionlines.productionlines)
+
+
 
     const renderLoading = () => <div className="spinner-border position-absolute top-50 start-50" role="status"></div>;
 
@@ -38,7 +44,7 @@ const Landing = () => {
                             <th scope="col">Status</th>
                             <th scope="col">Simulationsstatus</th>
                             <th scope="col">Stückzahl</th>
-                            <th  scope="col">Speed</th>
+                            <th scope="col">Speed</th>
                             <th scope="col">Start/Stop/Statistik</th>
                         </tr>
                     </thead>
