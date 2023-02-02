@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { createNewRobot, createNewEmployee, createNewStation } from "./ressourceSlice";
 
@@ -8,7 +8,7 @@ const NewRessource = () => {
     const dispatch = useDispatch();
     const [type, setType] = useState();
     const [name, setName] = useState();
-    const [time, setTime] = useState();
+    const [time, setTime] = useState(10);
 
     const checkTypeAndSave = (t) => {
         var regexName = /^[a-zA-Z0-9]{3,}$/g;
@@ -16,7 +16,9 @@ const NewRessource = () => {
         if (!name.match(regexName)) {
             alert("Name mus mindestens 3 Zeichen lang sein und darf keine Sonderzeichen enthalten.")
             return;
-        } else if (!time.match(regexTime)) {
+        }
+        console.log("TIME: ", time.toString())
+        if (!time.toString().match(regexTime)) {
             alert("Ein Arbeitsschritt darf maximal 999999 Sekunden dauern und darf keine Buchstaben oder Sonderzeichen enthalten.")
             return;
         }
@@ -29,6 +31,8 @@ const NewRessource = () => {
                 break;
             case "Mitarbeiter":
                 dispatch(createNewEmployee({ name: name }));
+                break;
+            default:
                 break;
         }
     }
@@ -54,12 +58,15 @@ const NewRessource = () => {
                         <input type="email" className="form-control" id="colFormLabel" placeholder="Ressourcenname" onChange={(e) => { setName(e.target.value) }} />
                     </div>
                 </div>
-                {type != "Mitarbeiter" ? <div className="row mb-3">
-                    <label htmlFor="colFormLabel" className="col-sm-2 col-form-label">Benötigte Zeit:</label>
-                    <div className="col-sm-10">
-                        <input type="email" className="form-control" id="colFormLabel" placeholder="in Sekunden" onChange={(e) => { setTime(e.target.value) }} />
-                    </div>
-                </div> : <div></div>}
+
+                {
+                    // eslint-disable-next-line
+                    type != "Mitarbeiter" ? <div className="row mb-3">
+                        <label htmlFor="colFormLabel" className="col-sm-2 col-form-label">Benötigte Zeit:</label>
+                        <div className="col-sm-10">
+                            <input type="email" className="form-control" id="colFormLabel" placeholder={`${time} (in Sekunden)`} onChange={(e) => { setTime(e.target.value) }} />
+                        </div>
+                    </div> : <div></div>}
 
             </form >
             <button className="btn btn-primary m-1" onClick={() => checkTypeAndSave(type)}>erstellen</button>

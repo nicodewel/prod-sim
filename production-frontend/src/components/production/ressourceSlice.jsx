@@ -24,7 +24,7 @@ export const createNewRobot = createAsyncThunk(
     async (robot) => {
         const response = await api.productionLineComponents.save1(robot);
         const json = await response.json()
-        return response;
+        return json;
     }
 )
 
@@ -41,7 +41,8 @@ export const createNewStation = createAsyncThunk(
     "stations/build",
     async (station) => {
         const response = await api.productionLineComponents.save1(station);
-        return response;
+        const json = await response.json();
+        return json;
     }
 )
 
@@ -58,7 +59,8 @@ export const createNewEmployee = createAsyncThunk(
     "employees/build",
     async (employee) => {
         const response = await api.employees.save2(employee);
-        return response;
+        const json = await response.json();
+        return json;
     }
 )
 

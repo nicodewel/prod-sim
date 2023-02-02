@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { simulateProductionline } from "./productionlineSlice";
 import { stopSimulation } from "./productionlineSlice";
@@ -10,25 +10,29 @@ const ProductionLine = ({ pl, number }) => {
     const [simSpeed, setSimSpeed] = useState(pl.simTime)
 
     const models = useSelector(state => state.ressources.carModels)
+    // eslint-disable-next-line
     const thisSim = useSelector(state => state.productionlines.simulatedLines).find(sim => sim.id == pl.id)
 
     const startSimulation = () => {
+        // eslint-disable-next-line
         let newMod = models.find(mod => mod.id == carModel)
         let data = { ...pl, carModel: newMod, simSpeed: simSpeed }
         var regexSpeed = /^[0-9]{1,3}$/g;
         if (!isNaN(simSpeed) && simSpeed.match(regexSpeed)) {
             dispatch(simulateProductionline(data));
         } else {
-            alert("Bitte eine Ganzahl  zwischen 1-999 eintragen")
+            alert("Bitte eine Ganzahl zwischen 1-999 eintragen")
         }
     }
 
     return (
         <tr>
             <th scope="row">{number + 1}</th>
+            {/* eslint-disable-next-line */}
             <td>{pl.name == null ? "Linienname" : pl.name}</td>
             <td>
                 <select className="form-select" onChange={e => setCarModel(e.target.value)} disabled={pl.active}>
+                    {/* eslint-disable-next-line */}
                     {models.map((mod, i) => <option key={i} value={mod.id} selected={pl.carModel.name == mod.name ? "selected" : ""}>{mod.name}</option>)}
                 </select>
             </td>

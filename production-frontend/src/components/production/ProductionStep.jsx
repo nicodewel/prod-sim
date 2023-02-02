@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setEmployeeBusy } from "./ressourceSlice";
 
@@ -20,25 +20,30 @@ const ProductionStep = ({ order, componentList, setComponentList, robots, statio
         let comp;
         switch (type) {
             case "robot":
+                /* eslint-disable-next-line */
                 comp = robots.find(e => e.id == id);
                 break;
+            /* eslint-disable-next-line */
             case "station": comp = stations.find(e => e.id == id);
                 break;
             case "employee":
+                /* eslint-disable-next-line */
                 if (!employees.find(emp => emp.id == stationEmp)) {
                     alert("kein Mitarbeiter ausgewählt!")
                 } else {
+                    /* eslint-disable-next-line */
                     let choosenEmp = employees.find(emp => emp.id == stationEmp)
                     choosenEmp = { ...choosenEmp, onDuty: true }
                     console.log("CHOOSEN: ", choosenEmp)
                     comp = { ...componentList[order - 1], employees: [...componentList[order - 1].employees, choosenEmp] };
                     setBusyEmp([...busyEmp, choosenEmp]);
                     dispatch(setEmployeeBusy(choosenEmp))
+                    /* eslint-disable-next-line */
                     ref.current.employees = ref.current.employees.filter(e => e.id != choosenEmp.id);
                     document.getElementById("employee-selection").value = "Mitarbeiter zuordnen";
-                    break;
                 }
-            case "empty":
+                break;
+            default:
                 comp = null;
                 break;
         }
