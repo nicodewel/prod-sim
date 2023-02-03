@@ -18,6 +18,7 @@ import java.util.Map;
 public class SimulationService {
 
     public static final int MINIMAL_STATION_COUNT = 3;
+    private static final int BASE_SIM_TIME = 1;
 
     private List<ProductionLine> activeSimulations = new ArrayList<>();
     private ProductionLineRepository productionLineRepository;
@@ -30,7 +31,7 @@ public class SimulationService {
     // Dabei wird bei einem minimalen Simulationsgeschwindigkeit (simSpeed) von 1 eine Produktionszeit von 1s hinzugefügt
     @Scheduled(fixedRate = 1000)
     public void executeProductionStep() {
-        activeSimulations.forEach(((productionLine) -> productionLine.addSimTime(1)));
+        activeSimulations.forEach(((productionLine) -> productionLine.addSimTime(BASE_SIM_TIME)));
     }
 
     public boolean addToSimulation(ProductionLine productionLine) {

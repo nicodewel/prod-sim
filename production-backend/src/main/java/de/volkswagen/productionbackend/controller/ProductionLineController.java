@@ -41,5 +41,11 @@ public class ProductionLineController {
         return ResponseEntity.ok(productionLineService.saveProductionLine(productionLine));
     }
 
+    @DeleteMapping("/productionLines")
+    public ResponseEntity<Void> delete(@RequestBody long id){
+        productionLineService.deleteProductionLineById(id);
+        return ResponseEntity.noContent().build();
+    }
+
 
 }
