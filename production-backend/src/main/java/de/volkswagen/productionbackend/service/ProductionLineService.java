@@ -45,7 +45,15 @@ public class ProductionLineService {
     }
 
     public void deleteProductionLineById(long id) {
-        productionLineRepository.deleteById(id);
+        Optional<ProductionLine> productionLineOpt = productionLineRepository.findById(id);
+        if (productionLineOpt.isPresent()){
+            ProductionLine pl = productionLineOpt.get();
+            pl.getComponents().clear();
+            pl.setCarModel(null);
+            productionLineRepository.deleteById(id);
+        }
+
+
     }
 
     public ProductionLine saveProductionLine(ProductionLine productionLine) {
