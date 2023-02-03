@@ -17,21 +17,21 @@ public class CarModelController {
     }
 
     @GetMapping("/carModels")
-    public ResponseEntity<List<CarModel>> getAll(){
-        return ResponseEntity.ok(carModelService.getAllCarModels());
+    public ResponseEntity<List<CarModel>> getAll() {
+        return ResponseEntity.ok(this.carModelService.getAllCarModels());
     }
 
     @GetMapping("/carModels/{id}")
-    public ResponseEntity<CarModel> getById(@PathVariable long id){
-        if (carModelService.getCarModelById(id).isEmpty()){
+    public ResponseEntity<CarModel> getById(@PathVariable long id) {
+        if (this.carModelService.getCarModelById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(carModelService.getCarModelById(id).get());
+        return ResponseEntity.ok(this.carModelService.getCarModelById(id).get());
     }
 
     @PostMapping("/carModels")
-    public ResponseEntity<CarModel> save(@RequestBody CarModel carModel){
-        return ResponseEntity.ok(carModelService.saveCarModel(carModel));
+    public ResponseEntity<CarModel> save(@RequestBody CarModel carModel) {
+        return ResponseEntity.ok(this.carModelService.saveCarModel(carModel));
     }
 
 

@@ -41,18 +41,18 @@ public class ProductionLineService {
     }
 
     public Optional<ProductionLine> getProductionLineById(long id) {
-        return productionLineRepository.findById(id);
+        return this.productionLineRepository.findById(id);
     }
 
     public void deleteProductionLineById(long id) {
-        Optional<ProductionLine> productionLineOpt = productionLineRepository.findById(id);
-        if (productionLineOpt.isPresent()){
+        Optional<ProductionLine> productionLineOpt = this.productionLineRepository.findById(id);
+        if (productionLineOpt.isPresent()) {
             ProductionLine pl = productionLineOpt.get();
             pl.getComponents().forEach(c -> c.setProductionLine(null));
             pl.getComponents().clear();
             pl.setCarModel(null);
-            productionLineRepository.save(pl);
-            productionLineRepository.deleteById(id);
+            this.productionLineRepository.save(pl);
+            this.productionLineRepository.deleteById(id);
         }
 
 
@@ -61,13 +61,13 @@ public class ProductionLineService {
     public ProductionLine saveProductionLine(ProductionLine productionLine) {
         List<ProductionLineComponent> components = productionLine.getComponents();
         CarModel carModel = productionLine.getCarModel();
-        if(carModel != null){
-            productionLine.setCarModel(carModelRepository.save(carModel));
+        if (carModel != null) {
+            productionLine.setCarModel(this.carModelRepository.save(carModel));
         }
 
 
         productionLine.setComponents(new ArrayList<>());
-        productionLineRepository.save(productionLine);
+        this.productionLineRepository.save(productionLine);
 
         components.forEach(pc -> {
             List<Employee> employees = pc.getEmployees();
@@ -79,13 +79,13 @@ public class ProductionLineService {
                 employees.forEach(emp -> {
                     emp.setOnDuty(true);
                     emp.setComponent(pc);
-                    employeeRepository.save(emp);
+                    this.employeeRepository.save(emp);
                     pc.getEmployees().add(emp);
                 });
             }
-            componentRepository.save(pc);
+            this.componentRepository.save(pc);
         });
         productionLine.setComponents(components);
-        return productionLineRepository.save(productionLine);
+        return this.productionLineRepository.save(productionLine);
     }
 }

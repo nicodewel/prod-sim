@@ -16,19 +16,19 @@ public class CarModelService {
         this.carModelRepository = carModelRepository;
     }
 
-    public List<CarModel> getAllCarModels(){
-        return carModelRepository.findAll();
+    public List<CarModel> getAllCarModels() {
+        return this.carModelRepository.findAll();
     }
 
-    public Optional<CarModel> getCarModelById(long id){
-        return carModelRepository.findById(id);
+    public Optional<CarModel> getCarModelById(long id) {
+        return this.carModelRepository.findById(id);
     }
 
-    public void deleteCarModelById(long id){
-        carModelRepository.deleteById(id);
+    public void deleteCarModelById(long id) {
+        this.carModelRepository.deleteById(id);
     }
 
-    public CarModel saveCarModel(CarModel carModel){
-        return carModelRepository.save(carModel);
+    public CarModel saveCarModel(CarModel carModel) {
+        return this.carModelRepository.save(carModel);
     }
 }

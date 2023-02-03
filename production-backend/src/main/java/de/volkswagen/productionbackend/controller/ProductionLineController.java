@@ -22,28 +22,28 @@ public class ProductionLineController {
     }
 
     @GetMapping("/productionLines")
-    public ResponseEntity<List<ProductionLine>> getAll(){
-        List<ProductionLine> list = productionLineService.getAllProductionLines();
+    public ResponseEntity<List<ProductionLine>> getAll() {
+        List<ProductionLine> list = this.productionLineService.getAllProductionLines();
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("/productionLines/{id}")
-    public ResponseEntity<ProductionLine> getById(@PathVariable long id){
-        if (productionLineService.getProductionLineById(id).isEmpty()){
+    public ResponseEntity<ProductionLine> getById(@PathVariable long id) {
+        if (this.productionLineService.getProductionLineById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(productionLineService.getProductionLineById(id).get());
+        return ResponseEntity.ok(this.productionLineService.getProductionLineById(id).get());
     }
 
     @PostMapping("/productionLines")
-    public ResponseEntity<ProductionLine> save(@RequestBody ProductionLine productionLine){
-        productionLine.validateConfiguration() ;
-        return ResponseEntity.ok(productionLineService.saveProductionLine(productionLine));
+    public ResponseEntity<ProductionLine> save(@RequestBody ProductionLine productionLine) {
+        productionLine.validateConfiguration();
+        return ResponseEntity.ok(this.productionLineService.saveProductionLine(productionLine));
     }
 
     @DeleteMapping("/productionLines")
-    public ResponseEntity<Void> delete(@RequestBody long id){
-        productionLineService.deleteProductionLineById(id);
+    public ResponseEntity<Void> delete(@RequestBody long id) {
+        this.productionLineService.deleteProductionLineById(id);
         return ResponseEntity.noContent().build();
     }
 

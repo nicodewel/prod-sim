@@ -1,16 +1,10 @@
 package de.volkswagen.productionbackend.controller;
 
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import de.volkswagen.productionbackend.model.*;
 import de.volkswagen.productionbackend.repository.CarModelRepository;
 import de.volkswagen.productionbackend.repository.EmployeeRepository;
 import de.volkswagen.productionbackend.repository.ProductionLineComponentRepository;
-import de.volkswagen.productionbackend.repository.ProductionLineRepository;
 import de.volkswagen.productionbackend.service.ProductionLineService;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -20,18 +14,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@AutoConfigureMockMvc
 @SpringBootTest
+@AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ProductionLineControllerTest {
-
+public class SimulationControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -43,10 +36,6 @@ public class ProductionLineControllerTest {
     @Autowired
     private CarModelRepository carRepository;
 
-    public ProductionLineControllerTest() {
-
-    }
-
     @BeforeAll
     void setUp() {
         List<ProductionLineComponent> productOrder = new ArrayList<>();
@@ -56,6 +45,12 @@ public class ProductionLineControllerTest {
         robot.setName("Robert");
         robot.setProductionTime(2);
         productOrder.add( productionLineComponentRepository.save(robot));
+
+        ProductionLineComponent robot2 = new ProductionLineComponent();
+        robot2.setType(Type.robot);
+        robot2.setName("Robert");
+        robot2.setProductionTime(2);
+        productOrder.add( productionLineComponentRepository.save(robot2));
 
         Employee employee = new Employee();
         employee.setName("Erwin");
@@ -87,35 +82,16 @@ public class ProductionLineControllerTest {
 
     }
 
-
     @Test
-    void getConfigurations() throws Exception {
-        mockMvc.perform(get("/productionLines"))
+    void postSimulation() throws Exception {
+        String request = "{\"id\":1,\"name\":\"Lenny\",\"simSpeed\":10,\"simTime\":0,\"timeToCompletion\":0,\"finishedParts\":0,\"carModel\":{\"id\":1,\"name\":\"ID3\",\"complexity\":1},\"components\":[{\"id\":1,\"name\":\"Robert\",\"step\":0,\"productionTime\":2,\"employees\":[],\"type\":\"robot\",\"onDuty\":true},{\"name\":\"Robert1\",\"step\":0,\"productionTime\":2,\"employees\":[],\"type\":\"robot\",\"onDuty\":true},{\"id\":2,\"name\":\"Band1\",\"step\":0,\"productionTime\":3,\"employees\":[{\"id\":1,\"name\":\"Erwin\",\"onDuty\":true}],\"type\":\"station\",\"onDuty\":true}],\"active\":true,\"runnable\":true}";
+        mockMvc.perform(post("/simulations")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(request))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name").value("Lenny"))
-                .andExpect(jsonPath("$[0].carModel.name").value("ID3"))
-                .andExpect(jsonPath("$[0].active").value("true"))
-                .andExpect(jsonPath("$[0].components.length()").value(2));
+                .andExpect(jsonPath("$.name").value("Lenny"))
+                .andExpect(jsonPath("$.active").value("true"))
+                .andExpect(jsonPath("$.runnable").value("true"));
     }
-
-    @Test
-    void postProductLine() throws Exception {
-        String request = "{\"name\":\"Franz\",\"carModel\":{\"name\":\"ID4\",\"complexity\":1},\"components\":[{\"id\":\"2\",\"type\":\"station\",\"productionTime\":2,\"employees\":[{\"id\":\"1\",\"name\":\"Hans\"}],\"name\":\"Band2\"},{\"id\":\"1\",\"productionTime\":2,\"lifetime\":0,\"name\":\"Roberto\"}],\"active\":false,\"runnable\":true}";
-        mockMvc.perform(post("/productionLines")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(request))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Franz"))
-                .andExpect(jsonPath("$.carModel.name").value("ID4"))
-                .andExpect(jsonPath("$.active").value("false"))
-        ;
-    }
-
-
-
-
-
-
-
 
 }

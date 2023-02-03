@@ -17,21 +17,21 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees")
-    public ResponseEntity<List<Employee>> getAll(){
-        return ResponseEntity.ok(employeeService.getAllEmployees());
+    public ResponseEntity<List<Employee>> getAll() {
+        return ResponseEntity.ok(this.employeeService.getAllEmployees());
     }
 
     @GetMapping("/employees/{id}")
-    public ResponseEntity<Employee> getById(@PathVariable long id){
-        if (employeeService.getEmployeeById(id).isEmpty()){
+    public ResponseEntity<Employee> getById(@PathVariable long id) {
+        if (this.employeeService.getEmployeeById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(employeeService.getEmployeeById(id).get());
+        return ResponseEntity.ok(this.employeeService.getEmployeeById(id).get());
     }
 
     @PostMapping("/employees")
-    public ResponseEntity<Employee> save(@RequestBody Employee employee){
-        return ResponseEntity.ok(employeeService.saveEmployee(employee));
+    public ResponseEntity<Employee> save(@RequestBody Employee employee) {
+        return ResponseEntity.ok(this.employeeService.saveEmployee(employee));
     }
 
 

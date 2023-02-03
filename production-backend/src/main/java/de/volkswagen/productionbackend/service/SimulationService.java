@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 
 @Service
 @Data
@@ -28,34 +25,34 @@ public class SimulationService {
     }
 
     // Ein Simulationsschritt wird pro Sekunde ausgeführt
-    // Dabei wird bei einem minimalen Simulationsgeschwindigkeit (simSpeed) von 1 eine Produktionszeit von 1s hinzugefügt
+    // Dabei wird bei einem minimalen Simulationsgeschwindigkeit (simSpeed) von 1 eine Produktionszeit von BASE_SIM_TIME s hinzugefügt
     @Scheduled(fixedRate = 1000)
     public void executeProductionStep() {
-        activeSimulations.forEach(((productionLine) -> productionLine.addSimTime(BASE_SIM_TIME)));
+        this.activeSimulations.forEach(((productionLine) -> productionLine.addSimTime(BASE_SIM_TIME)));
     }
 
     public boolean addToSimulation(ProductionLine productionLine) {
-        int index = activeSimulations.indexOf(productionLine);
+        int index = this.activeSimulations.indexOf(productionLine);
         if (index == -1) {
             if (!productionLine.validateConfiguration()) return false;
             productionLine.setFinishedParts(0);
-            activeSimulations.add(productionLine);
+            this.activeSimulations.add(productionLine);
             return true;
         }
-        activeSimulations.get(index).setSimSpeed(productionLine.getSimSpeed());
+        this.activeSimulations.get(index).setSimSpeed(productionLine.getSimSpeed());
         return true;
     }
 
-    public ProductionLine stopSimulation(ProductionLine productionLine){
-        int index = activeSimulations.indexOf(productionLine);
+    public ProductionLine stopSimulation(ProductionLine productionLine) {
+        int index = this.activeSimulations.indexOf(productionLine);
         if (index == -1) {
             productionLine.setActive(false);
             return productionLine;
         }
-        ProductionLine pl = activeSimulations.get(index);
+        ProductionLine pl = this.activeSimulations.get(index);
         pl.setActive(false);
-        ProductionLine finishedSim = productionLineRepository.save(pl);
-        activeSimulations.remove(productionLine);
+        ProductionLine finishedSim = this.productionLineRepository.save(pl);
+        this.activeSimulations.remove(productionLine);
         return finishedSim;
     }
 

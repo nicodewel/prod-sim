@@ -16,19 +16,19 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public List<Employee> getAllEmployees(){
-        return employeeRepository.findAll();
+    public List<Employee> getAllEmployees() {
+        return this.employeeRepository.findAll();
     }
 
-    public Optional<Employee> getEmployeeById(long id){
-        return employeeRepository.findById(id);
+    public Optional<Employee> getEmployeeById(long id) {
+        return this.employeeRepository.findById(id);
     }
 
-    public void deleteEmployeeById(long id){
-        employeeRepository.deleteById(id);
+    public void deleteEmployeeById(long id) {
+        this.employeeRepository.deleteById(id);
     }
 
-    public Employee saveEmployee(Employee employee){
-        return employeeRepository.save(employee);
+    public Employee saveEmployee(Employee employee) {
+        return this.employeeRepository.save(employee);
     }
 }

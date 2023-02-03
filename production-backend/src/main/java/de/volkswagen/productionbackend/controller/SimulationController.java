@@ -18,13 +18,13 @@ public class SimulationController {
     }
 
     @GetMapping("/simulations")
-    public ResponseEntity<List<ProductionLine>>getActiveSimulations(){
-        return ResponseEntity.ok(simulationService.getActiveSimulations());
+    public ResponseEntity<List<ProductionLine>> getActiveSimulations() {
+        return ResponseEntity.ok(this.simulationService.getActiveSimulations());
     }
 
     @PostMapping("/simulations")
-    public ResponseEntity<ProductionLine> addToSimulation(@RequestBody ProductionLine productionLine){
-        if (simulationService.addToSimulation(productionLine)) {
+    public ResponseEntity<ProductionLine> addToSimulation(@RequestBody ProductionLine productionLine) {
+        if (this.simulationService.addToSimulation(productionLine)) {
             productionLine.setActive(true);
             return ResponseEntity.ok(productionLine);
         }
@@ -32,13 +32,13 @@ public class SimulationController {
     }
 
     @PostMapping("/simulations/modifySpeed")
-    public ResponseEntity<Boolean> modifySimulationSpeed(@RequestBody ProductionLine productionLine){
-        if (simulationService.addToSimulation(productionLine)) return ResponseEntity.accepted().build();
+    public ResponseEntity<Boolean> modifySimulationSpeed(@RequestBody ProductionLine productionLine) {
+        if (this.simulationService.addToSimulation(productionLine)) return ResponseEntity.accepted().build();
         return ResponseEntity.badRequest().build();
     }
 
     @DeleteMapping("/simulations")
-    public ResponseEntity<ProductionLine> stopSimulation(@RequestBody ProductionLine productionLine){
-        return ResponseEntity.ok(simulationService.stopSimulation(productionLine));
+    public ResponseEntity<ProductionLine> stopSimulation(@RequestBody ProductionLine productionLine) {
+        return ResponseEntity.ok(this.simulationService.stopSimulation(productionLine));
     }
 }

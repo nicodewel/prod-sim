@@ -17,20 +17,20 @@ public class ProductionLineComponentController {
     }
 
     @GetMapping("/productionLineComponents")
-    public ResponseEntity<List<ProductionLineComponent>> getAll(){
-        return ResponseEntity.ok(productionLineComponentService.getAllProductionLineComponents());
+    public ResponseEntity<List<ProductionLineComponent>> getAll() {
+        return ResponseEntity.ok(this.productionLineComponentService.getAllProductionLineComponents());
     }
 
     @GetMapping("/productionLineComponents/{id}")
-    public ResponseEntity<ProductionLineComponent> getById(@PathVariable long id){
-        if (productionLineComponentService.getProductionLineComponentById(id).isEmpty()){
+    public ResponseEntity<ProductionLineComponent> getById(@PathVariable long id) {
+        if (this.productionLineComponentService.getProductionLineComponentById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(productionLineComponentService.getProductionLineComponentById(id).get());
+        return ResponseEntity.ok(this.productionLineComponentService.getProductionLineComponentById(id).get());
     }
 
     @PostMapping("/productionLineComponents")
-    public ResponseEntity<ProductionLineComponent> save(@RequestBody ProductionLineComponent productionLineComponent){
-        return ResponseEntity.ok(productionLineComponentService.saveProductionLineComponent(productionLineComponent));
+    public ResponseEntity<ProductionLineComponent> save(@RequestBody ProductionLineComponent productionLineComponent) {
+        return ResponseEntity.ok(this.productionLineComponentService.saveProductionLineComponent(productionLineComponent));
     }
 }

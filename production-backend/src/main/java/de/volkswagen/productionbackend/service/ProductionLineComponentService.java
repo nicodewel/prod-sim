@@ -16,19 +16,19 @@ public class ProductionLineComponentService {
         this.productionLineComponentRepository = productionLineComponentRepository;
     }
 
-    public List<ProductionLineComponent> getAllProductionLineComponents(){
-        return productionLineComponentRepository.findAll();
+    public List<ProductionLineComponent> getAllProductionLineComponents() {
+        return this.productionLineComponentRepository.findAll();
     }
 
-    public Optional<ProductionLineComponent> getProductionLineComponentById(long id){
-        return productionLineComponentRepository.findById(id);
+    public Optional<ProductionLineComponent> getProductionLineComponentById(long id) {
+        return this.productionLineComponentRepository.findById(id);
     }
 
-    public void deleteProductionLineComponentById(long id){
-        productionLineComponentRepository.deleteById(id);
+    public void deleteProductionLineComponentById(long id) {
+        this.productionLineComponentRepository.deleteById(id);
     }
 
-    public ProductionLineComponent saveProductionLineComponent(ProductionLineComponent productionLineComponent){
-        return productionLineComponentRepository.save(productionLineComponent);
+    public ProductionLineComponent saveProductionLineComponent(ProductionLineComponent productionLineComponent) {
+        return this.productionLineComponentRepository.save(productionLineComponent);
     }
 }

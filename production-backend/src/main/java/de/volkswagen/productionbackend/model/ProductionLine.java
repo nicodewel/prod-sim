@@ -41,25 +41,25 @@ public class ProductionLine {
     private List<ProductionLineComponent> components = new ArrayList<>();
 
     public boolean validateConfiguration() {
-        if (components.size() < MINIMAL_STATION_COUNT) return false;
-        if (simSpeed <= 0) return false;
-        if (carModel.getComplexity() < 0.5f || carModel.getComplexity() > 1.5f) return false;
-        if (components.stream()
+        if (this.components.size() < MINIMAL_STATION_COUNT) return false;
+        if (this.simSpeed <= 0) return false;
+        if (this.carModel.getComplexity() < 0.5f || this.carModel.getComplexity() > 1.5f) return false;
+        if (this.components.stream()
                 .filter(v -> v.getType() == Type.station)
                 .anyMatch(v -> v.getEmployees().isEmpty())
         ) return false;
-        timeToCompletion = components.stream()
+        this.timeToCompletion = this.components.stream()
                 .map(ProductionLineComponent::getProductionTime)
                 .reduce(0L, Long::sum);
-        isRunnable = true;
+        this.isRunnable = true;
         return true;
     }
 
     public void addSimTime(long time) {
-        simTime += time * simSpeed / carModel.getComplexity();
-        while (simTime >= timeToCompletion) {
-            simTime -= timeToCompletion;
-            finishedParts += 1;
+        this.simTime += time * this.simSpeed / this.carModel.getComplexity();
+        while (this.simTime >= this.timeToCompletion) {
+            this.simTime -= this.timeToCompletion;
+            this.finishedParts += 1;
         }
     }
 
