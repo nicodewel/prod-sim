@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import ProductionStep from "./ProductionStep";
 import { useSelector, useDispatch } from "react-redux";
 import { setCompBusy } from "./ressourceSlice";
@@ -8,6 +8,7 @@ import Header from "../Header";
 
 const NewProduction = () => {
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [name, setName] = useState();
     const [carmodel, setCarmodel] = useState();
@@ -42,6 +43,7 @@ const NewProduction = () => {
                 "active": false,
             }
             dispatch(buildNewProductionline(newLine));
+            navigate("/");
         }
     }
 

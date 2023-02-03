@@ -43,6 +43,14 @@ export const stopSimulation = createAsyncThunk(
     }
 )
 
+export const deleteLine = createAsyncThunk(
+    "ProductionLines/delete",
+    async (id) => {
+       await api.productionLines.delete(id);
+       return id; 
+    }
+)
+
 export const getActiveSimulations = createAsyncThunk(
     "simulations/load",
     async () => {
@@ -102,6 +110,9 @@ const productionlineSlice = createSlice({
             .addCase(getActiveSimulations.fulfilled, (state, action) => {
                 state.status = "idle";
                 state.simulatedLines = action.payload;
+            })
+            .addCase(deleteLine.fulfilled, (state, action) => {
+                state.productionlines = state.productionlines.filter(pl => pl.id != action.payload)
             })
     }
 })

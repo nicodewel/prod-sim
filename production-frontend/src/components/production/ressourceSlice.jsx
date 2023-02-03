@@ -64,6 +64,15 @@ export const createNewEmployee = createAsyncThunk(
     }
 )
 
+export const createNewModel = createAsyncThunk(
+    "model/build",
+    async (model) => {
+        const response = await api.carModels.save3(model);
+        const json = await response.json();
+        return json;
+    }
+)
+
 const ressourceSlice = createSlice({
     name: "robots",
     initialState,
@@ -126,6 +135,11 @@ const ressourceSlice = createSlice({
                 state.status = 'idle';
                 state.stations = [...state.stations, action.payload]
                 alert(`Die Station wurde erfolgreich angelegt`)
+            })
+            .addCase(createNewModel.fulfilled, (state, action) => {
+                state.status = 'idle';
+                state.stations = [...state.carModels, action.payload]
+                alert(`Das Fahrzeugmodell wurde erfolgreich angelegt`)
             });
     },
 })

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { simulateProductionline } from "./productionlineSlice";
-import { stopSimulation } from "./productionlineSlice";
+import { simulateProductionline, stopSimulation, deleteLine } from "./productionlineSlice";
 
 
 const ProductionLine = ({ pl, number }) => {
@@ -43,6 +42,7 @@ const ProductionLine = ({ pl, number }) => {
             <td><input className="col-4" placeholder={pl.simSpeed} onChange={(e) => setSimSpeed(e.target.value)} /></td>
             <td style={{ "font-size": "1.5em" }}> <i className="bi bi-play iconhover ms-2" onClick={() => startSimulation()}></i></td>
             <td className="text-center" style={{ "font-size": "1.5em" }}> <i className="bi bi-stop iconhover" onClick={() => dispatch(stopSimulation(pl))} ></i></td>
+            <td className="text-center" style={{ "font-size": "1.5em" }}> <i className="bi bi-trash3" onClick={() => dispatch(deleteLine(pl.id))} ></i></td>
 
         </tr>
 

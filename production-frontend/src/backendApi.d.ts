@@ -182,6 +182,14 @@ export declare class Api<SecurityDataType extends unknown> extends HttpClient<Se
      * No description
      *
      * @tags production-line-controller
+     * @name Delete
+     * @request DELETE:/productionLines
+     */
+    delete: (data: number, params?: RequestParams) => Promise<HttpResponse<void, any>>;
+    /**
+     * No description
+     *
+     * @tags production-line-controller
      * @name GetById
      * @request GET:/productionLines/{id}
      */

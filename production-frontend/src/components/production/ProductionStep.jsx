@@ -7,10 +7,21 @@ const ProductionStep = ({ order, componentList, setComponentList, robots, statio
     const [stationEmp, setStationEmp] = useState()
     const [busyEmp, setBusyEmp] = useState([]);
     const dispatch = useDispatch();
+    const initialEmp = [...employees];
 
     const resetStepSelection = (e, value) => {
-        setStep(value);
-        handleSelection(e, "empty", 0)
+        if(value != "Bitte wählen"){
+            setStep(value);
+            handleSelection(e, "empty", 0)
+        } else {
+            setStep(null)
+            document.getElementById("stationselection").value ="Station auswählen";
+            document.getElementById("employeeselection").value ="Mitarbeiter zuordnen";
+            setBusyEmp(busyEmp => [])
+            ref.current.employees = [...initialEmp]
+            componentList = componentList.pop();
+        }
+        
     }
 
     let ref = useRef({ robots, stations, employees })
@@ -47,11 +58,12 @@ const ProductionStep = ({ order, componentList, setComponentList, robots, statio
                 comp = null;
                 break;
         }
-        let components = [...componentList]
-        components[order - 1] = { ...comp, step: order }
-        setComponentList(componentList => {
+    
+            let components = [...componentList]
+            components[order - 1] = { ...comp, step: order }
+            setComponentList(componentList => {
             return components
-        })
+            })
 
     }
 
@@ -67,7 +79,7 @@ const ProductionStep = ({ order, componentList, setComponentList, robots, statio
                         <select className={generateClassName()} id="robotSelect" onChange={(e) => handleSelection(e, "robot", e.target.value)}>
                             <option defaultValue selected="selected">Roboter wählen</option>
                             {ref.current.robots?.map((robot, i) => {
-                                return (<option key={i} value={robot.id}>{robot.name}</option>)
+                                return (<option key={i} value={robot.id}>{`${robot.name} #${robot.id}`}</option>)
                             }
                             )}
                         </select>
@@ -78,15 +90,15 @@ const ProductionStep = ({ order, componentList, setComponentList, robots, statio
                     <div className="col">
                         <div className="col d-flex">
                             <div className="col-5 mb-2 me-4">
-                                <select className={generateClassName()} onChange={(e) => handleSelection(e, "station", e.target.value)} >
+                                <select id="stationselection" className={generateClassName()} onChange={(e) => handleSelection(e, "station", e.target.value)} >
                                     <option selected="selected1">Station auswählen</option>
                                     {ref.current.stations?.map((station, i) => <option key={i} value={station.id}>{station.name}</option>)}
                                 </select>
                             </div>
 
                             <div className=" col-5 me-2">
-                                <select className={generateClassName()} id="employee-selection" onChange={(e) => setStationEmp(e.target.value)} >
-                                    <option selected="selected2">Mitarbeiter zuordnen</option>
+                                <select  id="employeeselection" className={generateClassName()}  onChange={(e) => setStationEmp(e.target.value)} >
+                                    <option id="employeeselection" selected="selected2">Mitarbeiter zuordnen</option>
                                     {ref.current.employees?.map((emp, i) => <option key={i} value={emp.id}>{emp.name}</option>)}
                                 </select>
                             </div>

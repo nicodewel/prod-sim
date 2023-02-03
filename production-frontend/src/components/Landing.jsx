@@ -37,8 +37,8 @@ const Landing = () => {
 
     const renderLoading = () => <div className="spinner-border position-absolute top-50 start-50" role="status"></div>;
 
-    const createPlBtn = <NavLink to="/createproductionline"><button className="vw-btn m-1">Neue Produktionsstraße anlegen</button></NavLink>;
-    const createResBtn = <NavLink to="/createstation"><button className="vw-btn m-1" >Neue Ressource anlegen</button></NavLink>;
+    const createPlBtn = <NavLink to="/createproductionline"><button className="vw-btn m-1" onClick={() => clearInterval(interval.current)} >Neue Produktionsstraße anlegen</button></NavLink>;
+    const createResBtn = <NavLink to="/createstation"><button className="vw-btn m-1" onClick={() => clearInterval(interval.current)} >Neue Ressource anlegen</button></NavLink>;
     const headBtns = [createPlBtn, createResBtn];
 
 
@@ -78,6 +78,7 @@ const Landing = () => {
                             <th scope="col">Speed</th>
                             <th scope="col">Start </th>
                             <th className="text-center" scope="col">Stop</th>
+                            <th className="text-center" scope="col">Löschen </th>
                         </tr>
                     </thead>
                     <tbody>
