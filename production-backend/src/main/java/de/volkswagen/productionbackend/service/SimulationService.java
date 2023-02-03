@@ -1,6 +1,5 @@
 package de.volkswagen.productionbackend.service;
 
-import com.sun.tools.jconsole.JConsoleContext;
 import de.volkswagen.productionbackend.model.ProductionLine;
 import de.volkswagen.productionbackend.repository.ProductionLineRepository;
 import lombok.Data;
@@ -14,13 +13,11 @@ import java.util.List;
 
 @Service
 @Data
+
 public class SimulationService {
 
-
-    @Value("${application.minimal-station-count}")
-    public static int MINIMAL_STATION_COUNT;
-    @Value("${application.base-sim-time}")
-    public static int BASE_SIM_TIME;
+    public final static int MINIMAL_STATION_COUNT = 3;
+    public final static int BASE_SIM_TIME = 1;
 
     private List<ProductionLine> activeSimulations = new ArrayList<>();
     private ProductionLineRepository productionLineRepository;
@@ -33,6 +30,9 @@ public class SimulationService {
     // Dabei wird bei einem minimalen Simulationsgeschwindigkeit (simSpeed) von 1 eine Produktionszeit von BASE_SIM_TIME s hinzugefügt
     @Scheduled(fixedRate = 1000)
     public void executeProductionStep() {
+
+        System.out.println(BASE_SIM_TIME);
+        System.out.println(MINIMAL_STATION_COUNT);
         this.activeSimulations.forEach(((productionLine) -> productionLine.addSimTime(BASE_SIM_TIME)));
     }
 
