@@ -42,7 +42,7 @@ const Landing = () => {
     const headBtns = [createPlBtn, createResBtn];
 
 
-    const mainHeadline = "Production Simulator"
+    const mainHeadline = "Produktionsplaner"
 
 
     const renderDefault = () => {
@@ -75,9 +75,9 @@ const Landing = () => {
                             <th scope="col">Status</th>
                             <th scope="col">Simulationsstatus</th>
                             <th scope="col">Stückzahl</th>
-                            <th scope="col">Speed</th>
+                            <th scope="col">Tempo</th>
                             <th scope="col">Start </th>
-                            <th className="text-center" scope="col">Stop</th>
+                            <th className="text-center" scope="col">Stopp</th>
                             <th className="text-center" scope="col">Löschen </th>
                         </tr>
                     </thead>

@@ -39,7 +39,7 @@ const ProductionLine = ({ pl, number }) => {
             <td>{pl.runnable ? "lauffähig" : "unvollständig"}</td>
             <td>{thisSim?.active ? "läuft" : "läuft nicht"} </td>
             <td>{thisSim ? thisSim.finishedParts : pl.finishedParts}</td>
-            <td><input className="col-4" placeholder={pl.simSpeed} onChange={(e) => setSimSpeed(e.target.value)} /></td>
+            <td><input className="col-4" placeholder={thisSim ? thisSim.simSpeed : pl.simSpeed} onChange={(e) => setSimSpeed(e.target.value)} /></td>
             <td style={{ "font-size": "1.5em" }}> <i className="bi bi-play iconhover ms-2" onClick={() => startSimulation()}></i></td>
             <td className="text-center" style={{ "font-size": "1.5em" }}> <i className="bi bi-stop iconhover" onClick={() => dispatch(stopSimulation(pl))} ></i></td>
             <td className="text-center" style={{ "font-size": "1.5em" }}> <i className="bi bi-trash3" onClick={() => dispatch(deleteLine(pl.id))} ></i></td>
