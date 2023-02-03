@@ -1,8 +1,10 @@
 package de.volkswagen.productionbackend.service;
 
+import com.sun.tools.jconsole.JConsoleContext;
 import de.volkswagen.productionbackend.model.ProductionLine;
 import de.volkswagen.productionbackend.repository.ProductionLineRepository;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +16,11 @@ import java.util.List;
 @Data
 public class SimulationService {
 
-    public static final int MINIMAL_STATION_COUNT = 3;
-    private static final int BASE_SIM_TIME = 1;
+
+    @Value("${application.minimal-station-count}")
+    public static int MINIMAL_STATION_COUNT;
+    @Value("${application.base-sim-time}")
+    public static int BASE_SIM_TIME;
 
     private List<ProductionLine> activeSimulations = new ArrayList<>();
     private ProductionLineRepository productionLineRepository;
