@@ -17,7 +17,7 @@ export var ContentType;
   ContentType["Text"] = "text/plain";
 })(ContentType || (ContentType = {}));
 export class HttpClient {
-  baseUrl = "https://prodplanner.azurewebsites.net";
+  baseUrl = process.env.REACT_APP_BACKEND_URL;
   securityData = null;
   securityWorker;
   abortControllers = new Map();

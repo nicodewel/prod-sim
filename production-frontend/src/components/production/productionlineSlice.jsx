@@ -112,6 +112,7 @@ const productionlineSlice = createSlice({
                 state.simulatedLines = action.payload;
             })
             .addCase(deleteLine.fulfilled, (state, action) => {
+                /* eslint-disable-next-line */
                 state.productionlines = state.productionlines.filter(pl => pl.id != action.payload)
             })
     }

@@ -10,6 +10,7 @@ const ProductionStep = ({ order, componentList, setComponentList, robots, statio
     const initialEmp = [...employees];
 
     const resetStepSelection = (e, value) => {
+        /* eslint-disable-next-line */
         if(value != "Bitte wählen"){
             setStep(value);
             handleSelection(e, "empty", 0)
