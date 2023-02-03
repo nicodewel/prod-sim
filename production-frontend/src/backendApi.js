@@ -17,7 +17,7 @@ export var ContentType;
   ContentType["Text"] = "text/plain";
 })(ContentType || (ContentType = {}));
 export class HttpClient {
-  baseUrl = "http://localhost:8080";
+  baseUrl = "https://prodplanner.azurewebsites.net";
   securityData = null;
   securityWorker;
   abortControllers = new Map();
