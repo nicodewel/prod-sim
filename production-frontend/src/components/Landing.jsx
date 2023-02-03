@@ -37,8 +37,8 @@ const Landing = () => {
 
     const renderLoading = () => <div className="spinner-border position-absolute top-50 start-50" role="status"></div>;
 
-    const createPlBtn = <NavLink to="/createproductionline"><button className="vw-btn m-1" onClick={() => clearInterval(interval.current)} >Neue Produktionsstraße anlegen</button></NavLink>;
-    const createResBtn = <NavLink to="/createstation"><button className="vw-btn m-1" onClick={() => clearInterval(interval.current)} >Neue Ressource anlegen</button></NavLink>;
+    const createPlBtn = <NavLink key={1} to="/createproductionline"><button className="vw-btn m-1" onClick={() => clearInterval(interval.current)} >Neue Produktionsstraße anlegen</button></NavLink>;
+    const createResBtn = <NavLink key={2} to="/createstation"><button className="vw-btn m-1" onClick={() => clearInterval(interval.current)} >Neue Ressource anlegen</button></NavLink>;
     const headBtns = [createPlBtn, createResBtn];
 
 
@@ -48,7 +48,7 @@ const Landing = () => {
     const renderDefault = () => {
         return (
             <div className="container-fluid">
-                <Header headline={mainHeadline} btnArr={headBtns} />
+                <Header key={1} headline={mainHeadline} btnArr={headBtns} />
                 <div className="d-flex justify-content-between align-items-center mb-3">
                     <h3>Aktuelle Produktionsstraßen</h3>
                     <div>
@@ -60,7 +60,7 @@ const Landing = () => {
 
                         <div className="form-check form-switch ms-2">
                             <input className="form-check-input vw-checkbox" type="checkbox" id="flexSwitchCheckDefault" onChange={() => toggleRefresh()} />
-                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault" style={{ "font-size": "0.8em" }}>AutoRefresh</label>
+                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault" style={{ "fontSize": "0.8em" }}>AutoRefresh</label>
                         </div>
                     </div>
 

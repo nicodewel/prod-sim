@@ -16,7 +16,7 @@ const NewRessource = () => {
         var regexName = /^[a-zA-Z0-9 ]{3,}$/g;
         var regexTime = /^[0-9]{1,6}$/g;
         if (!name.match(regexName) || !name ) {
-            alert("Name mus mindestens 3 Zeichen lang sein und darf keine Sonderzeichen enthalten.")
+            alert("Name muss mindestens 3 Zeichen lang sein und darf keine Sonderzeichen enthalten.")
             return;
         }
         if (!time.toString().match(regexTime)) {
@@ -45,7 +45,7 @@ const NewRessource = () => {
         }
     }
 
-    const backBtn = <NavLink to="/"><button className="vw-btn m-1"><i class="bi bi-box-arrow-left"></i> zurück</button></NavLink>;
+    const backBtn = <NavLink key={1}to="/"><button className="vw-btn m-1"><i className="bi bi-box-arrow-left"></i> zurück</button></NavLink>;
 
     return (
         <div className="container-fluid">

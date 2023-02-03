@@ -17,7 +17,7 @@ const ProductionStep = ({ order, componentList, setComponentList, robots, statio
         } else {
             setStep(null)
             document.getElementById("stationselection").value ="Station auswählen";
-            document.getElementById("employeeselection").value ="Mitarbeiter zuordnen";
+            document.getElementById("employee-selection").value ="Mitarbeiter zuordnen";
             setBusyEmp(busyEmp => [])
             ref.current.employees = [...initialEmp]
             componentList = componentList.pop();
@@ -77,8 +77,8 @@ const ProductionStep = ({ order, componentList, setComponentList, robots, statio
             case "Roboter":
                 return (
                     <div className="col-sm-3">
-                        <select className={generateClassName()} id="robotSelect" onChange={(e) => handleSelection(e, "robot", e.target.value)}>
-                            <option defaultValue selected="selected">Roboter wählen</option>
+                        <select defaultValue={"Roboter wählen"}  className={generateClassName()} id="robotSelect" onChange={(e) => handleSelection(e, "robot", e.target.value)}>
+                            <option value="Roboter wählen">Roboter wählen</option>
                             {ref.current.robots?.map((robot, i) => {
                                 return (<option key={i} value={robot.id}>{`${robot.name} #${robot.id}`}</option>)
                             }
@@ -91,26 +91,25 @@ const ProductionStep = ({ order, componentList, setComponentList, robots, statio
                     <div className="col">
                         <div className="col d-flex">
                             <div className="col-5 mb-2 me-4">
-                                <select id="stationselection" className={generateClassName()} onChange={(e) => handleSelection(e, "station", e.target.value)} >
-                                    <option selected="selected1">Station auswählen</option>
+                                <select defaultValue={'Station auswählen'} id="stationselection" className={generateClassName()} onChange={(e) => handleSelection(e, "station", e.target.value)} >
+                                    <option value="Station auswählen">Station auswählen</option>
                                     {ref.current.stations?.map((station, i) => <option key={i} value={station.id}>{station.name}</option>)}
                                 </select>
                             </div>
 
                             <div className=" col-5 me-2">
-                                <select  id="employeeselection" className={generateClassName()}  onChange={(e) => setStationEmp(e.target.value)} >
-                                    <option id="employeeselection" selected="selected2">Mitarbeiter zuordnen</option>
+                                <select  defaultValue={'Mitarbeiter zuordnen'} id="employee-selection" className={generateClassName()}  onChange={(e) => setStationEmp(e.target.value)} >
+                                    <option  value={"Mitarbeiter zuordnen"} >Mitarbeiter zuordnen</option>
                                     {ref.current.employees?.map((emp, i) => <option key={i} value={emp.id}>{emp.name}</option>)}
                                 </select>
                             </div>
-
-                            <i className="bi bi-person-add" style={{ "font-size": "1.5rem" }} onClick={(e) => handleSelection(e, "employee", e.target.value)}></i>
+                            <i className="bi bi-person-add" style={{ "fontSize": "1.5rem" }} onClick={(e) => handleSelection(e, "employee", e.target.value)}></i>
 
 
 
                         </div>
                         <div className=" d-flex">
-                            <pre><i style={{ "font-size": "1.1rem" }} className="bi bi-people"></i> </pre>
+                            <pre><i style={{ "fontSize": "1.1rem" }} className="bi bi-people"></i> </pre>
                             {/* eslint-disable-next-line */}
                             {busyEmp.map(emp => emp == busyEmp[busyEmp.length - 1] ? ` ${emp.name}` : `${emp.name}, `)}
                         </div>
@@ -125,8 +124,8 @@ const ProductionStep = ({ order, componentList, setComponentList, robots, statio
         <div className="row mb-3" >
             <label htmlFor="colFormLabel" className="col-sm-2 col-form-label">Schritt {order}</label>
             <div className="col-sm-3">
-                <select className={generateClassName()} aria-label="Default select example" onChange={(e) => resetStepSelection(e, e.target.value)}>
-                    <option defaultValue>Bitte wählen</option>
+                <select defaultValue={'Bitte wählen'} className={generateClassName()} aria-label="Default select example" onChange={(e) => resetStepSelection(e, e.target.value)}>
+                    <option value="Bitte wählen" >Bitte wählen</option>
                     <option value="Roboter">Roboter</option>
                     <option value="Station">Station</option>
                 </select>

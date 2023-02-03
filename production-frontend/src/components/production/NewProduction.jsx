@@ -21,9 +21,7 @@ const NewProduction = () => {
     const stationList = useSelector(state => state.ressources.stations).filter(comp => !comp.onDuty)
 
     const buildProduction = () => {
-
-
-        if (componentList.length < 3) {
+        if (componentList.length < 3 ) {
             document.getElementById("staticBackdropLabel").innerHTML = "Nicht genügend Schritte."
             document.getElementById("modal-body").innerHTML = "Eine Produktionsstraße besteht aus mindestens 3 Schritten. "
             document.getElementById("modalBtn").setAttribute("data-bs-toggle", "modal")
@@ -49,7 +47,7 @@ const NewProduction = () => {
 
     const nextStep = () => {
         // eslint-disable-next-line
-        if (componentList[componentList.length - 1].id == undefined || componentList.length != order.length) {
+        if (componentList[componentList.length - 1]?.id == undefined || componentList.length != order.length) {
             document.getElementById("staticBackdropLabel").innerHTML = "Schritt unvollständig"
             document.getElementById("modal-body").innerHTML = "Bitte eine Komponente auswählen."
             document.getElementById("modalBtn").setAttribute("data-bs-toggle", "modal")
@@ -62,11 +60,11 @@ const NewProduction = () => {
         }
     }
 
-    const backBtn = <NavLink to="/"><button className="vw-btn m-1"><i className="bi bi-box-arrow-left"></i> zurück</button></NavLink>;
+    const backBtn = <NavLink key={1} to="/"><button className="vw-btn m-1"><i className="bi bi-box-arrow-left"></i> zurück</button></NavLink>;
 
     return (
         <div className="container-fluid">
-            <Header headline="Neue Produktionsstraße anlegen" btnArr={[backBtn]} />
+            <Header key={1} headline="Neue Produktionsstraße anlegen" btnArr={[backBtn]} />
             <form>
                 <div className="row mb-3">
                     <label htmlFor="colFormLabel" className="col-sm-2 col-form-label">Name</label>
@@ -77,8 +75,8 @@ const NewProduction = () => {
                 <div className="row mb-3">
                     <label htmlFor="colFormLabel" className="col-sm-2 col-form-label">Modell</label>
                     <div className="col-sm-10">
-                        <select className="form-select" aria-label="Default select example" onChange={(e) => setCarmodel(e.target.value)} >
-                            <option defaultValue>Fahrzeugmodell wählen</option>
+                        <select className="form-select" aria-label="Default select example"  defaultValue={'Fahrzeugmodell wählen'} onChange={(e) => setCarmodel(e.target.value)} >
+                            <option value="Fahrzeugmodell wählen">Fahrzeugmodell wählen</option>
                             {models?.map(mod => <option value={mod.id}>{mod.name}</option>)};
                         </select>
                     </div>
