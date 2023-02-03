@@ -48,8 +48,10 @@ public class ProductionLineService {
         Optional<ProductionLine> productionLineOpt = productionLineRepository.findById(id);
         if (productionLineOpt.isPresent()){
             ProductionLine pl = productionLineOpt.get();
+            pl.getComponents().forEach(c -> c.setProductionLine(null));
             pl.getComponents().clear();
             pl.setCarModel(null);
+            productionLineRepository.save(pl);
             productionLineRepository.deleteById(id);
         }
 
